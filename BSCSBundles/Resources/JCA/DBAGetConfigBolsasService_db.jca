@@ -1,0 +1,14 @@
+<adapter-config name="DBAGetConfigBolsasService" adapter="Database Adapter" wsdlLocation="../WSDLs/DBAGetConfigBolsasService.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="PROVI_BOLS_BSCSE2E" adapterRef=""/>
+  <endpoint-interaction portType="DBAGetConfigBolsasService_ptt" operation="DBAGetConfigBolsasService">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_BUNDLES_PKG"/>
+      <property name="ProcedureName" value="GET_CONFIG_BOLSAS_BY_FILTER_FN"/>
+       <property name="QueryTimeout" value="600"/>  
+       <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

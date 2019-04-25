@@ -1,0 +1,24 @@
+<?binding.jca getInfoPlanCicloDBA_db.jca?><wsdl:definitions name="getInfoPlanCicloDBA" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/NoAws/getInfoPlanCicloDBA" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoPlanCicloDBA" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/NoAws/getInfoPlanCicloDBA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getInfoPlanCicloDBA_plt">
+        <plt:role name="getInfoPlanCicloDBA_role">
+            <plt:portType name="tns:getInfoPlanCicloDBA_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoPlanCicloDBA" schemaLocation="getInfoPlanCicloDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getInfoPlanCicloDBAInput_msg">
+        <wsdl:part name="getInfoPlanCicloDBAInput_msg" element="db:getInfoPlanCicloDBAInput"/>
+    </wsdl:message>
+    <wsdl:message name="getInfoPlanCicloDBAOutputCollection_msg">
+        <wsdl:part name="getInfoPlanCicloDBAOutputCollection" element="db:getInfoPlanCicloDBAOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getInfoPlanCicloDBA_ptt">
+        <wsdl:operation name="getInfoPlanCicloDBA">
+            <wsdl:input message="tns:getInfoPlanCicloDBAInput_msg"/>
+            <wsdl:output message="tns:getInfoPlanCicloDBAOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

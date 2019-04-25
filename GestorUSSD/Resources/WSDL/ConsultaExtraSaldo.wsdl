@@ -1,0 +1,38 @@
+<wsdl:definitions name="ConsultaExtraSaldo" targetNamespace="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" xmlns:tns="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" xmlns:inp1="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" xmlns:inp2="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" xmlns:inp3="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:flt="http://schemas.xmlsoap.org/soap/envelope/">
+    <wsdl:types>
+      <xsd:schema>
+          <xsd:import namespace="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo" schemaLocation="ConsultaExtraSaldo.xsd"/>
+       </xsd:schema>
+    </wsdl:types>
+    
+     
+    <wsdl:message name="ConsultaExtraSaldoReqMessage">
+        <wsdl:part name="PartConsultaExtraSaldo" element="tns:consultaExtraCreditoRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ConsultaExtraSaldoRespMessage">
+        <wsdl:part name="PartConsultaExtraSaldo" element="tns:consultaExtraCreditoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="PortTypeConsultaExtraSaldo">
+        <wsdl:operation name="OperationConsultaExtraSaldo">
+            <wsdl:input message="tns:ConsultaExtraSaldoReqMessage"/>
+            <wsdl:output message="tns:ConsultaExtraSaldoRespMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BindingConsultaExtraSaldo" type="tns:PortTypeConsultaExtraSaldo">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="OperationConsultaExtraSaldo">
+            <soap:operation style="document" soapAction="OperationConsultaExtraSaldo"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ServiceConsultaExtraSaldo">
+        <wsdl:port name="PortConsultaExtraSaldo" binding="tns:BindingConsultaExtraSaldo">
+            <soap:address location="localhost"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="PrepaidWave/Resources/WSDL/serviceSearchPrepagoICC"/>
+            <con:binding>
+                <con:name>SearchBalanceIccPortTypeServiceSOAP11Binding</con:name>
+                <con:namespace>http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelinePairNode__request" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-6117">
+            <con:stage name="validaParametrosEntrada" errorHandler="_onErrorHandler-117499623759384894--2f62363f.1525b1a31ce.-7a0b">
+                <con:context>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con2:log>
+                        <con1:id>_ActionId-117499623759384894--2f62363f.1525b1a31ce.-7a29</con1:id>
+                        <con2:logLevel>debug</con2:logLevel>
+                        <con2:expr>
+                            <con1:xqueryText>$body</con1:xqueryText>
+                        </con2:expr>
+                        <con2:message>-----|||Request PSServiceSearchPrepagoICC|||-----</con2:message>
+                    </con2:log>
+                    <con3:validate>
+                        <con1:id>_ActionId-117499623759384894--2f62363f.1525b1a31ce.-7a0c</con1:id>
+                        <con3:schema ref="PrepaidWave/Resources/WSDL/serviceSearchPrepagoICC-request"/>
+                        <con3:schemaElement xmlns:get="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">get:searchBalancesICC-request</con3:schemaElement>
+                        <con3:varName>body</con3:varName>
+                        <con3:location>
+                            <con1:xpathText>./get:searchBalancesICC-request</con1:xpathText>
+                        </con3:location>
+                    </con3:validate>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getPlataformaXPlan">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getPlataformaXPlanDba" prefix="pln"/>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con1:id>_ActionId-117499623759384894--2f62363f.1525b1a31ce.-7a97</con1:id>
+                        <con3:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetPlataformaXPlan" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>getPlataformaXPlanDba</con3:operation>
+                        <con3:request>
+                            <con3:body>plataformaXPlanReq</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body>plataformaXPlanRes</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:replace varName="plataformaXPlanReq" contents-only="false">
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7ebf</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetPlataformaXPlan"/>
+                                        <con1:param name="nroCelular">
+                                            <con1:path>$body/get:searchBalancesICC-request/get:phone_number/text()</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con3:requestTransform>
+                        <con3:responseTransform>
+                            <con3:assign varName="PlataformaPCRF">
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7e86</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryText>upper-case($plataformaXPlanRes/pln:getPlataformaXPlanDbaOutput/pln:PLATAFORM_PCRF[1]/text())</con1:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="PlataformaICC">
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7e4d</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryText>upper-case($plataformaXPlanRes/pln:getPlataformaXPlanDbaOutput/pln:PLATAFORM_ICC[1]/text())</con1:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="shdes">
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7d1d</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryText>$plataformaXPlanRes/pln:getPlataformaXPlanDbaOutput/pln:SHDES[1]/text()</con1:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="tmcode">
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7d00</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryText>$plataformaXPlanRes/pln:getPlataformaXPlanDbaOutput/pln:TMCODE[1]/text()</con1:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="phone_number">
+                                <con1:id>_ActionId-5576066427536541135--58fb3b71.152ac61fb87.-7fe4</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryText>$body/get:searchBalancesICC-request/get:phone_number/text()</con1:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:ifThenElse>
+                                <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7dc4</con1:id>
+                                <con3:case>
+                                    <con3:condition>
+                                        <con1:xqueryText>empty($shdes) or  fn-bea:trim($shdes) = ''</con1:xqueryText>
+                                    </con3:condition>
+                                    <con3:actions>
+                                        <con3:Error>
+                                            <con1:id>_ActionId-2409946622198208098--2529291f.152b28fccb0.-7f76</con1:id>
+                                            <con3:errCode>ERR-0006</con3:errCode>
+                                            <con3:message>Error el numero ingresado no tiene plan</con3:message>
+                                        </con3:Error>
+                                    </con3:actions>
+                                </con3:case>
+                                <con3:case>
+                                    <con3:condition>
+                                        <con1:xqueryText>empty($PlataformaICC) or fn-bea:trim($PlataformaICC) = ''  and fn-bea:trim($PlataformaPCRF) = '' or  empty($PlataformaPCRF)</con1:xqueryText>
+                                    </con3:condition>
+                                    <con3:actions>
+                                        <con3:Error>
+                                            <con1:id>_ActionId-2409946622198208098--2529291f.152b28fccb0.-7fae</con1:id>
+                                            <con3:errCode>ERR-0001</con3:errCode>
+                                            <con3:message>Error para este plan no se encuentra configurada la plataforma de consulta.</con3:message>
+                                        </con3:Error>
+                                    </con3:actions>
+                                </con3:case>
+                                <con3:default/>
+                            </con3:ifThenElse>
+                        </con3:responseTransform>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getBolsasXPlataforma">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/" prefix="get4"/>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con3:ifThenElse>
+                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7fc9</con1:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con1:xqueryText>$PlataformaICC = 'X'</con1:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:wsCallout>
+                                    <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7eaf</con1:id>
+                                    <con3:service xsi:type="ref:ProxyRef" ref="Alcatel-HighLevelApiWS/SubscriberLineManager/Proxy Services/PSSubscriberLineManagerService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con3:operation>getAllInformation</con3:operation>
+                                    <con3:request>
+                                        <con3:body>requestBody</con3:body>
+                                    </con3:request>
+                                    <con3:response>
+                                        <con3:body>responseBody</con3:body>
+                                    </con3:response>
+                                    <con3:requestTransform>
+                                        <con3:assign varName="requestBody">
+                                            <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7eb0</con1:id>
+                                            <con3:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_PSSearchBalancesICCService_TO_IN_PSSubscriberLineManagerService"/>
+                                                    <con1:param name="searchBalancesICC_request1">
+                                                        <con1:path>$body/get:searchBalancesICC-request</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con3:expr>
+                                        </con3:assign>
+                                    </con3:requestTransform>
+                                    <con3:responseTransform/>
+                                </con3:wsCallout>
+                                <con3:ifThenElse>
+                                    <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7f5b</con1:id>
+                                    <con3:case>
+                                        <con3:condition>
+                                            <con1:xqueryText>$PlataformaPCRF = 'X' and not(upper-case(normalize-space($body/get:searchBalancesICC-request/get:tipBucket/text())) = 'BALANCE')</con1:xqueryText>
+                                        </con3:condition>
+                                        <con3:actions>
+                                            <con2:wsCallout xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7b83</con1:id>
+                                                <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BStimsiBymsisdnDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con2:operation>timsiBymsisdnDBA</con2:operation>
+                                                <con2:request>
+                                                    <con2:body>timsiBymsisdnDBA</con2:body>
+                                                </con2:request>
+                                                <con2:response>
+                                                    <con2:body>timsiBymsisdnDBAResponse</con2:body>
+                                                </con2:response>
+                                                <con2:requestTransform>
+                                                    <con2:assign varName="timsiBymsisdnDBA">
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7bad</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>&lt;get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/">
+    &lt;!--Optional:-->
+    &lt;get:I_MSISDN>{$phone_number}&lt;/get:I_MSISDN>
+&lt;/get:InputParameters></con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                </con2:requestTransform>
+                                                <con2:responseTransform>
+                                                    <con2:assign varName="timsiBymsisdnResp">
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7bac</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>$timsiBymsisdnDBAResponse</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                    <con2:assign varName="Cod_ErrorIMSI">
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7bab</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>$timsiBymsisdnResp/get4:V_RESULT/text()</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                    <con2:ifThenElse>
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7baa</con1:id>
+                                                        <con2:case>
+                                                            <con2:condition>
+                                                                <con1:xqueryText>$Cod_ErrorIMSI != '0' or empty($Cod_ErrorIMSI)</con1:xqueryText>
+                                                            </con2:condition>
+                                                            <con2:actions>
+                                                                <con3:Error xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                    <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7ac1</con1:id>
+                                                                    <con3:errCode>ERR-0001</con3:errCode>
+                                                                    <con3:message>Error al obtener imsi para ejecutar el servicio PCRF</con3:message>
+                                                                </con3:Error>
+                                                            </con2:actions>
+                                                        </con2:case>
+                                                        <con2:default>
+                                                            <con2:assign varName="imsi">
+                                                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7ba6</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>data($timsiBymsisdnResp/get4:V_IMSI)</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                        </con2:default>
+                                                    </con2:ifThenElse>
+                                                    <con2:wsCallout>
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-791a</con1:id>
+                                                        <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con2:operation>getSubscriberAllInf</con2:operation>
+                                                        <con2:request>
+                                                            <con2:param>
+                                                                <con2:name>inPara</con2:name>
+                                                                <con2:variable>getSubscriberAllInf</con2:variable>
+                                                            </con2:param>
+                                                        </con2:request>
+                                                        <con2:response>
+                                                            <con2:param>
+                                                                <con2:name>result</con2:name>
+                                                                <con2:variable>getSubscriberAllInfResp</con2:variable>
+                                                            </con2:param>
+                                                        </con2:response>
+                                                        <con2:requestTransform>
+                                                            <con2:assign varName="getSubscriberAllInf">
+                                                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-791c</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText><![CDATA[<inPara>
+    <subscriber>
+        <!--1 or more repetitions:-->
+        <attribute>
+            <key>USRIDENTIFIER</key>
+            <value>{$imsi}</value>
+        </attribute>
+    </subscriber>
+</inPara>]]></con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                        </con2:requestTransform>
+                                                        <con2:responseTransform/>
+                                                    </con2:wsCallout>
+                                                </con2:responseTransform>
+                                            </con2:wsCallout>
+                                        </con3:actions>
+                                    </con3:case>
+                                    <con3:default>
+                                        <con3:assign varName="getSubscriberAllInfResp">
+                                            <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7614</con1:id>
+                                            <con3:expr>
+                                                <con1:xqueryText>&lt;ns0:SReturnVO xmlns:ns0="rm:type">
+&lt;/ns0:SReturnVO></con1:xqueryText>
+                                            </con3:expr>
+                                        </con3:assign>
+                                    </con3:default>
+                                </con3:ifThenElse>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con1:xqueryText>$PlataformaPCRF = 'X'</con1:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:ifThenElse>
+                                    <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7cee</con1:id>
+                                    <con3:case>
+                                        <con3:condition>
+                                            <con1:xqueryText>not(upper-case(normalize-space($body/get:searchBalancesICC-request/get:tipBucket/text())) = 'BALANCE')</con1:xqueryText>
+                                        </con3:condition>
+                                        <con3:actions>
+                                            <con2:wsCallout xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7cdc</con1:id>
+                                                <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BStimsiBymsisdnDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con2:operation>timsiBymsisdnDBA</con2:operation>
+                                                <con2:request>
+                                                    <con2:body>timsiBymsisdnDBA</con2:body>
+                                                </con2:request>
+                                                <con2:response>
+                                                    <con2:body>timsiBymsisdnDBAResponse</con2:body>
+                                                </con2:response>
+                                                <con2:requestTransform>
+                                                    <con2:assign varName="timsiBymsisdnDBA">
+                                                        <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7ce4</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>&lt;get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/">
+    &lt;!--Optional:-->
+    &lt;get:I_MSISDN>{$phone_number}&lt;/get:I_MSISDN>
+&lt;/get:InputParameters></con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                </con2:requestTransform>
+                                                <con2:responseTransform>
+                                                    <con2:assign varName="timsiBymsisdnResp">
+                                                        <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7ce3</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>$timsiBymsisdnDBAResponse</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                    <con2:assign varName="Cod_ErrorIMSI">
+                                                        <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7ce2</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>$timsiBymsisdnResp/get4:V_RESULT/text()</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                    <con2:ifThenElse>
+                                                        <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7ce1</con1:id>
+                                                        <con2:case>
+                                                            <con2:condition>
+                                                                <con1:xqueryText>$Cod_ErrorIMSI != '0' or empty($Cod_ErrorIMSI)</con1:xqueryText>
+                                                            </con2:condition>
+                                                            <con2:actions>
+                                                                <con3:Error xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                    <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7ce0</con1:id>
+                                                                    <con3:errCode>ERR-0001</con3:errCode>
+                                                                    <con3:message>Error al obtener imsi para ejecutar el servicio PCRF</con3:message>
+                                                                </con3:Error>
+                                                            </con2:actions>
+                                                        </con2:case>
+                                                        <con2:default>
+                                                            <con2:assign varName="imsi">
+                                                                <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7cdf</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>data($timsiBymsisdnResp/get4:V_IMSI)</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                        </con2:default>
+                                                    </con2:ifThenElse>
+                                                    <con2:wsCallout>
+                                                        <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7cdd</con1:id>
+                                                        <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con2:operation>getSubscriberAllInf</con2:operation>
+                                                        <con2:request>
+                                                            <con2:param>
+                                                                <con2:name>inPara</con2:name>
+                                                                <con2:variable>getSubscriberAllInf</con2:variable>
+                                                            </con2:param>
+                                                        </con2:request>
+                                                        <con2:response>
+                                                            <con2:param>
+                                                                <con2:name>result</con2:name>
+                                                                <con2:variable>getSubscriberAllInfResp</con2:variable>
+                                                            </con2:param>
+                                                        </con2:response>
+                                                        <con2:requestTransform>
+                                                            <con2:assign varName="getSubscriberAllInf">
+                                                                <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7cde</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText><![CDATA[<inPara>
+    <subscriber>
+        <!--1 or more repetitions:-->
+        <attribute>
+            <key>USRIDENTIFIER</key>
+            <value>{$imsi}</value>
+        </attribute>
+    </subscriber>
+</inPara>]]></con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                        </con2:requestTransform>
+                                                        <con2:responseTransform/>
+                                                    </con2:wsCallout>
+                                                </con2:responseTransform>
+                                            </con2:wsCallout>
+                                        </con3:actions>
+                                    </con3:case>
+                                    <con3:default>
+                                        <con3:assign varName="getSubscriberAllInfResp">
+                                            <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7c88</con1:id>
+                                            <con3:expr>
+                                                <con1:xqueryText>&lt;ns0:SReturnVO xmlns:ns0="rm:type">
+&lt;/ns0:SReturnVO></con1:xqueryText>
+                                            </con3:expr>
+                                        </con3:assign>
+                                    </con3:default>
+                                </con3:ifThenElse>
+                                <con3:ifThenElse>
+                                    <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7f23</con1:id>
+                                    <con3:case>
+                                        <con3:condition>
+                                            <con1:xqueryText>$PlataformaICC = 'X'</con1:xqueryText>
+                                        </con3:condition>
+                                        <con3:actions>
+                                            <con3:wsCallout>
+                                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7e03</con1:id>
+                                                <con3:service xsi:type="ref:ProxyRef" ref="Alcatel-HighLevelApiWS/SubscriberLineManager/Proxy Services/PSSubscriberLineManagerService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con3:operation>getAllInformation</con3:operation>
+                                                <con3:request>
+                                                    <con3:body>requestBody</con3:body>
+                                                </con3:request>
+                                                <con3:response>
+                                                    <con3:body>responseBody</con3:body>
+                                                </con3:response>
+                                                <con3:requestTransform>
+                                                    <con3:assign varName="requestBody">
+                                                        <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7e04</con1:id>
+                                                        <con3:expr>
+                                                            <con1:xqueryTransform>
+                                                                <con1:resource ref="PrepaidWave/Resources/XQuery/IN_PSSearchBalancesICCService_TO_IN_PSSubscriberLineManagerService"/>
+                                                                <con1:param name="searchBalancesICC_request1">
+                                                                    <con1:path>$body/get:searchBalancesICC-request</con1:path>
+                                                                </con1:param>
+                                                            </con1:xqueryTransform>
+                                                        </con3:expr>
+                                                    </con3:assign>
+                                                </con3:requestTransform>
+                                                <con3:responseTransform/>
+                                            </con3:wsCallout>
+                                        </con3:actions>
+                                    </con3:case>
+                                    <con3:case>
+                                        <con3:condition>
+                                            <con1:xqueryText>empty($PlataformaICC) or fn-bea:trim($PlataformaICC) = '' and upper-case(normalize-space($body/get:searchBalancesICC-request/get:tipBucket/text())) = 'BALANCE'</con1:xqueryText>
+                                        </con3:condition>
+                                        <con3:actions>
+                                            <con3:Error>
+                                                <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7bfc</con1:id>
+                                                <con3:errCode>ERR-0009</con3:errCode>
+                                                <con3:message>El plan del cliente no se encuentra configurado para consultar bucket de saldo en ICC</con3:message>
+                                            </con3:Error>
+                                        </con3:actions>
+                                    </con3:case>
+                                    <con3:default>
+                                        <con3:assign varName="responseBody">
+                                            <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-75c0</con1:id>
+                                            <con3:expr>
+                                                <con1:xqueryText>&lt;ns0:getAllInformationResponse xmlns:ns0="http://implementation.web.api.icc.services.osp.in.alcatel.com"
+ xmlns:ns1="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd">
+&lt;/ns0:getAllInformationResponse></con1:xqueryText>
+                                            </con3:expr>
+                                        </con3:assign>
+                                    </con3:default>
+                                </con3:ifThenElse>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con1:xqueryText>empty($PlataformaICC) or fn-bea:trim($PlataformaICC) = '' and upper-case(normalize-space($body/get:searchBalancesICC-request/get:tipBucket/text())) = 'BALANCE'</con1:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:Error>
+                                    <con1:id>_ActionId-3299487815854259929-4505626d.156bd0decd3.-7d26</con1:id>
+                                    <con3:errCode>ERR-0009</con3:errCode>
+                                    <con3:message>El plan del cliente no se encuentra configurado para consultar bucket de saldo en ICC</con3:message>
+                                </con3:Error>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:default>
+                            <con3:Error>
+                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-7eeb</con1:id>
+                                <con3:errCode>ERR-0002</con3:errCode>
+                                <con3:message>Error la plataforma obtenida no es compatible con la lógica del servicio</con3:message>
+                            </con3:Error>
+                        </con3:default>
+                    </con3:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getOfertaBucket">
+                <con:context/>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con1:id>_ActionId-133867959604979893-5880dabc.15284d18fd2.-7c5c</con1:id>
+                        <con3:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetOfertaBucket" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>getOfertaBucketDba</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="false">getOfertaBucketReq</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="false">getOfertaBucketRes</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:replace varName="getOfertaBucketReq">
+                                <con1:id>_ActionId-7617887375354301432--73d791e5.15288178863.-76a0</con1:id>
+                                <con3:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_getOfertaBucketPlataforma"/>
+                                        <con1:param name="sReturnVO1">
+                                            <con1:path>$getSubscriberAllInfResp</con1:path>
+                                        </con1:param>
+                                        <con1:param name="getAllInformationResponse1">
+                                            <con1:path>$responseBody</con1:path>
+                                        </con1:param>
+                                        <con1:param name="shdes">
+                                            <con1:path>normalize-space($shdes)</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con3:requestTransform>
+                        <con3:responseTransform/>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode__response" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-6116">
+            <con:stage name="stage_fin">
+                <con:context>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-5017533134140733220-6068d737.14108c1413d.-77d6</con1:id>
+                        <con3:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_PSSubscriberLineManagerService_TO_IN_PSSearchBalancesICCService"/>
+                                <con1:param name="sReturnVO1">
+                                    <con1:path>$getSubscriberAllInfResp</con1:path>
+                                </con1:param>
+                                <con1:param name="viewBucket">
+                                    <con1:path>normalize-space($body/get:searchBalancesICC-request/get:detail_bucket/text())</con1:path>
+                                </con1:param>
+                                <con1:param name="getAllInformationResponse1">
+                                    <con1:path>$responseBody</con1:path>
+                                </con1:param>
+                                <con1:param name="outputParameters1">
+                                    <con1:path>$getOfertaBucketRes</con1:path>
+                                </con1:param>
+                                <con1:param name="tipBucket">
+                                    <con1:path>normalize-space($body/get:searchBalancesICC-request/get:tipBucket/text())</con1:path>
+                                </con1:param>
+                                <con1:param name="shDesPlan">
+                                    <con1:path>normalize-space($shdes)</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con3:expr>
+                    </con3:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-6117">
+            <con:stage name="stage_error_in">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-60a5</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns1:searchBalancesICC-response xmlns:ns1="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+  <ns1:totalBalance></ns1:totalBalance>
+  <ns1:err_description>{concat('stage: ',$fault/ctx:location/ctx:stage/text(),', ',$fault/ctx:reason/text())}</ns1:err_description>
+  <ns1:error_code>{$fault/ctx:errorCode/text}</ns1:error_code>
+  <ns1:buckets/>
+</ns1:searchBalancesICC-response>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-60a4</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-6116">
+            <con:stage name="stage_error_out">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5f6f</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns1:searchBalancesICC-response xmlns:ns1="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+  <ns1:totalBalance></ns1:totalBalance>
+  <ns1:err_description>{concat('stage: ',$fault/ctx:location/ctx:stage/text(),', ',$fault/ctx:reason/text())}</ns1:err_description>
+  <ns1:error_code>{$fault/ctx:errorCode/text}</ns1:error_code>
+  <ns1:buckets/>
+</ns1:searchBalancesICC-response>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-606a</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-117499623759384894--2f62363f.1525b1a31ce.-7a0b">
+            <con:stage name="stgErrorInValidate">
+                <con:context>
+                    <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-117499623759384894--2f62363f.1525b1a31ce.-78db</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns1:searchBalancesICC-response xmlns:ns1="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+  <ns1:totalBalance></ns1:totalBalance>
+  <ns1:err_description>{$fault/ctx:details/con1:ValidationFailureDetail/con1:message/text()}</ns1:err_description>
+  <ns1:error_code>VAL-0001</ns1:error_code>
+  <ns1:buckets/>
+</ns1:searchBalancesICC-response>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-117499623759384894--2f62363f.1525b1a31ce.-7964</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode_">
+                <con:request>PipelinePairNode__request</con:request>
+                <con:response>PipelinePairNode__response</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

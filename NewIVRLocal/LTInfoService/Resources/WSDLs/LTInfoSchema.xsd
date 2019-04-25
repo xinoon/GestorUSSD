@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:query="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1">
+	<element name="infoCuotaDatos" type="query:infoCuotaDatosRequestType"/>
+	<element name="infoCuotaDatosResponse" type="query:infoCuotaDatosResponseType"/>
+        
+	<complexType name="infoCuotaDatosRequestType">
+		<sequence>
+			<element name="nroCelular" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoCuotaDatosResponseType">
+		<sequence>
+			<element name="infoCuotaDatos" type="query:infoCuotaDatosOut" minOccurs="0"/>
+                        <element name="error_code" type="string" minOccurs="1"/>
+                        <element name="err_description" maxOccurs="1" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoCuotaDatosOut">
+		<sequence>
+			<element name="codigoPlan" type="string" minOccurs="0"/>
+			<element name="nombrePlan" type="string" minOccurs="0"/>
+			<element name="tipoTecnologia" type="string" minOccurs="0"/>
+			<element name="montoDatos" type="string" minOccurs="0"/>
+			<element name="consumoCuotaDatosVigente" type="string" minOccurs="0"/>
+			<element name="cicloFacturacion" type="string" minOccurs="0"/>
+			<element name="inicioCicloVigente" type="string" minOccurs="0"/>
+			<element name="finCicloVigente" type="string" minOccurs="0"/>
+			<element name="customerId" type="string" minOccurs="0"/>
+			<element name="coId" type="string" minOccurs="0"/>
+			<element name="otro" type="string" minOccurs="0"/>
+			<element name="otro1" type="string" minOccurs="0"/>
+			<element name="infoPlanCiclo" type="query:listaBolsaOut" minOccurs="0"/>
+		</sequence>
+	</complexType>
+        
+	<complexType name="listaBolsaOut">
+		<sequence>
+			<element name="bolsa" type="string" minOccurs="0"/>
+			<element name="fechaInicio" type="string" minOccurs="0"/>
+			<element name="fechaFin" type="string" minOccurs="0"/>
+			<element name="cuotaBolsa" type="string" minOccurs="0"/>
+			<element name="cuotaOcupada" type="string" minOccurs="0"/>
+			<element name="cuotaDisponible" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="infoPlanCiclo" type="query:infoPlanCicloRequestType"/>
+	<element name="infoPlanCicloResponse" type="query:infoPlanCicloResponseType"/>
+        
+        <complexType name="infoPlanCicloRequestType">
+		<sequence>
+			<element name="nroCelular" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoPlanCicloResponseType">
+		<sequence>
+			<element name="infoPlanCiclo" type="query:infoPlanCicloOut" minOccurs="0"/>
+                        <element name="error_code" type="string" minOccurs="1"/>
+                        <element name="err_description" maxOccurs="1" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoPlanCicloOut">
+		<sequence>
+			<element name="codigoPlan" type="string" minOccurs="0"/>
+			<element name="nombrePlan" type="string" minOccurs="0"/>
+			<element name="tipoTecnologia" type="string" minOccurs="0"/>
+			<element name="vozONNetIncluido" type="string" minOccurs="0"/>
+			<element name="vozOFFNetIncluido" type="string" minOccurs="0"/>
+			<element name="vozAllDestIncluido" type="string" minOccurs="0"/>
+			<element name="totalVoz" type="string" minOccurs="0"/>
+			<element name="SMSIncluido" type="string" minOccurs="0"/>
+			<element name="PTTIncluido" type="string" minOccurs="0"/>
+			<element name="datosIncluido" type="string" minOccurs="0"/>
+			<element name="cicloFacturacion" type="string" minOccurs="0"/>
+			<element name="inicioCicloVigente" type="string" minOccurs="0"/>
+			<element name="finCicloVigente" type="string" minOccurs="0"/>
+			<element name="customerId" type="string" minOccurs="0"/>
+			<element name="coId" type="string" minOccurs="0"/>
+			<element name="otro" type="string" minOccurs="0"/>
+			<element name="otro1" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+        
+	<element name="infoCicloReset" type="query:infoCicloResetRequestType"/>
+	<element name="infoCicloResetResponse" type="query:infoCicloResetResponseType"/>
+        
+	<complexType name="infoCicloResetRequestType">
+		<sequence>
+			<element name="nroCelular" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoCicloResetResponseType">
+		<sequence>
+			<element name="infoCicloReset" type="query:infoCicloResetOut" minOccurs="0"/>
+                        <element name="error_code" type="string" minOccurs="1"/>
+                        <element name="err_description" maxOccurs="1" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="infoCicloResetOut">
+		<sequence>
+			<element name="codigoPlan" type="string" minOccurs="0"/>
+			<element name="nombrePlan" type="string" minOccurs="0"/>
+			<element name="tipoTecnologia" type="string" minOccurs="0"/>
+                        <element name="ptt" type="string" minOccurs="0"/>
+			<element name="voz" type="string" minOccurs="0"/>
+			<element name="sms" type="string" minOccurs="0"/>
+			<element name="datos" type="string" minOccurs="0"/>
+			<element name="cicloFacturacion" type="string" minOccurs="0"/>
+			<element name="inicioCicloVigente" type="string" minOccurs="0"/>
+			<element name="finCicloVigente" type="string" minOccurs="0"/>
+			<element name="customerId" type="string" minOccurs="0"/>
+			<element name="coId" type="string" minOccurs="0"/>
+			<element name="otro" type="string" minOccurs="0"/>
+			<element name="otro1" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+        
+</schema>

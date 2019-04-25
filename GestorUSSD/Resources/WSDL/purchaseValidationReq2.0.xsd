@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ws.wom.cl/WOM/NEG/ProductCatalog/purchaseValidation/v/2.0" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ws.wom.cl/WOM/NEG/ProductCatalog/purchaseValidation/v/2.0">
+  <xsd:element name="purchaseValidationReq" type="purchaseValidationReqType"/>
+  <xsd:complexType name="purchaseValidationReqType">
+    <xsd:sequence>
+      <xsd:element name="msisdn" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="idProducto" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="channel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

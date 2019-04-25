@@ -1,0 +1,24 @@
+<?binding.jca ValidaTransDescDBA_db.jca?><wsdl:definitions name="ValidaTransDescDBA" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/ValidaTransDescDBA" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/ValidaTransDescDBA" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/ValidaTransDescDBA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="ValidaTransDescDBA_plt">
+        <plt:role name="ValidaTransDescDBA_role">
+            <plt:portType name="tns:ValidaTransDescDBA_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ValidaTransDescDBA" schemaLocation="ValidaTransDescDBA.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ValidaTransDescDBAInput_msg">
+        <wsdl:part name="ValidaTransDescDBAInput_msg" element="db:ValidaTransDescDBAInput"/>
+    </wsdl:message>
+    <wsdl:message name="ValidaTransDescDBAOutput_msg">
+        <wsdl:part name="ValidaTransDescDBAOutput" element="db:ValidaTransDescDBAOutput"/>
+    </wsdl:message>
+    <wsdl:portType name="ValidaTransDescDBA_ptt">
+        <wsdl:operation name="ValidaTransDescDBA">
+            <wsdl:input message="tns:ValidaTransDescDBAInput_msg"/>
+            <wsdl:output message="tns:ValidaTransDescDBAOutput_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

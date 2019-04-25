@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getMensajeSmsProducto" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getMensajeSmsProducto" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getMensajeSmsProductoInput" type="getMensajeSmsProductoInput"/>
+   <xs:complexType name="getMensajeSmsProductoInput">
+      <xs:sequence>
+         <xs:element name="id_pcrf_prod" type="xs:string" nillable="true"/>
+         <xs:element name="id_prod" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getMensajeSmsProductoOutputCollection" type="getMensajeSmsProductoOutputCollection"/>
+   <xs:complexType name="getMensajeSmsProductoOutputCollection">
+      <xs:sequence>
+         <xs:element name="getMensajeSmsProductoOutput" type="getMensajeSmsProductoOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getMensajeSmsProductoOutput">
+      <xs:sequence>
+         <xs:element name="MENSAJE" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

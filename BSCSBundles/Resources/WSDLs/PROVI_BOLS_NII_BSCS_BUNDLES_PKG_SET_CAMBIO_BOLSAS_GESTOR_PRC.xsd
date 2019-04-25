@@ -1,0 +1,82 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_BUNDLES_PKG/SET_CAMBIO_BOLSAS_GESTOR_PRC/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_BUNDLES_PKG/SET_CAMBIO_BOLSAS_GESTOR_PRC/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="IN_CUSTOMER_ID" type="decimal" db:index="1" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="IN_CLIENT_NAME" type="string" db:index="2" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="IN_STATUS" type="string" db:index="3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SQ_LIST_PACKAGE" type="db:PROVI_BOLS.PACKAGE_QT_LIST" db:index="4" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="SN_COD_RETORNO" type="decimal" db:index="5" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_MENS_RETORNO" type="string" db:index="6" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_NUM_EVENTO" type="decimal" db:index="7" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="PROVI_BOLS.PACKAGE_QT_LIST">
+      <sequence>
+         <element name="SQ_LIST_PACKAGE_ITEM" type="db:PROVI_BOLS.PACKAGE_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.PACKAGE_QT">
+      <sequence>
+         <element name="SN_SPCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SV_DESC_SPCODE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="25"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="SERVICES_LIST" type="db:PROVI_BOLS.SERVICES_QT_LIST" db:type="Array" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.SERVICES_QT">
+      <sequence>
+         <element name="SNCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SV_DES" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TEMPLATE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="BUNDLES_LIST" type="db:PROVI_BOLS.BUNDLES_BY_SERVICES_QT_LIST" db:type="Array" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.BUNDLES_BY_SERVICES_QT">
+      <sequence>
+         <element name="BUNDLE_VALUE" type="float" db:type="FLOAT" minOccurs="0" nillable="true"/>
+         <element name="BUNDLE_UNIT" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="BUNDLE_TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="225"/>
+               </restriction>
+            </simpleType>
+         </element>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.SERVICES_QT_LIST">
+      <sequence>
+         <element name="SERVICES_LIST_ITEM" type="db:PROVI_BOLS.SERVICES_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.BUNDLES_BY_SERVICES_QT_LIST">
+      <sequence>
+         <element name="BUNDLES_LIST_ITEM" type="db:PROVI_BOLS.BUNDLES_BY_SERVICES_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+</schema>

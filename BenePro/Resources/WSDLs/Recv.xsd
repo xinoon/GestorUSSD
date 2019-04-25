@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Oracle JAX-WS 2.1.5. --><xs:schema xmlns:tns="http://recv.ws.srv.promo.wom.smartdici/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://recv.ws.srv.promo.wom.smartdici/">
+
+<xs:element name="PromoRecvException" type="tns:PromoRecvException"/>
+
+<xs:element name="aplicarPromocion" type="tns:aplicarPromocion"/>
+
+<xs:element name="aplicarPromocionResponse" type="tns:aplicarPromocionResponse"/>
+
+<xs:element name="getPromosAplicables" type="tns:getPromosAplicables"/>
+
+<xs:element name="getPromosAplicablesResponse" type="tns:getPromosAplicablesResponse"/>
+
+<xs:element name="llamarColaRecv" type="tns:llamarColaRecv"/>
+
+<xs:element name="monitor" type="tns:monitor"/>
+
+<xs:element name="monitorResponse" type="tns:monitorResponse"/>
+
+<xs:element name="notificarEvento" type="tns:notificarEvento"/>
+
+<xs:element name="notificarEventoResponse" type="tns:notificarEventoResponse"/>
+
+<xs:complexType name="getPromosAplicables">
+<xs:sequence>
+<xs:element name="contrato" type="xs:string" minOccurs="0"/>
+<xs:element name="evento" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPromosAplicablesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:promocionAccion" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="promocionAccion">
+<xs:sequence>
+<xs:element name="beneficiario" type="tns:beneficiario" minOccurs="0"/>
+<xs:element name="idAccion" type="xs:string" minOccurs="0"/>
+<xs:element name="idAplicable" type="xs:long"/>
+<xs:element name="idPromoAct" type="xs:long"/>
+<xs:element name="idPromocion" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="beneficiario">
+<xs:sequence>
+<xs:element name="codCliente" type="xs:string" minOccurs="0"/>
+<xs:element name="codContrato" type="xs:string" minOccurs="0"/>
+<xs:element name="idBeneficiario" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="monitor">
+<xs:sequence>
+<xs:element name="param" type="xs:string" minOccurs="0"/>
+<xs:element name="clave" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="monitorResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="notificarEvento">
+<xs:sequence>
+<xs:element name="evento" type="tns:evento2" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="evento2">
+<xs:complexContent>
+<xs:extension base="tns:evento">
+<xs:sequence>
+<xs:element name="atributosFicha2">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="key" minOccurs="0" type="xs:string"/>
+<xs:element name="value" minOccurs="0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="evento">
+<xs:sequence>
+<xs:element name="accion" type="xs:string" minOccurs="0"/>
+<xs:element name="atributosFicha">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="key" minOccurs="0" type="xs:string"/>
+<xs:element name="value" minOccurs="0" type="xs:anyType"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="beneficiario" type="tns:beneficiario" minOccurs="0"/>
+<xs:element name="detalles" type="xs:string" minOccurs="0"/>
+<xs:element name="idEvento" type="xs:long"/>
+<xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+<xs:element name="nomPromocion" type="xs:string" minOccurs="0"/>
+<xs:element name="onDemand" type="xs:boolean"/>
+<xs:element name="tipoEvento" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="notificarEventoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PromoRecvException">
+<xs:sequence>
+<xs:element name="codigo" type="tns:codigoError" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="llamarColaRecv">
+<xs:sequence>
+<xs:element name="evento" type="tns:evento2" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aplicarPromocion">
+<xs:sequence>
+<xs:element name="evento" type="tns:evento2" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aplicarPromocionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resp" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resp">
+<xs:sequence>
+<xs:element name="codigo" type="xs:string" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="codigoError">
+<xs:restriction base="xs:string">
+<xs:enumeration value="ERROR_INTERNO"/>
+<xs:enumeration value="E_INCONSISTENCIA_BBDD"/>
+<xs:enumeration value="E_ERROR_TOTAL_CALAMITOSO"/>
+<xs:enumeration value="E_CODIGO_INCORRECTO"/>
+<xs:enumeration value="E_INSERTAR_EVENTO"/>
+<xs:enumeration value="E_ATRIBUTO_FICHA_NO_DEFINIDO"/>
+<xs:enumeration value="E_FUENTE_DATOS_SIN_CONEXION"/>
+<xs:enumeration value="E_FALTA_PARAMETRO"/>
+<xs:enumeration value="E_VALOR_MULTIPLE_ENCONTRADO"/>
+<xs:enumeration value="E_FALTAN_PARAMETROS"/>
+<xs:enumeration value="E_NO_VALOR"/>
+<xs:enumeration value="E_VALIDACION"/>
+<xs:enumeration value="E_ERROR_PROCESAMIENTO"/>
+<xs:enumeration value="E_EXTERNO"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

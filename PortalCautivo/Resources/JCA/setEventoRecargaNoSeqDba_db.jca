@@ -1,0 +1,12 @@
+<adapter-config name="setEventoRecargaNoSeqDba" adapter="Database Adapter" wsdlLocation="../WSDLs/setEventoRecargaNoSeqDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="setEventoRecargaNoSeqDba_ptt" operation="setEventoRecargaNoSeqDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="INSERT INTO PROVI_BOLS.EVENTO_RECARGA (NUM_CEL,MONTO,CUSTOMER_ID,TRANSACTION_CODE_BUY,FECHA_RECARGA) VALUES(#NUM_CEL,  #MONTO,#CUSTOMER_ID,SQ_TRANSACTION_CODE_BUY.NEXTVAL,SYSDATE)"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,36 @@
+<WL5G3N0:definitions targetNamespace="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMWSDL/v1" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMXSD/v1" xmlns:WL5G3N2="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMWSDL/v1" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema elementFormDefault="qualified" xmlns:communicationcustsendsms="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMXSD/v1" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMWSDL/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMXSD/v1" schemaLocation="XMLSchema_1447687381.xsd"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="SendSMSInfoRequest">
+    <WL5G3N0:part element="WL5G3N1:SendSMSRequest" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="SendSMSInfoResponse">
+    <WL5G3N0:part element="WL5G3N1:SendSMSResponse" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="SendSMSInfoRqRs">
+    <WL5G3N0:operation name="sendSMS">
+      <WL5G3N0:input message="WL5G3N2:SendSMSInfoRequest"/>
+      <WL5G3N0:output message="WL5G3N2:SendSMSInfoResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="SendSMSInfoRqRsSoapHttp" type="WL5G3N2:SendSMSInfoRqRs">
+    <WL5G3N3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="sendSMS">
+      <WL5G3N3:operation soapAction="http://xmlns.nii.com/EnterpriseServices/Industry/Communications/SendSMS/V1/sendSMS"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body parts="payload" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body parts="payload" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="SendSMSInfoRqRsSoapHttpQSService">
+    <WL5G3N0:port binding="WL5G3N2:SendSMSInfoRqRsSoapHttp" name="SendSMSInfoRqRsSoapHttpQSPort">
+      <WL5G3N3:address location="http://10.101.241.61:8011/SendSMSPrj/ProxyServices/SendSMSSiebelRqRsPS"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

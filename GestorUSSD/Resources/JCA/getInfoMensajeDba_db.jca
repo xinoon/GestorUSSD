@@ -1,0 +1,13 @@
+<adapter-config name="getInfoMensajeDba" adapter="Database Adapter" wsdlLocation="../WSDL/getInfoMensajeDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/PMEDUSSD" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getInfoMensajeDba_ptt" operation="getInfoMensajeDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select ID_MSJ, MSJ_DES,MENSAJE from INFO_MENSAJE where ID_MSJ = #idMsj"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextelCustomerInfoDBA" name="NextelCustomerInfoDBA-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextelCustomerInfoDBA" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextelCustomerInfoDBA" location="NextelCustomerInfoDBA.wsdl"/>
+  <binding name="NextelCustomerInfoDBA_ptt-binding" type="tns:NextelCustomerInfoDBA_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="NextelCustomerInfoDBA">
+      <soap:operation soapAction="NextelCustomerInfoDBA"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="NextelCustomerInfoDBA-service">
+    <port name="NextelCustomerInfoDBA-port" binding="tns:NextelCustomerInfoDBA_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

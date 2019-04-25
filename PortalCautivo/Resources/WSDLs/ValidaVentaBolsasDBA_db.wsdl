@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/ValidaVentaBolsasDBA" name="ValidaVentaBolsasDBA-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/ValidaVentaBolsasDBA" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/ValidaVentaBolsasDBA" location="ValidaVentaBolsasDBA.wsdl"/>
+  <binding name="ValidaVentaBolsasDBA_ptt-binding" type="tns:ValidaVentaBolsasDBA_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="ValidaVentaBolsasDBA">
+      <soap:operation soapAction="ValidaVentaBolsasDBA"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ValidaVentaBolsasDBA-service">
+    <port name="ValidaVentaBolsasDBA-port" binding="tns:ValidaVentaBolsasDBA_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

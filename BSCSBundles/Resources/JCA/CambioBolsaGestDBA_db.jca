@@ -1,0 +1,14 @@
+<adapter-config name="CambioBolsaGestDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/CambioBolsaGestDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="CambioBolsaGestDBA_ptt" operation="CambioBolsaGestDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_BUNDLES_PKG"/>
+      <property name="ProcedureName" value="SET_CAMBIO_BOLSAS_GESTOR_PRC"/>
+       <property name="QueryTimeout" value="600"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

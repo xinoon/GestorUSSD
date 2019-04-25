@@ -1,0 +1,24 @@
+<?binding.jca validaTransaccioDBA_db.jca?><wsdl:definitions name="validaTransaccioDBA" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/validaTransaccioDBA" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/validaTransaccioDBA" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/validaTransaccioDBA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="validaTransaccioDBA_plt">
+        <plt:role name="validaTransaccioDBA_role">
+            <plt:portType name="tns:validaTransaccioDBA_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/validaTransaccioDBA" schemaLocation="validaTransaccioDBA.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="validaTransaccioDBAInput_msg">
+        <wsdl:part name="validaTransaccioDBAInput_msg" element="db:validaTransaccioDBAInput"/>
+    </wsdl:message>
+    <wsdl:message name="validaTransaccioDBAOutput_msg">
+        <wsdl:part name="validaTransaccioDBAOutput" element="db:validaTransaccioDBAOutput"/>
+    </wsdl:message>
+    <wsdl:portType name="validaTransaccioDBA_ptt">
+        <wsdl:operation name="validaTransaccioDBA">
+            <wsdl:input message="tns:validaTransaccioDBAInput_msg"/>
+            <wsdl:output message="tns:validaTransaccioDBAOutput_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

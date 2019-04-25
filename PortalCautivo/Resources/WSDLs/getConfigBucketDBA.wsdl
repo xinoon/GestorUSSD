@@ -1,0 +1,24 @@
+<?binding.jca getConfigBucketDBA_db.jca?><wsdl:definitions name="getConfigBucketDBA" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/getConfigBucketDBA" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/getConfigBucketDBA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getConfigBucketDBA_plt">
+        <plt:role name="getConfigBucketDBA_role">
+            <plt:portType name="tns:getConfigBucketDBA_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA" schemaLocation="getConfigBucketDBA.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getConfigBucketDBAInput_msg">
+        <wsdl:part name="getConfigBucketDBAInput_msg" element="db:getConfigBucketDBAInput"/>
+    </wsdl:message>
+    <wsdl:message name="getConfigBucketDBAOutputCollection_msg">
+        <wsdl:part name="getConfigBucketDBAOutputCollection" element="db:getConfigBucketDBAOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getConfigBucketDBA_ptt">
+        <wsdl:operation name="getConfigBucketDBA">
+            <wsdl:input message="tns:getConfigBucketDBAInput_msg"/>
+            <wsdl:output message="tns:getConfigBucketDBAOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

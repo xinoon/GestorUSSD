@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:description/>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con2:wsdl ref="3GBSCS/Resources/WSDLs/BookingRequestWrite" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>BookingRequestWriteServiceSoapBinding</con:name>
+                <con:namespace>http://www.lhsgroup.com/ws_v2_NII_1</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router errorHandler="_onErrorHandler-366578304843925583--3989ca51.140e5f50889.-7fc2" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+        <con:pipeline type="error" name="_onErrorHandler-1340852361655669487--2e146083.14012794859.-7c18">
+            <con:stage name="In_stg_BookingRequestWrite_error">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con2:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                    <con2:userNsDecl namespace="cluxds01.nextel.com.ar" prefix="ns1"/>
+                    <con2:varNsDecl namespace="http://www.lhsgroup.com/ws_v2_NII_1" prefix="ws1"/>
+                </con:context>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con1:assign varName="bodyError1" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-1340852361655669487--2e146083.14012794859.-7b03</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<ws:BookingRequestWriteReturn xmlns:ws="http://www.lhsgroup.com/ws_v2_NII_1">
+ <ws:occId></ws:occId>
+ <ws:error_code>{data($fault/ctx:errorCode)}</ws:error_code>
+ <ws:err_description>{fn:concat(data($fault/ctx:reason),' - ',data($body/soap-env:Fault/faultstring))}</ws:err_description>
+</ws:BookingRequestWriteReturn>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-1340852361655669487--2e146083.14012794859.-7b02</con2:id>
+                        <con1:location>
+                            <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">.</con4:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError1</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:log xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id>_ActionId-366578304843925583--3989ca51.140e5f50889.-7be6</con2:id>
+                        <con4:logLevel>info</con4:logLevel>
+                        <con4:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con4:expr>
+                        <con4:message>body</con4:message>
+                    </con4:log>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-1340852361655669487--2e146083.14012794859.-7b01</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-366578304843925583--3989ca51.140e5f50889.-7fc2">
+            <con:stage name="In_stg_BookingRequestWrite_error1">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con2:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                    <con2:userNsDecl namespace="cluxds01.nextel.com.ar" prefix="ns1"/>
+                    <con2:varNsDecl namespace="http://www.lhsgroup.com/ws_v2_NII_1" prefix="ws1"/>
+                </con:context>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con1:assign varName="bodyError2" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-366578304843925583--3989ca51.140e5f50889.-7f4f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<ws:BookingRequestWriteReturn xmlns:ws="http://www.lhsgroup.com/ws_v2_NII_1">
+ <ws:occId></ws:occId>
+ <ws:error_code>{data($fault/ctx:errorCode)}</ws:error_code>
+ <ws:err_description>{fn:concat(data($fault/ctx:reason),' - ',data($body/soap-env:Fault/faultstring))}</ws:err_description>
+</ws:BookingRequestWriteReturn>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-366578304843925583--3989ca51.140e5f50889.-7f4e</con2:id>
+                        <con1:location>
+                            <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">.</con4:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError2</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:log xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id>_ActionId-366578304843925583--3989ca51.140e5f50889.-7c1f</con2:id>
+                        <con4:logLevel>info</con4:logLevel>
+                        <con4:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con4:expr>
+                        <con4:message>body</con4:message>
+                    </con4:log>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-366578304843925583--3989ca51.140e5f50889.-7f4d</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:route-node name="RouteTo_BSBookingRequestWrite" error-handler="_onErrorHandler-1340852361655669487--2e146083.14012794859.-7c18">
+                <con:context/>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <conid1:id xmlns:conid1="http://www.bea.com/wli/sb/stages/config">_ActionId-1340852361655669487--2e146083.14012794859.-8000</conid1:id>
+                        <con1:service ref="3GBSCS/Business Services/BSBookingRequestWrite" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://captive.portal.ws.ncl.nii.com"
+           xmlns:tns="http://captive.portal.ws.ncl.nii.com"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="setAjustaICCPortal" type="tns:setAjustaICCPortal"/>
+  <xs:element name="setAjustaICCPortalResponse"
+              type="tns:msgAjustaICCPortalResponse"/>
+  <xs:complexType name="setAjustaICCPortal">
+    <xs:sequence>     
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="tariff_prod" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="msgAjustaICCPortalResponse">
+    <xs:sequence>
+      <xs:element name="cadenaBucket" type="xs:string" nillable="true"/>
+      <xs:element name="error_code" type="xs:string" minOccurs="1"/>
+      <xs:element name="err_description" maxOccurs="1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

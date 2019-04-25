@@ -1,0 +1,74 @@
+<wsdl:definitions name="LTInfoWSDL" targetNamespace="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1" xmlns:ns1="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1" schemaLocation="LTInfoSchema.xsd"/>
+  </schema>
+ </wsdl:types>
+ <wsdl:message name="infoCuotaDatosRequestMessage">
+  <wsdl:part name="payload" element="ns1:infoCuotaDatos"/>
+ </wsdl:message>
+ <wsdl:message name="infoCuotaDatosResponseMessage">
+  <wsdl:part name="payload" element="ns1:infoCuotaDatosResponse"/>
+ </wsdl:message>
+ <wsdl:message name="infoPlanCicloRequestMessage">
+  <wsdl:part name="payload" element="ns1:infoPlanCiclo"/>
+ </wsdl:message>
+ <wsdl:message name="infoPlanCicloResponseMessage">
+  <wsdl:part name="payload" element="ns1:infoPlanCicloResponse"/>
+ </wsdl:message>
+ <wsdl:message name="infoCicloResetRequestMessage">
+  <wsdl:part name="payload" element="ns1:infoCicloReset"/>
+ </wsdl:message>
+ <wsdl:message name="infoCicloResetResponseMessage">
+  <wsdl:part name="payload" element="ns1:infoCicloResetResponse"/>
+ </wsdl:message>
+ <wsdl:portType name="LTInfoPort">
+  <wsdl:operation name="LTInfoCuotaDatos">
+   <wsdl:input message="client:infoCuotaDatosRequestMessage"/>
+   <wsdl:output message="client:infoCuotaDatosResponseMessage"/>
+  </wsdl:operation>
+  <wsdl:operation name="LTIInfoPlanCiclo">
+   <wsdl:input message="client:infoPlanCicloRequestMessage"/>
+   <wsdl:output message="client:infoPlanCicloResponseMessage"/>
+  </wsdl:operation>
+  <wsdl:operation name="LTInfoCicloReset">
+   <wsdl:input message="client:infoCicloResetRequestMessage"/>
+   <wsdl:output message="client:infoCicloResetResponseMessage"/>
+  </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:binding name="LTInfoBinding" type="client:LTInfoPort">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="LTInfoCuotaDatos">
+   <soap:operation soapAction="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1/LTInfoCuotaDatos" style="document"/>
+   <wsdl:input>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="LTIInfoPlanCiclo">
+   <soap:operation soapAction="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1/LTIInfoPlanCiclo" style="document"/>
+   <wsdl:input>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+  <wsdl:operation name="LTInfoCicloReset">
+   <soap:operation soapAction="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1/LTInfoCicloReset" style="document"/>
+   <wsdl:input>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body parts="payload" use="literal"/>
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:service name="LTInfoService">
+  <wsdl:port name="LTInfoPort" binding="client:LTInfoBinding">
+   <soap:address location="http://10.12.101.114:8011/LTInfoPrj/ProxyServices/LTInfoPS"/>
+  </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>

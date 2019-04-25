@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ns1="rm:type" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="rm:soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="rm:soap" name="ScfMobileSoap">
+	<types>
+		<schema targetNamespace="rm:type" xmlns="http://www.w3.org/2001/XMLSchema"
+			xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:tns="rm:type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<!--=====================Attribute Value Pair====================== -->
+			<complexType name="SAVP">
+				<sequence>
+					<element name="key" type="xsd:string" />
+					<element name="value" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<!--=====================Subscriber====================== -->
+			<complexType name="SPccSubscriber">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================Subscription Attributes====================== -->
+			<complexType name="SSubscribedService">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================Subscriber Quota Attributes====================== -->
+			<complexType name="SSubscriberQuota">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================Subscriber Account Attributes====================== -->
+			<complexType name="SSubscriberAccount">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SServicePackage Attributes====================== -->
+			<complexType name="SServicePackage">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberRechargedQuota Attributes====================== -->
+			<complexType name="SSubscriberRechargedQuota">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberRechargedService Attributes====================== -->
+			<complexType name="SSubscriberRechargedService">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberAccumulation Attributes====================== -->
+			<complexType name="SSubscriberAccumulation">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberAccumulationUsageInfo Attributes====================== -->
+			<complexType name="SSubscriberAccumulationUsageInfo">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberAccumulation Attributes====================== -->
+			<complexType name="SSubscriberClearAccumulation">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================SSubscriberCustomLevel Attributes====================== -->
+			<complexType name="SSubscriberCustomLevel">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="attribute"
+						nillable="false" type="tns:SAVP" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberParaVO====================== -->
+			<complexType name="SInSubscriberParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0" name="deleteService"
+						nillable="false" type="tns:SSubscribedService" />
+					<element maxOccurs="unbounded" minOccurs="0" name="modifyService"
+						nillable="false" type="tns:SSubscribedService" />
+					<element maxOccurs="unbounded" minOccurs="0" name="addService"
+						nillable="false" type="tns:SSubscribedService" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriptionParaVO====================== -->
+			<complexType name="SInSubscriptionParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscribedService" nillable="false" type="tns:SSubscribedService" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberQuotaParaVO====================== -->
+			<complexType name="SInSubscriberQuotaParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0" name="subscriberQuota"
+						nillable="false" type="tns:SSubscriberQuota" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberServicePackageParaVO====================== -->
+			<complexType name="SInSubscriberServicePackageParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0" name="servicePackage"
+						nillable="false" type="tns:SServicePackage" />
+				</sequence>
+			</complexType>
+			<!--=====================SInSubscriberAllInfParaVO====================== -->
+			<complexType name="SInSubscriberAllInfParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberService" nillable="false" type="tns:SSubscribedService" />
+					<element maxOccurs="unbounded" minOccurs="0" name="subscriberQuota"
+						nillable="false" type="tns:SSubscriberQuota" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccount" nillable="false" type="tns:SSubscriberAccount" />
+					<element maxOccurs="unbounded" minOccurs="0" name="servicePackage"
+						nillable="false" type="tns:SServicePackage" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberAccountParaVO====================== -->
+			<complexType name="SInSubscriberAccountParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccount" nillable="false" type="tns:SSubscriberAccount" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberRechargedQuotaParaVO====================== -->
+			<complexType name="SInSubscriberRechargedQuotaParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0" name="rechargedQuota"
+						nillable="false" type="tns:SSubscriberRechargedQuota" />
+				</sequence>
+			</complexType>
+			<!--=====================InSubscriberRechargeServiceParaVO====================== -->
+			<complexType name="SInSubscriberRechargedServiceParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0" name="rechargedService"
+						nillable="false" type="tns:SSubscriberRechargedService" />
+				</sequence>
+			</complexType>
+			<!--=====================InASubscribeAccumulationParaVO====================== -->
+			<complexType name="SInSubscriberAccumulationParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccumulation" nillable="false"
+						type="tns:SSubscriberAccumulation" />
+				</sequence>
+			</complexType>
+			<!--=====================InASubscribeClearAccumulationParaVO====================== -->
+			<complexType name="SInSubscriberClearAccumulationParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberClearAccumulation" nillable="false"
+						type="tns:SSubscriberClearAccumulation" />
+				</sequence>
+			</complexType>
+			<!--=====================InASubscribeClearAccumulationParaVO====================== -->
+			<complexType name="SInSubscriberCustomLevelParaVO">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberCustomLevel" nillable="false" type="tns:SSubscriberCustomLevel" />
+				</sequence>
+			</complexType>
+			<!--=====================ReturnVO====================== -->
+			<complexType name="SReturnVO">
+				<sequence>
+					<element name="resultCode" type="int" />
+					<element maxOccurs="unbounded" minOccurs="0" name="paras"
+						nillable="false" type="tns:SAVP" />
+					<element maxOccurs="unbounded" minOccurs="0" name="subscriber"
+						nillable="false" type="tns:SPccSubscriber" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscribedService" nillable="false" type="tns:SSubscribedService" />
+					<element maxOccurs="unbounded" minOccurs="0" name="subscriberQuota"
+						nillable="false" type="tns:SSubscriberQuota" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccount" nillable="false" type="tns:SSubscriberAccount" />
+					<element maxOccurs="unbounded" minOccurs="0" name="servicePackage"
+						nillable="false" type="tns:SServicePackage" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccumulation" nillable="false"
+						type="tns:SSubscriberAccumulation" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberAccumulationUsageInfo" nillable="false"
+						type="tns:SSubscriberAccumulationUsageInfo" />
+					<element maxOccurs="unbounded" minOccurs="0"
+						name="subscriberCustomLevel" nillable="false" type="tns:SSubscriberCustomLevel" />
+				</sequence>
+			</complexType>
+		</schema>
+	</types>
+	<message name="ScfPccSoapServiceEndpoint_addSubscriber">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_addSubscriberResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_authSubscriber">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_authSubscriberResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriber">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllService">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllServiceResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllQuota">
+		<part name="inPara" type="ns1:SInSubscriberQuotaParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllQuotaResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllInf">
+		<part name="inPara" type="ns1:SInSubscriberAllInfParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllInfResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberSpecQuota">
+		<part name="inPara" type="ns1:SInSubscriberQuotaParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberSpecQuotaResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAccount">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAccountResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllServicePackage">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message
+		name="ScfPccSoapServiceEndpoint_getSubscriberAllServicePackageResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_delSubscriber">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_delSubscriberResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeService">
+		<part name="inPara" type="ns1:SInSubscriptionParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeServiceResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAllServicePacket">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message
+		name="ScfPccSoapServiceEndpoint_getSubscriberAllServicePacketResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeServicePacket">
+		<part name="inPara" type="ns1:SInSubscriptionParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeServicePacketResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeServicePacket">
+		<part name="inPara" type="ns1:SInSubscriptionParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeServicePacketResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscribedServicePackage">
+		<part name="inPara" type="ns1:SInSubscriberServicePackageParaVO" />
+	</message>
+	<message
+		name="ScfPccSoapServiceEndpoint_updateSubscribedServicePackageResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeServicePackage">
+		<part name="inPara" type="ns1:SInSubscriberServicePackageParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeServicePackageResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeService">
+		<part name="inPara" type="ns1:SInSubscriptionParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeServiceResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeServicePackage">
+		<part name="inPara" type="ns1:SInSubscriberServicePackageParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeServicePackageResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubSubscription">
+		<part name="inPara" type="ns1:SInSubscriptionParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubSubscriptionResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriber">
+		<part name="inPara" type="ns1:SInSubscriberParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberAccount">
+		<part name="inPara" type="ns1:SInSubscriberAccountParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberAccountResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_rechargeSubscriberQuota">
+		<part name="inPara" type="ns1:SInSubscriberRechargedQuotaParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_rechargeSubscriberQuotaResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberQuota">
+		<part name="inPara" type="ns1:SInSubscriberQuotaParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberQuotaResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_rechargeSubscriberService">
+		<part name="inPara" type="ns1:SInSubscriberRechargedServiceParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_rechargeSubscriberServiceResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeAccumulation">
+		<part name="inPara" type="ns1:SInSubscriberAccumulationParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_subscribeAccumulationResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeAccumulation">
+		<part name="inPara" type="ns1:SInSubscriberAccumulationParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_unSubscribeAccumulationResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_clearAccumulation">
+		<part name="inPara" type="ns1:SInSubscriberClearAccumulationParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_clearAccumulationResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAccumulation">
+		<part name="inPara" type="ns1:SInSubscriberAccumulationParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberAccumulationResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_updateSubscriberCustomLevel">
+		<part name="inPara" type="ns1:SInSubscriberCustomLevelParaVO" />
+	</message>
+	<message
+		name="ScfPccSoapServiceEndpoint_updateSubscriberCustomLevelResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberCustomLevel">
+		<part name="inPara" type="ns1:SInSubscriberCustomLevelParaVO" />
+	</message>
+	<message name="ScfPccSoapServiceEndpoint_getSubscriberCustomLevelResponse">
+		<part name="result" type="ns1:SReturnVO" />
+	</message>
+	<portType name="ScfPccSoapServiceEndpoint">
+		<operation name="addSubscriber" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_addSubscriber" />
+			<output message="tns:ScfPccSoapServiceEndpoint_addSubscriberResponse" />
+		</operation>
+		<operation name="delSubscriber" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_delSubscriber" />
+			<output message="tns:ScfPccSoapServiceEndpoint_delSubscriberResponse" />
+		</operation>
+		<operation name="getSubscriber" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriber" />
+			<output message="tns:ScfPccSoapServiceEndpoint_getSubscriberResponse" />
+		</operation>
+		<operation name="getSubscriberAllService" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllService" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllServiceResponse" />
+		</operation>
+		<operation name="getSubscriberAllServicePackage"
+			parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllServicePackage" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllServicePackageResponse" />
+		</operation>
+		<operation name="getSubscriberAllQuota" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllQuota" />
+			<output message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllQuotaResponse" />
+		</operation>
+		<operation name="getSubscriberAllInf" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllInf" />
+			<output message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllInfResponse" />
+		</operation>
+		<operation name="getSubscriberSpecQuota" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberSpecQuota" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberSpecQuotaResponse" />
+		</operation>
+		<operation name="getSubscriberAccount" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAccount" />
+			<output message="tns:ScfPccSoapServiceEndpoint_getSubscriberAccountResponse" />
+		</operation>
+		<operation name="subscribeService" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_subscribeService" />
+			<output message="tns:ScfPccSoapServiceEndpoint_subscribeServiceResponse" />
+		</operation>
+		<!-- this interface is only added for compatible with RM9000 V300R002C02 
+			below by 00131893 -->
+		<operation name="getSubscriberAllServicePacket"
+			parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllServicePacket" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberAllServicePacketResponse" />
+		</operation>
+		<operation name="subscribeServicePacket" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_subscribeServicePacket" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_subscribeServicePacketResponse" />
+		</operation>
+		<operation name="unSubscribeServicePacket" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_unSubscribeServicePacket" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_unSubscribeServicePacketResponse" />
+		</operation>
+		<!-- this interface is only added for compatible with RM9000 V300R002C02 
+			above by 00131893 -->
+		<operation name="subscribeServicePackage" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_subscribeServicePackage" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_subscribeServicePackageResponse" />
+		</operation>
+		<operation name="unSubscribeService" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_unSubscribeService" />
+			<output message="tns:ScfPccSoapServiceEndpoint_unSubscribeServiceResponse" />
+		</operation>
+		<operation name="unSubscribeServicePackage" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_unSubscribeServicePackage" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_unSubscribeServicePackageResponse" />
+		</operation>
+		<operation name="updateSubSubscription" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubSubscription" />
+			<output message="tns:ScfPccSoapServiceEndpoint_updateSubSubscriptionResponse" />
+		</operation>
+		<operation name="updateSubscriber" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubscriber" />
+			<output message="tns:ScfPccSoapServiceEndpoint_updateSubscriberResponse" />
+		</operation>
+		<operation name="updateSubscriberAccount" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubscriberAccount" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_updateSubscriberAccountResponse" />
+		</operation>
+		<operation name="updateSubscribedServicePackage"
+			parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubscribedServicePackage" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_updateSubscribedServicePackageResponse" />
+		</operation>
+		<operation name="rechargeSubscriberQuota" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_rechargeSubscriberQuota" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_rechargeSubscriberQuotaResponse" />
+		</operation>
+		<operation name="updateSubscriberQuota" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubscriberQuota" />
+			<output message="tns:ScfPccSoapServiceEndpoint_updateSubscriberQuotaResponse" />
+		</operation>
+		<operation name="rechargeSubscriberService" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_rechargeSubscriberService" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_rechargeSubscriberServiceResponse" />
+		</operation>
+		<operation name="subscribeAccumulation" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_subscribeAccumulation" />
+			<output message="tns:ScfPccSoapServiceEndpoint_subscribeAccumulationResponse" />
+		</operation>
+		<operation name="unSubscribeAccumulation" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_unSubscribeAccumulation" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_unSubscribeAccumulationResponse" />
+		</operation>
+		<operation name="clearAccumulation" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_clearAccumulation" />
+			<output message="tns:ScfPccSoapServiceEndpoint_clearAccumulationResponse" />
+		</operation>
+		<operation name="getSubscriberAccumulation" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberAccumulation" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberAccumulationResponse" />
+		</operation>
+		<operation name="updateSubscriberCustomLevel"
+			parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_updateSubscriberCustomLevel" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_updateSubscriberCustomLevelResponse" />
+		</operation>
+		<operation name="getSubscriberCustomLevel" parameterOrder="inPara">
+			<input message="tns:ScfPccSoapServiceEndpoint_getSubscriberCustomLevel" />
+			<output
+				message="tns:ScfPccSoapServiceEndpoint_getSubscriberCustomLevelResponse" />
+		</operation>
+	</portType>
+	<binding name="ScfPccSoapServiceEndpointBinding" type="tns:ScfPccSoapServiceEndpoint">
+		<soap:binding style="rpc"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="addSubscriber">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="delSubscriber">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriber">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAllService">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAllServicePackage">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAllQuota">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAllInf">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberSpecQuota">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAccount">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="subscribeService">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<!-- this interface is only added for compatible with RM9000 V300R002C02 
+			below by 00131893 -->
+		<operation name="getSubscriberAllServicePacket">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="subscribeServicePacket">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="unSubscribeServicePacket">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<!-- this interface is only added for compatible with RM9000 V300R002C02 
+			above by 00131893 -->
+		<operation name="subscribeServicePackage">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="unSubscribeService">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="unSubscribeServicePackage">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubSubscription">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubscriber">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubscriberAccount">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubscribedServicePackage">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="rechargeSubscriberQuota">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubscriberQuota">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="rechargeSubscriberService">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="subscribeAccumulation">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="unSubscribeAccumulation">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="clearAccumulation">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberAccumulation">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="updateSubscriberCustomLevel">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+		<operation name="getSubscriberCustomLevel">
+			<soap:operation />
+			<input>
+				<soap:body use="literal" namespace="rm:soap" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="rm:soap" />
+			</output>
+		</operation>
+	</binding>
+	<service name="ScfMobileSoap">
+		<port name="ScfPccSoapServiceEndpointPort" binding="tns:ScfPccSoapServiceEndpointBinding">
+			<soap:address location="REPLACE_WITH_ACTUAL_URL" />
+		</port>
+	</service>
+</definitions>

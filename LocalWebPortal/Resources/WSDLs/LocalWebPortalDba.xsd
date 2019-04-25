@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/LocalWebPortalDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/LocalWebPortalDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="LocalWebPortalDbaInput" type="LocalWebPortalDbaInput"/>
+   <xs:complexType name="LocalWebPortalDbaInput">
+      <xs:sequence>
+         <xs:element name="cel_num" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="LocalWebPortalDbaOutputCollection" type="LocalWebPortalDbaOutputCollection"/>
+   <xs:complexType name="LocalWebPortalDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="LocalWebPortalDbaOutput" type="LocalWebPortalDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="LocalWebPortalDbaOutput">
+      <xs:sequence>
+         <xs:element name="PORT_NUM" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

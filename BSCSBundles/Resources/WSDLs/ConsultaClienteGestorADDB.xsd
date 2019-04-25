@@ -1,0 +1,29 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ConsultaClienteGestorADDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/ConsultaClienteGestorADDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="ConsultaClienteGestorADDBInput" type="ConsultaClienteGestorADDBInput"/>
+   <xs:complexType name="ConsultaClienteGestorADDBInput">
+      <xs:sequence>
+         <xs:element name="client_name" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="ConsultaClienteGestorADDBOutputCollection" type="ConsultaClienteGestorADDBOutputCollection"/>
+   <xs:complexType name="ConsultaClienteGestorADDBOutputCollection">
+      <xs:sequence>
+         <xs:element name="ConsultaClienteGestorADDBOutput" type="ConsultaClienteGestorADDBOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ConsultaClienteGestorADDBOutput">
+      <xs:sequence>
+         <xs:element name="SPCODE" type="xs:decimal" nillable="true"/>
+         <xs:element name="SNCODE" type="xs:string" nillable="true"/>
+         <xs:element name="BUNDLE_VALUE" type="xs:decimal" nillable="true"/>
+         <xs:element name="BUNDLE_UNIT" type="xs:string" nillable="true"/>
+         <xs:element name="BUNDLE_TYPE" type="xs:decimal" nillable="true"/>
+         <xs:element name="TEMPLATE_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="COD_TIPO_TRAFICO" type="xs:decimal" nillable="true"/>
+         <xs:element name="DES_BUNDLE_TYPE" type="xs:string" nillable="true"/>
+         <xs:element name="SV_DES" type="xs:string" nillable="true"/>
+         
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

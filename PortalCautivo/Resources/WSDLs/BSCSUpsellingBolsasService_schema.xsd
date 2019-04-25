@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com"
+	xmlns:tns="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="getUpsellingCompraBolsas" type="tns:getUpsellingCompraBolsas" />
+	<xs:element name="getUpsellingCompraBolsasResponse" type="tns:getUpsellingCompraBolsasResponse" />
+
+	<xs:complexType name="getUpsellingCompraBolsas">
+		<xs:sequence>
+			<xs:element name="nro_cel" type="xs:string" maxOccurs="1" />
+			<xs:element name="rate_plan" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="segment_prod" type="xs:string"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="client_name" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="traffic_type" type="xs:string" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="platform_act" type="xs:string" minOccurs="0"
+				maxOccurs="1" nillable="true" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getUpsellingCompraBolsasResponse">
+		<xs:sequence>
+			<xs:element name="bundleAmount" maxOccurs="1"
+				type="xs:string" />
+			<xs:element name="listaBundles" type="tns:listBundle"
+				maxOccurs="1" nillable="true" />
+			<xs:element name="errorCode" type="xs:long" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="errorDescription" maxOccurs="1" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="listBundle">
+		<xs:sequence>
+			<xs:element name="item_bundle" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="cod_prod" type="xs:string"
+							minOccurs="1" />
+						<xs:element name="cod_pcrf" type="xs:string"
+							minOccurs="1" />
+						<xs:element name="cod_bscs" type="xs:string"
+							minOccurs="1" />
+						<xs:element name="bundleName" type="xs:string"
+							minOccurs="1" />
+						<xs:element name="priority" type="xs:string" minOccurs="1" />
+						<xs:element name="trafic_type" type="xs:string" minOccurs="1" />
+						<xs:element name="platform_bundle" type="xs:string" minOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

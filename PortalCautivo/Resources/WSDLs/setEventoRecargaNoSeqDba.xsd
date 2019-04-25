@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/setEventoRecargaNoSeqDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/setEventoRecargaNoSeqDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="setEventoRecargaNoSeqDbaInput" type="setEventoRecargaNoSeqDbaInput"/>
+   <xs:complexType name="setEventoRecargaNoSeqDbaInput">
+      <xs:sequence>
+         <xs:element name="NUM_CEL" type="xs:string" nillable="true"/>
+         <xs:element name="MONTO" type="xs:string" nillable="true"/>
+         <xs:element name="CUSTOMER_ID" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

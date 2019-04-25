@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB/ConsultaInfoLineaCliente/ConsultaClienteGestorDB" name="ConsultaClienteGestorDB-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB/ConsultaInfoLineaCliente/ConsultaClienteGestorDB" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB/ConsultaInfoLineaCliente/ConsultaClienteGestorDB" location="ConsultaClienteGestorDB.wsdl"/>
+  <binding name="ConsultaClienteGestorDB_ptt-binding" type="tns:ConsultaClienteGestorDB_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="ConsultaClienteGestorDB">
+      <soap:operation soapAction="ConsultaClienteGestorDB"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ConsultaClienteGestorDB-service">
+    <port name="ConsultaClienteGestorDB-port" binding="tns:ConsultaClienteGestorDB_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,2106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="PortalCautivo/Resources/WSDLs/CaptivePortalService" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config"/>
+            <con:binding>
+                <con:name>CaptivePortalPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+        <con:pipeline type="request" name="PipelinePairNode1_request">
+            <con:stage name="IN_stage_NextelProdCatalog_business">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                    <con2:varNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_PRODUCT_CATALOG_PRC/" prefix="nex"/>
+                    <con3:variable name="outProCat" path="$outProCat" asChild="false">
+                        <con3:schema ref="PortalCautivo/Resources/WSDLs/PROVI_BOLS_NII_BSCS_PORTAL_CAUTIVO_PKG_NEXTEL_PRODUCT_CATALOG_PRC" element="OutputParameters"/>
+                    </con3:variable>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-7eec</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSProductoCatalogDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>ProductoCatalogDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>ProCatRequestBodyBS</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>ProCatResponseBodyBS</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="ProCatRequestBodyBS">
+                                <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-7eaf</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_ProductoCatalog"/>
+                                        <con2:param name="getNextelProductCatalog1">
+                                            <con2:path>$body/cap:getNextelProductCatalog</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response">
+            <con:stage name="Salida_NextelProdCatalog">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-7c4d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_ProductoCatalog"/>
+                                <con2:param name="outputParameters1">
+                                    <con2:path>$ProCatResponseBodyBS</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="ProCatRequestBodyBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7fae</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="ProCatResponseBodyBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7f91</con2:id>
+                    </con1:delete>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode2_request" errorHandler="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-7f54">
+            <con:stage name="EntradaNextQryHistProdVali">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7e8c</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryText>empty($body/cap:getNextQryHistProd/phone_number/text()) or $body/cap:getNextQryHistProd/phone_number/text() = ''</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7f8f</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Error: el numero de celular es un campo obligatorio.</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryText>empty($body/cap:getNextQryHistProd/qty_period/text()) or $body/cap:getNextQryHistProd/qty_period/text() = ''</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7f72</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Error: el parametro qty_period es un campo obligatorio.</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="IN_NextQryHistProd_business">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                    <con2:varNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXT_QRY_HIST_PROD_PRC/" prefix="next"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-7acf</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSNextQryHistProdDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>NextQryHistProdDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>NextQryHistProdRequestBS</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>NextQryHistProdResponseBS</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="NextQryHistProdRequestBS" contents-only="false">
+                                <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-7a97</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_NextQryHistProdDBA"/>
+                                        <con2:param name="getNextQryHistProd1">
+                                            <con2:path>$body/cap:getNextQryHistProd</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode2_response" errorHandler="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-7fca">
+            <con:stage name="salida_NextQryHistProd">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-4534154093352130343-31f82fb3.13cb9f95290.-786d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_NextQryHistProdDBA"/>
+                                <con2:param name="outputParameters1">
+                                    <con2:path>$NextQryHistProdResponseBS</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextQryHistProdResponseBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-75d8</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextQryHistProdRequestBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-75d7</con2:id>
+                    </con1:delete>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode3_request" errorHandler="_onErrorHandler-939576136247366974--345d7577.13cd4bdf4da.-6c2a">
+            <con:stage name="EntradaIsNextelUserValidate">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                    <con2:varNsDecl namespace="http://ws.validator.nextel.com.ar/" prefix="ws1"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="fecha-entrada">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7ac3</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>fn:current-dateTime()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="ErrorSalVal">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-6f12</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>''</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7d5c</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>data($body/cap:isNextelUserValidate/phone_number)</con2:leftPath>
+                                        <con2:rightPath>''</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:ifThenElse>
+                                    <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7d24</con2:id>
+                                    <con1:case>
+                                        <con1:condition>
+                                            <con2:xqueryConditionExpr>
+                                                <con2:compExpr operator="!=">
+                                                    <con2:leftPath>data($body/cap:isNextelUserValidate/rut)</con2:leftPath>
+                                                    <con2:rightPath>''</con2:rightPath>
+                                                </con2:compExpr>
+                                            </con2:xqueryConditionExpr>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con1:wsCallout>
+                                                <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7ebd</con2:id>
+                                                <con1:service xsi:type="ref:ProxyRef" ref="CurrentAccount/LDAPAccountValidator/Proxy Services/PSLDAPValidator" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con1:operation>validateLDAPAccount</con1:operation>
+                                                <con1:request>
+                                                    <con1:body>validateLDAPAccountReq</con1:body>
+                                                </con1:request>
+                                                <con1:response>
+                                                    <con1:body>validateLDAPAccountResp</con1:body>
+                                                </con1:response>
+                                                <con1:requestTransform>
+                                                    <con1:assign varName="validateLDAPAccountReq">
+                                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7dc7</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText><![CDATA[<ws:validateLDAPAccount xmlns:ws="http://ws.validator.nextel.com.ar/">
+    <user>{data($body/cap:isNextelUserValidate/rut)}</user>
+    <password>{data($body/cap:isNextelUserValidate/passwd)}</password>
+</ws:validateLDAPAccount>]]></con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                </con1:requestTransform>
+                                                <con1:responseTransform>
+                                                    <con1:replace varName="validateLDAPAccountRespuesta">
+                                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7d8a</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText>$Body/ws1:validateLDAPAccountResponse</con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:replace>
+                                                    <con1:assign varName="ErrorSalVal">
+                                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7d89</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText>data($ResponseBusiness/return/code)</con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                    <con1:assign varName="ResponseBusiness">
+                                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7d88</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText>$validateLDAPAccountResp</con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                </con1:responseTransform>
+                                            </con1:wsCallout>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:default>
+                                        <con1:Error>
+                                            <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7c2d</con2:id>
+                                            <con1:errCode>1</con1:errCode>
+                                            <con1:message>No existen parámetros de búsqueda o son inválidos</con1:message>
+                                        </con1:Error>
+                                    </con1:default>
+                                </con1:ifThenElse>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:wsCallout>
+                                <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7c9c</con2:id>
+                                <con1:service xsi:type="ref:ProxyRef" ref="CurrentAccount/LDAPAccountValidator/Proxy Services/PSLDAPValidator" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con1:operation>validateLDAPAccount</con1:operation>
+                                <con1:request>
+                                    <con1:body>validateLDAPAccountReq</con1:body>
+                                </con1:request>
+                                <con1:response>
+                                    <con1:body>validateLDAPAccountResp</con1:body>
+                                </con1:response>
+                                <con1:requestTransform>
+                                    <con1:assign varName="validateLDAPAccountReq">
+                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7c48</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText><![CDATA[<ws:validateLDAPAccount xmlns:ws="http://ws.validator.nextel.com.ar/">
+    <user>{data($body/cap:isNextelUserValidate/phone_number)}</user>
+    <password>{data($body/cap:isNextelUserValidate/passwd)}</password>
+</ws:validateLDAPAccount>]]></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con1:requestTransform>
+                                <con1:responseTransform>
+                                    <con1:replace varName="validateLDAPAccountRespuesta">
+                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7bb8</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText>$Body/ws1:validateLDAPAccountResponse</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:replace>
+                                    <con1:assign varName="ErrorSalVal">
+                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7bb7</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText>data($ResponseBusiness/return/code)</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                    <con1:assign varName="ResponseBusiness">
+                                        <con2:id>_ActionId-3678287010142222911--2fd68e98.13e7b8dee1a.-7bb6</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText>$validateLDAPAccountResp</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con1:responseTransform>
+                            </con1:wsCallout>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode3_response" errorHandler="_onErrorHandler-939576136247366974--345d7577.13cd4bdf4da.-7b01">
+            <con:stage name="SalidaIsNextelUserValidate">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="fecha-salida">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-72ee</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>fn:current-dateTime()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="salida_IsNextelUserValidate">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7171</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>$ErrorSalVal</con2:leftPath>
+                                        <con2:rightPath>'0'</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body">
+                                    <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7170</con2:id>
+                                    <con1:location>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con1:location>
+                                    <con1:expr>
+                                        <con2:xqueryText><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cap:isNextelUserValidateResponse>
+         <error_code>0</error_code>
+         <err_description>OK</err_description>
+      </cap:isNextelUserValidateResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:Error>
+                                <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-716f</con2:id>
+                                <con1:errCode>1</con1:errCode>
+                                <con1:message>Usuario Inválido</con1:message>
+                            </con1:Error>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-939576136247366974--345d7577.13cd4bdf4da.-7b01">
+            <con:stage name="stage_error_UserVal">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyError">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-77dc</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:isNextelUserValidateResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:isNextelUserValidateResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-7768</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-76f8</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-939576136247366974--345d7577.13cd4bdf4da.-6c2a">
+            <con:stage name="stage_error_UserVal1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyError">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-6bb7</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:isNextelUserValidateResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:isNextelUserValidateResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-6bb6</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-939576136247366974--345d7577.13cd4bdf4da.-6bb5</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode4_request" errorHandler="_onErrorHandler-135025756120750627--22bc6a62.13cf8ece25c.-7a54">
+            <con:stage name="IN_NextelCustomerInfo_BS">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-7d13</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSNextelCustomerInfoDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>NextelCustomerInfoDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>NextelCusInfoRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>NextelCusInfoResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="NextelCusInfoRequest">
+                                <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-7ca3</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_NextelCustomerInfo"/>
+                                        <con2:param name="getNextelCustomerInfo1">
+                                            <con2:path>$body/cap:getNextelCustomerInfo</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode4_response" errorHandler="_onErrorHandler-135025756120750627--22bc6a62.13cf8ece25c.-7ba9">
+            <con:stage name="OUT_NextelCustomerInfo_PS">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-7baa</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_NextelCustomerInfo"/>
+                                <con2:param name="outputParameters1">
+                                    <con2:path>$NextelCusInfoResponse</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextelCusInfoRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-759f</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCusInfoResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7582</con2:id>
+                    </con1:delete>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-135025756120750627--22bc6a62.13cf8ece25c.-7ba9">
+            <con:stage name="ErrorCusInfo">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-7a8b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:getNextelCustomerInfoResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getNextelCustomerInfoResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextelCusInfoRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7541</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCusInfoResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7540</con2:id>
+                    </con1:delete>
+                    <con2:reply>
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-7b18</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-135025756120750627--22bc6a62.13cf8ece25c.-7a54">
+            <con:stage name="ErrorCusInfoRq">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-79e0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:getNextelCustomerInfoResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getNextelCustomerInfoResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextelCusInfoRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7562</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCusInfoResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7561</con2:id>
+                    </con1:delete>
+                    <con2:reply>
+                        <con2:id>_ActionId-135025756120750627--22bc6a62.13cf8ece25c.-79df</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-7fca">
+            <con:stage name="Out_Error_NextQryHistProd">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7f56</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:getNextQryHistProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <listProduct/>
+  <error_code>1</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getNextQryHistProdResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextQryHistProdResponseBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7dd0</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextQryHistProdRequestBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7dcf</con2:id>
+                    </con1:delete>
+                    <con2:reply>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7f55</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-7f54">
+            <con:stage name="In_Error_NextQryHistProd1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7ee0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:getNextQryHistProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <listProduct/>
+  <error_code>1</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getNextQryHistProdResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="NextQryHistProdResponseBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7df2</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextQryHistProdRequestBS">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7df0</con2:id>
+                    </con1:delete>
+                    <con2:reply>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7edf</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode53_request" errorHandler="_onErrorHandler-4600709138787045482-e6af15d.13d1bcc6bd3.-743a">
+            <con:stage name="In_stg_LCVariable">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="LC_SQ_TRANSACTION_CODE_BUY">
+                        <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7230</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>''</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_valida">
+                <con:context>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_CUSTOMER_INFO_PRC/" prefix="ns1"/>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-77a5</con2:id>
+                        <con1:service ref="PortalCautivo/Proxy Services/LCPSValidaPortal" xsi:type="con:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>setNextelActiveProduct</con1:operation>
+                        <con1:request>
+                            <con1:body>validaRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>validaResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="validaRequest">
+                                <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7736</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_ValidaActivaProd"/>
+                                        <con2:param name="setNextelActiveProduct1">
+                                            <con2:path>$body/cap:setNextelActiveProduct</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="LCErrorOCC">
+                                <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-730a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$validaResponse/error_code/text()</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7309</con2:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="!=">
+                                                <con4:leftPath>$LCErrorOCC</con4:leftPath>
+                                                <con4:rightPath>'0'</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7c57</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{$LCErrorOCC}</error_code>
+ <err_description>{data($validaResponse/err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7cb0</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaRequest">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7c93</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaResponse">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7c76</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LCErrorOCC">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7c59</con2:id>
+                                        </con1:delete>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7306</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                            <con4:wsCallout xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6ce9</con1:id>
+                                <con4:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSNextelCustomerInfoDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con4:operation>NextelCustomerInfoDBA</con4:operation>
+                                <con4:request>
+                                    <con4:body>NextelCustomerInfoReq</con4:body>
+                                </con4:request>
+                                <con4:response>
+                                    <con4:body>NextelCustomerInfoResp</con4:body>
+                                </con4:response>
+                                <con4:requestTransform>
+                                    <con4:replace varName="NextelCustomerInfoReq">
+                                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6cef</con1:id>
+                                        <con4:expr>
+                                            <con1:xqueryTransform>
+                                                <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_ConsultaCustomerInfoXsegmento"/>
+                                                <con1:param name="p_PHONE_NUMBER1">
+                                                    <con1:path>$body/cap:setNextelActiveProduct/phone_number/text()</con1:path>
+                                                </con1:param>
+                                            </con1:xqueryTransform>
+                                        </con4:expr>
+                                    </con4:replace>
+                                </con4:requestTransform>
+                                <con4:responseTransform>
+                                    <con4:assign varName="SegmentoCliente">
+                                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6cee</con1:id>
+                                        <con4:expr>
+                                            <con1:xqueryText>upper-case($NextelCustomerInfoResp/ns1:SV_SEGMENT_CLIENT/text())</con1:xqueryText>
+                                        </con4:expr>
+                                    </con4:assign>
+                                    <con4:ifThenElse>
+                                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6ced</con1:id>
+                                        <con4:case>
+                                            <con4:condition>
+                                                <con1:xqueryText>$SegmentoCliente = 'PREPAID'</con1:xqueryText>
+                                            </con4:condition>
+                                            <con4:actions>
+                                                <con4:replace varName="body" contents-only="true">
+                                                    <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6cec</con1:id>
+                                                    <con4:location>
+                                                        <con1:xpathText>./cap:setNextelActiveProduct/metodo_pago</con1:xpathText>
+                                                    </con4:location>
+                                                    <con4:expr>
+                                                        <con1:xqueryText>'SALDO_PREPAGO'</con1:xqueryText>
+                                                    </con4:expr>
+                                                </con4:replace>
+                                            </con4:actions>
+                                        </con4:case>
+                                        <con4:case>
+                                            <con4:condition>
+                                                <con1:xqueryText>$SegmentoCliente = 'POSTPAID'</con1:xqueryText>
+                                            </con4:condition>
+                                            <con4:actions>
+                                                <con4:replace varName="body" contents-only="true">
+                                                    <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6ceb</con1:id>
+                                                    <con4:location>
+                                                        <con1:xpathText>./cap:setNextelActiveProduct/metodo_pago</con1:xpathText>
+                                                    </con4:location>
+                                                    <con4:expr>
+                                                        <con1:xqueryText>'CONTRA_FACTURA'</con1:xqueryText>
+                                                    </con4:expr>
+                                                </con4:replace>
+                                            </con4:actions>
+                                        </con4:case>
+                                        <con4:default/>
+                                    </con4:ifThenElse>
+                                    <con4:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6cea</con1:id>
+                                        <con4:location>
+                                            <con1:xpathText>./cap:setNextelActiveProduct/segment_prod</con1:xpathText>
+                                        </con4:location>
+                                        <con4:expr>
+                                            <con1:xqueryText>$SegmentoCliente</con1:xqueryText>
+                                        </con4:expr>
+                                    </con4:replace>
+                                </con4:responseTransform>
+                            </con4:wsCallout>
+                            <con1:replace varName="typeRequest">
+                                <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7515</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_ValidaActivaProd"/>
+                                        <con2:param name="metodo_pago">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/metodo_pago)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="customer_id">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/customer_id)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="transaction_code">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/transaction_code)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="rate_plan">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/rate_plan)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="phone_number">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/phone_number)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="client_type">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/client_type)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="date">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/date)</con2:path>
+                                        </con2:param>
+                                        <con2:param name="setNextelActiveProductResponse1">
+                                            <con2:path>$validaResponse</con2:path>
+                                        </con2:param>
+                                        <con2:param name="pago_aplicado">
+                                            <con2:path>data($body/cap:setNextelActiveProduct/pago_aplicado)</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                            <con1:ifThenElse>
+                                <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f3c</con2:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con2:xqueryText>$SegmentoCliente != $validaResponse/segment_prod/text()</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f3b</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>1051</error_code>
+ <err_description>{concat('El segmento de la bolsa no corresponde al que tiene asociado el cliente. Detalle: Segmento bolsa = ' ,$validaResponse/segment_prod/text(),', Segmento cliente = ', $SegmentoCliente,', ID_PROD = ',$body/cap:setNextelActiveProduct/id_prod/text()) 
+ 
+ }</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f3a</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f39</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f38</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LCErrorOCC">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f37</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f36</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f35</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoReq">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f34</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="typeRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f33</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="SegmentoCliente">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f32</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoResp">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f31</con2:id>
+                                        </con1:delete>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7f30</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_FlujoPrepaidICC">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e62</con2:id>
+                        <con1:service ref="PortalCautivo/Proxy Services/LCPSPrepaidNewBucketICC" xsi:type="con:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>setNextelActiveProduct</con1:operation>
+                        <con1:request>
+                            <con1:body>DatosRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>DatosResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="DatosRequest">
+                                <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e6d</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$typeRequest</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e6b</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($DatosResponse/transaction_code)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LCErrorOCC">
+                                <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e6a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$DatosResponse/error_code/text()</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e69</con2:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con2:xqueryText>$LCErrorOCC = '0'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e64</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <transaction_code>{$LC_SQ_TRANSACTION_CODE_BUY}</transaction_code>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7b91</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaRequest">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7b8f</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaResponse">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7b8d</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LCErrorOCC">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7b8b</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosResponse">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7889</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosRequest">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-788b</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoReq">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7893</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="typeRequest">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-788d</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="SegmentoCliente">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-788f</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoResp">
+                                            <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7891</con2:id>
+                                        </con1:delete>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-6e63</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con2:xqueryText>$LCErrorOCC != '0101'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-712a</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{$LCErrorOCC}</error_code>
+ <err_description>{data($DatosResponse/err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:delete varName="validaRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7070</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LCErrorOCC">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6fc4</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-701a</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-70c6</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoResp">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-711e</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="SegmentoCliente">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7120</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="typeRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7122</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoReq">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7124</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7126</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7128</con2:id>
+                                        </con1:delete>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-711c</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_SetDato">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6fa0</con2:id>
+                        <con1:service ref="PortalCautivo/Proxy Services/LCPSTraficTypeDatos" xsi:type="con:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>setNextelActiveProduct</con1:operation>
+                        <con1:request>
+                            <con1:body>DatosRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>DatosResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="DatosRequest">
+                                <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6fb1</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$typeRequest</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6fb0</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($DatosResponse/transaction_code)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LCErrorOCC">
+                                <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6faf</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($DatosResponse/error_code)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6fae</con2:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con2:xqueryText>$LCErrorOCC = '0101'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:Error>
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ed8</con2:id>
+                                            <con1:errCode>1</con1:errCode>
+                                            <con1:message>Error: La ejecución no coincide con ningún flujo conocido.</con1:message>
+                                        </con1:Error>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con2:xqueryText>$LCErrorOCC != '0'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6eca</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{$LCErrorOCC}</error_code>
+ <err_description>{data($DatosResponse/err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:delete varName="NextelCustomerInfoResp">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec9</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="SegmentoCliente">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec8</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="typeRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec7</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="NextelCustomerInfoReq">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec6</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec5</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec4</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LCErrorOCC">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec3</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec2</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="validaRequest">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec1</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ec0</con2:id>
+                                        </con1:delete>
+                                        <con1:delete varName="DatosResponse">
+                                            <con2:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ebf</con2:id>
+                                        </con1:delete>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6ebe</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode53_response" errorHandler="_onErrorHandler-4600709138787045482-e6af15d.13d1bcc6bd3.-73c4">
+            <con:stage name="Out_stg_Activa">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-78b5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <transaction_code>{$LC_SQ_TRANSACTION_CODE_BUY}</transaction_code>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-761c</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-761b</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-761a</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="LCErrorOCC">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7619</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7618</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7617</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoReq">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7616</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="typeRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7615</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="SegmentoCliente">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7614</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoResp">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7613</con2:id>
+                    </con1:delete>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode8_request" errorHandler="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-76e4">
+            <con:stage name="In_stg_getCatalogoProductoINT">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a2</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSCatalogoProductosINTDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CatalogoProductosINTDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>CatProINTRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>CatProINTResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:ifThenElse>
+                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a8</con2:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="!=">
+                                                <con4:leftPath>data($body/cap:setNextDeactiveProd/id_prod)</con4:leftPath>
+                                                <con4:rightPath>''</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:ifThenElse>
+                                            <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a7</con2:id>
+                                            <con1:case>
+                                                <con1:condition>
+                                                    <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                        <con4:compExpr operator="!=">
+                                                            <con4:leftPath>data($body/cap:setNextDeactiveProd/client_name)</con4:leftPath>
+                                                            <con4:rightPath>''</con4:rightPath>
+                                                        </con4:compExpr>
+                                                    </con4:xqueryConditionExpr>
+                                                </con1:condition>
+                                                <con1:actions>
+                                                    <con1:assign varName="CatProINTRequest">
+                                                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a6</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText><![CDATA[<get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/">
+    <!--Optional:-->
+    <get:P_ID_PCRF_PROD>{data($body/cap:setNextDeactiveProd/id_pcrf_prod)}</get:P_ID_PCRF_PROD>
+    <!--Optional:-->
+    <get:P_ID_BSCS_PROD>{data($body/cap:setNextDeactiveProd/id_bscs_prod)}</get:P_ID_BSCS_PROD>
+    <!--Optional:-->
+    <get:P_ID_PROD>{data($body/cap:setNextDeactiveProd/id_prod)}</get:P_ID_PROD>
+    <!--Optional:-->
+    <get:P_MONTO_RECARGA>0</get:P_MONTO_RECARGA>
+    <!--Optional:-->
+    <get:P_CLIENT_NAME>{data($body/cap:setNextDeactiveProd/client_name)}</get:P_CLIENT_NAME>
+</get:InputParameters>]]></con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                </con1:actions>
+                                            </con1:case>
+                                            <con1:default>
+                                                <con1:Error>
+                                                    <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a5</con2:id>
+                                                    <con1:errCode>1</con1:errCode>
+                                                    <con1:message>Error campo cliente name es requerido.</con1:message>
+                                                </con1:Error>
+                                            </con1:default>
+                                        </con1:ifThenElse>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default>
+                                    <con1:Error>
+                                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a4</con2:id>
+                                        <con1:errCode>1</con1:errCode>
+                                        <con1:message>Error código producto es obligatorio.</con1:message>
+                                    </con1:Error>
+                                </con1:default>
+                            </con1:ifThenElse>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="CatProINTResp">
+                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-77a3</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$CatProINTResponse</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_LOCAL_VARIABLES1">
+                <con:context>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="SN_ID_PCRF_PROD">
+                        <con2:id>_ActionId-6656305074591427653-4f8f6179.1401689372b.-7eea</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_ID_PCRF_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_ID_BSCS_PROD">
+                        <con2:id>_ActionId-6656305074591427653-4f8f6179.1401689372b.-7f3e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_ID_BSCS_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_ID_PROD">
+                        <con2:id>_ActionId-6656305074591427653-4f8f6179.1401689372b.-7f92</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_ID_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LC_SQ_TRANSACTION_CODE_BUY">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-70f0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>''</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_TRAFFIC_TYPE ">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7023</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SV_TRAFFIC_TYPE)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_COD_RETORNO">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7722</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_COD_RETORNO)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_TEMPLATE_ID">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7720</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_TEMPLATE_ID)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_ID_BSCS_PROD">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-73c7</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_ID_BSCS_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SN_SPCODE">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7400</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_SPCODE)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_CHANNEL_ACT">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-771f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SV_CHANNEL_ACT)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_CATEGORY_PROD">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-771e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SN_TARIFF_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_CATEGORY_PROD ">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7006</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SV_CATEGORY_PROD)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_CHANNEL_ACT ">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-6fb2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SV_CHANNEL_ACT)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_PLATFORM_ACT ">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-6f79</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>data($CatProINTResp/get:SV_PLATFORM_ACT)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SV_SEGMENT_PROD">
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-6f40</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>fn:upper-case(data($CatProINTResp/get:SV_SEGMENT_PROD))</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="IN_NextDeactiveProd">
+                <con:context>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/" prefix="get"/>
+                    <con2:userNsDecl namespace="http://bolsas.bscs.bundle.ws.ncl.nii.com" prefix="wr"/>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-7551</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>$SV_TRAFFIC_TYPE</con2:leftPath>
+                                        <con2:rightPath>'DATOS'</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:ifThenElse>
+                                    <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-6fd8</con2:id>
+                                    <con1:case>
+                                        <con1:condition>
+                                            <con2:xqueryConditionExpr>
+                                                <con2:boolExpr operator="and">
+                                                    <con2:boolExpr operator="or">
+                                                        <con2:boolExpr operator="and">
+                                                            <con2:boolExpr operator="or">
+                                                                <con2:compExpr operator="=">
+                                                                    <con2:leftPath>$SV_CATEGORY_PROD</con2:leftPath>
+                                                                    <con2:rightPath>'BOLSA'</con2:rightPath>
+                                                                </con2:compExpr>
+                                                                <con2:compExpr operator="=">
+                                                                    <con2:leftPath>$SV_CATEGORY_PROD</con2:leftPath>
+                                                                    <con2:rightPath>'SERVICIO'</con2:rightPath>
+                                                                </con2:compExpr>
+                                                            </con2:boolExpr>
+                                                            <con2:compExpr operator="=">
+                                                                <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                                <con2:rightPath>'PORTAL'</con2:rightPath>
+                                                            </con2:compExpr>
+                                                        </con2:boolExpr>
+                                                        <con2:compExpr operator="=">
+                                                            <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                            <con2:rightPath>'APPBOLSAS'</con2:rightPath>
+                                                        </con2:compExpr>
+                                                    </con2:boolExpr>
+                                                    <con2:compExpr operator="=">
+                                                        <con2:leftPath>$SV_PLATFORM_ACT</con2:leftPath>
+                                                        <con2:rightPath>'PCRF'</con2:rightPath>
+                                                    </con2:compExpr>
+                                                </con2:boolExpr>
+                                            </con2:xqueryConditionExpr>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con4:wsCallout xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7ab6</con1:id>
+                                                <con4:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BStimsiBymsisdnDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con4:operation>timsiBymsisdnDBA</con4:operation>
+                                                <con4:request>
+                                                    <con4:body>timsiBymsisdnDBA</con4:body>
+                                                </con4:request>
+                                                <con4:response>
+                                                    <con4:body>timsiBymsisdnDBAResponse</con4:body>
+                                                </con4:response>
+                                                <con4:requestTransform>
+                                                    <con4:assign varName="timsiBymsisdnDBA">
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7ab9</con1:id>
+                                                        <con4:expr>
+                                                            <con1:xqueryText>&lt;get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/">
+    &lt;!--Optional:-->
+    &lt;get:I_MSISDN>{data($body/cap:setNextDeactiveProd/phone_number)}&lt;/get:I_MSISDN>
+&lt;/get:InputParameters></con1:xqueryText>
+                                                        </con4:expr>
+                                                    </con4:assign>
+                                                </con4:requestTransform>
+                                                <con4:responseTransform>
+                                                    <con4:assign varName="timsiBymsisdnResp">
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7ab8</con1:id>
+                                                        <con4:expr>
+                                                            <con1:xqueryText>$timsiBymsisdnDBAResponse</con1:xqueryText>
+                                                        </con4:expr>
+                                                    </con4:assign>
+                                                    <con1:assign varName="IMSI" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                        <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-78aa</con5:id>
+                                                        <con1:expr>
+                                                            <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">data($timsiBymsisdnResp/get:V_IMSI)</con5:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                    <con4:assign varName="Cod_ErrorIMSI">
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7ab7</con1:id>
+                                                        <con4:expr>
+                                                            <con1:xqueryText>data($timsiBymsisdnResp/get:V_RESULT)</con1:xqueryText>
+                                                        </con4:expr>
+                                                    </con4:assign>
+                                                    <con4:ifThenElse>
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7a5e</con1:id>
+                                                        <con4:case>
+                                                            <con4:condition>
+                                                                <con1:xqueryConditionExpr>
+                                                                    <con1:compExpr operator="!=">
+                                                                        <con1:leftPath>$Cod_ErrorIMSI</con1:leftPath>
+                                                                        <con1:rightPath>'0'</con1:rightPath>
+                                                                    </con1:compExpr>
+                                                                </con1:xqueryConditionExpr>
+                                                            </con4:condition>
+                                                            <con4:actions>
+                                                                <con1:Error xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-79d0</con5:id>
+                                                                    <con1:errCode>1</con1:errCode>
+                                                                    <con1:message>Error: No se puede obtener el IMSI.</con1:message>
+                                                                </con1:Error>
+                                                            </con4:actions>
+                                                        </con4:case>
+                                                        <con4:default/>
+                                                    </con4:ifThenElse>
+                                                </con4:responseTransform>
+                                            </con4:wsCallout>
+                                            <con1:wsCallout>
+                                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-78e3</con2:id>
+                                                <con1:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con1:operation>unSubscribeService</con1:operation>
+                                                <con1:request>
+                                                    <con1:param>
+                                                        <con1:name>inPara</con1:name>
+                                                        <con1:variable>unSubscribeServiceReq</con1:variable>
+                                                    </con1:param>
+                                                </con1:request>
+                                                <con1:response>
+                                                    <con1:param>
+                                                        <con1:name>result</con1:name>
+                                                        <con1:variable>unSubscribeServiceResponse</con1:variable>
+                                                    </con1:param>
+                                                </con1:response>
+                                                <con1:requestTransform>
+                                                    <con1:assign varName="unSubscribeServiceReq">
+                                                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-78e5</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{$IMSI}</value>
+	   </attribute>
+	</subscriber>
+	<!--Zero or more repetitions:-->
+	<subscribedService>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>SRVNAME</key>
+		  <value>{data($body/cap:setNextDeactiveProd/id_pcrf_prod)}</value>
+	   </attribute>
+	</subscribedService>
+ </inPara>]]></con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                </con1:requestTransform>
+                                                <con1:responseTransform>
+                                                    <con1:assign varName="unSubscribServResponse">
+                                                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-78e4</con2:id>
+                                                        <con1:expr>
+                                                            <con2:xqueryText>$unSubscribeServiceResponse</con2:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                </con1:responseTransform>
+                                            </con1:wsCallout>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:default>
+                                        <con1:Error>
+                                            <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-6f88</con2:id>
+                                            <con1:errCode>1</con1:errCode>
+                                            <con1:message>No comple todas las condiciones de desactivación de datos.</con1:message>
+                                        </con1:Error>
+                                    </con1:default>
+                                </con1:ifThenElse>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:boolExpr operator="or">
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>$SV_TRAFFIC_TYPE</con2:leftPath>
+                                            <con2:rightPath>'VOZ'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>$SV_TRAFFIC_TYPE</con2:leftPath>
+                                            <con2:rightPath>'SMS'</con2:rightPath>
+                                        </con2:compExpr>
+                                    </con2:boolExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:ifThenElse>
+                                    <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-6c87</con2:id>
+                                    <con1:case>
+                                        <con1:condition>
+                                            <con2:xqueryConditionExpr>
+                                                <con2:boolExpr operator="or">
+                                                    <con2:boolExpr operator="and">
+                                                        <con2:boolExpr operator="or">
+                                                            <con2:compExpr operator="=">
+                                                                <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                                <con2:rightPath>'GESTOR'</con2:rightPath>
+                                                            </con2:compExpr>
+                                                            <con2:compExpr operator="=">
+                                                                <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                                <con2:rightPath>'APPBOLSAS'</con2:rightPath>
+                                                            </con2:compExpr>
+                                                        </con2:boolExpr>
+                                                        <con2:compExpr operator="=">
+                                                            <con2:leftPath>$SV_PLATFORM_ACT</con2:leftPath>
+                                                            <con2:rightPath>'ICC'</con2:rightPath>
+                                                        </con2:compExpr>
+                                                        <con2:compExpr operator="=">
+                                                            <con2:leftPath>$SV_SEGMENT_PROD</con2:leftPath>
+                                                            <con2:rightPath>'PREPAID'</con2:rightPath>
+                                                        </con2:compExpr>
+                                                    </con2:boolExpr>
+                                                    <con2:compExpr operator="=">
+                                                        <con2:leftPath>$SV_SEGMENT_PROD</con2:leftPath>
+                                                        <con2:rightPath>'HYBRID'</con2:rightPath>
+                                                    </con2:compExpr>
+                                                </con2:boolExpr>
+                                            </con2:xqueryConditionExpr>
+                                        </con1:condition>
+                                        <con1:actions/>
+                                    </con1:case>
+                                    <con1:case>
+                                        <con1:condition>
+                                            <con2:xqueryConditionExpr>
+                                                <con2:boolExpr operator="and">
+                                                    <con2:boolExpr operator="or">
+                                                        <con2:compExpr operator="=">
+                                                            <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                            <con2:rightPath>'GESTOR'</con2:rightPath>
+                                                        </con2:compExpr>
+                                                        <con2:compExpr operator="=">
+                                                            <con2:leftPath>$SV_CHANNEL_ACT</con2:leftPath>
+                                                            <con2:rightPath>'APPBOLSAS'</con2:rightPath>
+                                                        </con2:compExpr>
+                                                    </con2:boolExpr>
+                                                    <con2:compExpr operator="=">
+                                                        <con2:leftPath>$SV_PLATFORM_ACT</con2:leftPath>
+                                                        <con2:rightPath>'BSCS'</con2:rightPath>
+                                                    </con2:compExpr>
+                                                    <con2:compExpr operator="=">
+                                                        <con2:leftPath>$SV_SEGMENT_PROD</con2:leftPath>
+                                                        <con2:rightPath>'POSTPAID'</con2:rightPath>
+                                                    </con2:compExpr>
+                                                </con2:boolExpr>
+                                            </con2:xqueryConditionExpr>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con4:wsCallout xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7439</con1:id>
+                                                <con4:service xsi:type="ref:ProxyRef" ref="BSCSBundles/Proxy Services/PSBSCSBundleService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                <con4:operation>setWriteBSCSBundle</con4:operation>
+                                                <con4:request>
+                                                    <con4:body>setWriteBSCSBundle</con4:body>
+                                                </con4:request>
+                                                <con4:response>
+                                                    <con4:body>setWriteBSCSBundleResponse</con4:body>
+                                                </con4:response>
+                                                <con4:requestTransform>
+                                                    <con1:assign varName="setWriteBSCSBundle" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                        <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7441</con5:id>
+                                                        <con1:expr>
+                                                            <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config"><![CDATA[<bol:setWriteBSCSBundle xmlns:bol="http://bolsas.bscs.bundle.ws.ncl.nii.com">
+    <enterpriseID>{data($body/cap:setNextDeactiveProd/customer_id)}</enterpriseID>
+    <client_Name>{data($body/cap:setNextDeactiveProd/client_name)}</client_Name>
+    <packages>
+        <item_pkg>
+            <spcode>{$SN_SPCODE}</spcode>
+            <services>
+                <item_srv>
+                    <sncode>{$SN_ID_BSCS_PROD}</sncode>
+                    <templ_Id>{$SN_TEMPLATE_ID}</templ_Id>
+                    <bundles>
+                        <item_bls>
+                            <bundle_value></bundle_value>
+                            <bundle_unit></bundle_unit>
+                            <bundle_type></bundle_type>
+                        </item_bls>
+                    </bundles>
+                </item_srv>
+            </services>
+        </item_pkg>
+    </packages>
+    <operationFlag>2</operationFlag>
+</bol:setWriteBSCSBundle>]]></con5:xqueryText>
+                                                        </con1:expr>
+                                                    </con1:assign>
+                                                    <con3:log>
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7440</con1:id>
+                                                        <con3:logLevel>info</con3:logLevel>
+                                                        <con3:expr>
+                                                            <con1:xqueryText>$setWriteBSCSBundle</con1:xqueryText>
+                                                        </con3:expr>
+                                                    </con3:log>
+                                                </con4:requestTransform>
+                                                <con4:responseTransform>
+                                                    <con4:assign varName="WriteBSCSBundleResp">
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743f</con1:id>
+                                                        <con4:expr>
+                                                            <con1:xqueryText>$setWriteBSCSBundleResponse</con1:xqueryText>
+                                                        </con4:expr>
+                                                    </con4:assign>
+                                                    <con4:assign varName="LC_errorCodeWrite">
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743e</con1:id>
+                                                        <con4:expr>
+                                                            <con1:xqueryText>data($WriteBSCSBundleResp/errorCode)</con1:xqueryText>
+                                                        </con4:expr>
+                                                    </con4:assign>
+                                                    <con4:ifThenElse>
+                                                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743d</con1:id>
+                                                        <con4:case>
+                                                            <con4:condition>
+                                                                <con1:xqueryConditionExpr>
+                                                                    <con1:compExpr operator="!=">
+                                                                        <con1:leftPath>$LC_errorCodeWrite</con1:leftPath>
+                                                                        <con1:rightPath>'0'</con1:rightPath>
+                                                                    </con1:compExpr>
+                                                                </con1:xqueryConditionExpr>
+                                                            </con4:condition>
+                                                            <con4:actions>
+                                                                <con1:assign varName="bodyas" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743c</con5:id>
+                                                                    <con1:expr>
+                                                                        <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextDeactiveProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$LC_errorCodeWrite}</error_code>
+   <err_description>{data($WriteBSCSBundleResp/errorDescription)}</err_description>
+</cap:setNextDeactiveProdResponse>]]></con5:xqueryText>
+                                                                    </con1:expr>
+                                                                </con1:assign>
+                                                                <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743b</con5:id>
+                                                                    <con1:expr>
+                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$bodyas</con4:xqueryText>
+                                                                    </con1:expr>
+                                                                </con1:replace>
+                                                                <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                    <con4:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-743a</con4:id>
+                                                                </con4:reply>
+                                                            </con4:actions>
+                                                        </con4:case>
+                                                        <con4:default/>
+                                                    </con4:ifThenElse>
+                                                </con4:responseTransform>
+                                            </con4:wsCallout>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:default>
+                                        <con1:Error>
+                                            <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-6c86</con2:id>
+                                            <con1:errCode>1</con1:errCode>
+                                            <con1:message>No comple todas las condiciones de desactivación de voz o sms.</con1:message>
+                                        </con1:Error>
+                                    </con1:default>
+                                </con1:ifThenElse>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="RegistraProductoDesactivo">
+                <con:context>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ValidaTransDescDBA" prefix="val"/>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXT_DEACTIVE_PROD_PRC/" prefix="nexd"/>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7128</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSNextDeactiveProdDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>NextDeactiveProdDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>NextDesProRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>NextDesProResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="NextDesProRequest">
+                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-712a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<next:InputParameters xmlns:next="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXT_DEACTIVE_PROD_PRC/">
+    <!--Optional  No se utiliza en el package phone_number :-->
+    <next:P_CLIENT_NAME>{data($body/cap:setNextDeactiveProd/client_name)}</next:P_CLIENT_NAME>
+    <!--Optional  No se utiliza en el package phone_number :-->
+    <next:P_PHONE_NUMBER>{data($body/cap:setNextDeactiveProd/phone_number)}</next:P_PHONE_NUMBER>
+    <!--Optional  No se utiliza en el package customer_id:-->
+    <next:P_CUSTOMER_ID>{data($body/cap:setNextDeactiveProd/customer_id)}</next:P_CUSTOMER_ID>
+    <!--Optional:-->
+    <next:P_ID_PROD>{$SN_ID_PROD}</next:P_ID_PROD>
+    <!--Optional:-->
+    <next:P_ID_PCRF_PROD>{$SN_ID_PCRF_PROD}</next:P_ID_PCRF_PROD>
+    <!--Optional:-->
+    <next:P_ID_BSCS_PROD>{$SN_ID_BSCS_PROD}</next:P_ID_BSCS_PROD>
+    <!--Optional No se utiliza en el package date_buy:-->
+    <next:P_DATE_BUY>{data($body/cap:setNextDeactiveProd/date_buy)}</next:P_DATE_BUY>
+    <!--Optional:-->
+    <next:P_REASON>{data($body/cap:setNextDeactiveProd/reason)}</next:P_REASON>
+    <!--Optional :-->
+    <next:P_DATE_DEACTIVATE>{data($body/cap:setNextDeactiveProd/date_deactivate)}</next:P_DATE_DEACTIVATE>
+    <!--Optional:-->
+    <next:P_BILLCYCLE_LIMIT>{data($body/cap:setNextDeactiveProd/billcycle_limit)}</next:P_BILLCYCLE_LIMIT>
+    <!--Optional:-->
+    <next:P_TRANSACTION_CODE_BUY></next:P_TRANSACTION_CODE_BUY>
+</next:InputParameters>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="NextDesProResBS">
+                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7129</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$NextDesProResponse</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LC_SQ_TRANSACTION_CODE_BUY">
+                                <con2:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-70d3</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($NextDesProResBS/nexd:SN_NUM_EVENTO)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                    <con4:wsCallout xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-712e</con1:id>
+                        <con4:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSValidaTransDescDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>ValidaTransDescDBA</con4:operation>
+                        <con4:request>
+                            <con4:body>validaTransaccioDBA</con4:body>
+                        </con4:request>
+                        <con4:response>
+                            <con4:body>validaTransaccioDBAResponse</con4:body>
+                        </con4:response>
+                        <con4:requestTransform>
+                            <con4:assign varName="validaTransaccioDBA">
+                                <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7135</con1:id>
+                                <con4:expr>
+                                    <con1:xqueryText>&lt;val:ValidaTransDescDBAInput xmlns:val="http://xmlns.oracle.com/pcbpel/adapter/db/ValidaTransDescDBA">
+    &lt;val:P_TRANSACTION_CODE_BUY>{$LC_SQ_TRANSACTION_CODE_BUY}&lt;/val:P_TRANSACTION_CODE_BUY>
+&lt;/val:ValidaTransDescDBAInput></con1:xqueryText>
+                                </con4:expr>
+                            </con4:assign>
+                        </con4:requestTransform>
+                        <con4:responseTransform>
+                            <con4:assign varName="validaTransResp">
+                                <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7134</con1:id>
+                                <con4:expr>
+                                    <con1:xqueryText>$validaTransaccioDBAResponse</con1:xqueryText>
+                                </con4:expr>
+                            </con4:assign>
+                            <con4:assign varName="LCValCount">
+                                <con1:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7133</con1:id>
+                                <con4:expr>
+                                    <con1:xqueryText>data($validaTransResp/val:LCount)</con1:xqueryText>
+                                </con4:expr>
+                            </con4:assign>
+                            <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7132</con5:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="=">
+                                                <con4:leftPath>$LCValCount</con4:leftPath>
+                                                <con4:rightPath>'0'</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:assign varName="bodyas">
+                                            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7131</con5:id>
+                                            <con1:expr>
+                                                <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextDeactiveProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>0</error_code>
+   <err_description>Error: No se registro la transaccion.</err_description>
+</cap:setNextDeactiveProdResponse>]]></con5:xqueryText>
+                                            </con1:expr>
+                                        </con1:assign>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7130</con5:id>
+                                            <con1:expr>
+                                                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$bodyas</con4:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-7061473206436240289-1ca811e4.13fd381832a.-712f</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con4:responseTransform>
+                    </con4:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode8_response" errorHandler="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-76e3">
+            <con:stage name="OUT_setNextDeactiveProd_PP1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-1204562949028727753--296c67c9.13f8b5a2d91.-7dda</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{data($unSubscribServResponse/resultCode)}</error_code>
+ <err_description>{fn:concat('Key: ',data($unSubscribServResponse/paras/key),' - Value: ' ,data($unSubscribServResponse/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-1204562949028727753--296c67c9.13f8b5a2d91.-7dd9</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-76e4">
+            <con:stage name="IN_error_NextDeactiveProd">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-766f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextDeactiveProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:setNextDeactiveProdResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-766e</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-3348098671624923993-658daad9.13cfd31978e.-76e3">
+            <con:stage name="OUT_error_NextDeactiveProd">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-75c4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextDeactiveProdResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:setNextDeactiveProdResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-3348098671624923993-658daad9.13cfd31978e.-75c3</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4600709138787045482-e6af15d.13d1bcc6bd3.-743a">
+            <con:stage name="In_stg_error_Activa">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7964</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$fault/ctx:errorCode/text()}</error_code>
+   <err_description>{$fault/ctx:reason/text()}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-767a</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7679</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7678</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="LCErrorOCC">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7677</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7676</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7675</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoReq">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7674</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="typeRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7673</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="SegmentoCliente">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7672</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoResp">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7671</con2:id>
+                    </con1:delete>
+                    <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7963</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4600709138787045482-e6af15d.13d1bcc6bd3.-73c4">
+            <con:stage name="Out_stg_error_Activa">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7928</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$fault/ctx:errorCode/text()}</error_code>
+   <err_description>{$fault/ctx:reason/text()}</err_description>
+</cap:setNextelActiveProductResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:delete varName="LC_SQ_TRANSACTION_CODE_BUY">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-764b</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-764a</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="validaResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7649</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="LCErrorOCC">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7648</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosResponse">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7647</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="DatosRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7646</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoReq">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7645</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="typeRequest">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7644</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="SegmentoCliente">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7643</con2:id>
+                    </con1:delete>
+                    <con1:delete varName="NextelCustomerInfoResp">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7642</con2:id>
+                    </con1:delete>
+                    <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-2837155348922716967--705da7d1.13fce8b1733.-7927</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="getNextelCustomerInfo_request">
+            <con:stage name="getDefault">
+                <con:context>
+                    <con2:varNsDecl namespace="http://ussd.operaciones.wom.ws.ncl.com" prefix="ussd"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7d20</con2:id>
+                        <con3:expr>
+                            <con2:xqueryText><![CDATA[<cap:getNextelCustomerInfoResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>ERR-1111</error_code>
+   <err_description>Ingreso un tipo de operación invalida, favor comunicarse con el administrador.</err_description>
+</cap:getNextelCustomerInfoResponse>]]></con2:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con4:log xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7d1f</con2:id>
+                        <con4:logLevel>error</con4:logLevel>
+                        <con4:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con4:expr>
+                        <con4:message>-----|||Response PSBSCSPortalCautivoService|||-----</con4:message>
+                    </con4:log>
+                    <con2:reply isError="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id>_ActionId-1877010751685907386-20030f62.1614350dd56.-7d1e</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="getNextelCustomerInfo_response"/>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="getNextelProductCatalog">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelineGetNextelProductCatalog">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getNextQryHistProd">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelineGetNextQryHistProd">
+                                <con:request>PipelinePairNode2_request</con:request>
+                                <con:response>PipelinePairNode2_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="setNextelActiveProduct">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelineSetNextelActiveProduct">
+                                <con:request>PipelinePairNode53_request</con:request>
+                                <con:response>PipelinePairNode53_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="setNextDeactiveProd">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode8">
+                                <con:request>PipelinePairNode8_request</con:request>
+                                <con:response>PipelinePairNode8_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="isNextelUserValidate">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode3">
+                                <con:request>PipelinePairNode3_request</con:request>
+                                <con:response>PipelinePairNode3_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getNextelCustomerInfo">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelineGetNextelCustomerInfo">
+                                <con:request>PipelinePairNode4_request</con:request>
+                                <con:response>PipelinePairNode4_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow>
+                            <con:pipeline-node name="getNextelCustomerInfo">
+                                <con:request>getNextelCustomerInfo_request</con:request>
+                                <con:response>getNextelCustomerInfo_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

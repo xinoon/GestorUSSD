@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/validaTransaccioDBA" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/validaTransaccioDBA" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="validaTransaccioDBAInput" type="validaTransaccioDBAInput"/>
+   <xs:complexType name="validaTransaccioDBAInput">
+      <xs:sequence>
+         <xs:element name="transaction_code" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="validaTransaccioDBAOutput" type="validaTransaccioDBAOutput"/>
+   <xs:complexType name="validaTransaccioDBAOutput">
+      <xs:sequence>
+         <xs:element name="valCount" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

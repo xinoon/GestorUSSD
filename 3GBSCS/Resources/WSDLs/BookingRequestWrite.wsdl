@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:intf="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 21, 2010 (11:39:14 CEST)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <complexType name="BaseSOIBean">
+    <sequence/>
+   </complexType>
+   <complexType name="MoneyBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="amount" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="currency" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DateTimeBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="date" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DateBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="date" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="BookingRequestWriteBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="actionCode" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="adjIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="amount" nillable="true" type="impl:MoneyBean"/>
+       <element minOccurs="0" name="amountRel" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="basePartId" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="billFormat" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="billingAccountCode" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="billingAccountId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="callDate" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="chargePartId" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="csId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="devicenum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="dirnum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="eventCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="feeClass" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="feeType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="fuNum" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="fuPackId" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="fuPackIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="fuPkelsq" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="fuPkver" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="fuVer" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="glcode" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="glcodedisc" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="glcodemin" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="ivId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="jobcost" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="jobcostPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="jobcostdisc" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="jobcostdiscPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="jobcostmin" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="jobcostminPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="numPeriods" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="periodicityType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="recordId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="recordSubId" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="remark" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="rpVscode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="rpcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="rpcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="rsCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="seqno" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="servCode" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="servType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="servcatCode" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="spcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="spcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="validFrom" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="validTo" nillable="true" type="impl:DateTimeBean"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="key" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="SessionChangeBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="values" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="BookingRequestWrite" type="tns1:com.lhs.ws.beans.v2_NII_1.BookingRequestWriteBeanServiceIn"/>
+   <complexType name="BookingRequestWriteBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="occId" nillable="true" type="xsd:long"/>
+		<element minOccurs="0" name="error_code" nillable="true" type="xsd:string"/>
+		<element minOccurs="0" name="err_description" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="BookingRequestWriteReturn" type="impl:BookingRequestWriteBeanOut"/>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://www.lhsgroup.com/ws_v2_NII_1"/>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.BookingRequestWriteBeanServiceIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="input" nillable="true" type="impl:BookingRequestWriteBeanIn"/>
+       <element minOccurs="0" name="sessionChange" nillable="true" type="impl:SessionChangeBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="executeResponse">
+
+      <wsdl:part element="impl:BookingRequestWriteReturn" name="BookingRequestWriteReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRequest">
+
+      <wsdl:part element="impl:BookingRequestWrite" name="BookingRequestWrite"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BookingRequestWriteService">
+
+      <wsdl:operation name="execute" parameterOrder="BookingRequestWrite">
+
+         <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+         <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BookingRequestWriteServiceSoapBinding" type="impl:BookingRequestWriteService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BookingRequestWriteService">
+
+      <wsdl:port binding="impl:BookingRequestWriteServiceSoapBinding" name="BookingRequestWriteService">
+
+         <wsdlsoap:address location="http://10.101.241.42:11137/ws_v2_NII_1/services/BookingRequestWrite"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

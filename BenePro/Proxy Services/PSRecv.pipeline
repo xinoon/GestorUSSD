@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:description/>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con1:wsdl ref="BenePro/Resources/WSDLs/Recv" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>RecvPortBinding</con:name>
+                <con:namespace>http://recv.ws.srv.promo.wom.smartdici/</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router errorHandler="_onErrorHandler-6839734061465600346-22e6d537.155279cf8ea.-7f96" xmlns:ser="http://www.bea.com/wli/sb/services">
+        <con:pipeline name="_onErrorHandler-6839734061465600346-22e6d537.155279cf8ea.-7f96" type="error">
+            <con:stage name="stage1">
+                <con:actions>
+                    <con1:reply isError="true" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-6839734061465600346-22e6d537.155279cf8ea.-7f95</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:route-node name="RouteTo_BSRecv">
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <conid1:id xmlns:conid1="http://www.bea.com/wli/sb/stages/config">_ActionId-6839734061465600346-22e6d537.155279cf8ea.-7f98</conid1:id>
+                        <con1:service ref="BenePro/Business  Services/BSRecv" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

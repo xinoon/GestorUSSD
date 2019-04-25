@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ISCUSTOMERLEVEL10SERVICE/ISCUSTOMERLEVEL10SERVICE/IsCustomerLevel10Service" name="IsCustomerLevel10Service-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ISCUSTOMERLEVEL10SERVICE/ISCUSTOMERLEVEL10SERVICE/IsCustomerLevel10Service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ISCUSTOMERLEVEL10SERVICE/ISCUSTOMERLEVEL10SERVICE/IsCustomerLevel10Service" location="IsCustomerLevel10Service.wsdl"/>
+  <binding name="IsCustomerLevel10Service_ptt-binding" type="tns:IsCustomerLevel10Service_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="IsCustomerLevel10Service">
+      <soap:operation soapAction="IsCustomerLevel10Service"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="IsCustomerLevel10Service-service">
+    <port name="IsCustomerLevel10Service-port" binding="tns:IsCustomerLevel10Service_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,1391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:ns2="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ns1="http://web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+<wsdl:documentation>AccountManager</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:ns="http://implementation.web.api.icc.services.osp.in.alcatel.com">
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WSHighLevelAPIException">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="WSHighLevelAPIException" nillable="true" type="ns1:WSHighLevelAPIException"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="create">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:Account"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="get">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="accountIdType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:Account"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:Account"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="accountIdType" type="xs:int"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:Account"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="list">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="listResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ns2:Account"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="acc" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="accLabel" nillable="true" type="ns2:AccountLabel"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="adjustAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="adjustInfo" nillable="true" type="ns2:AdjustAccountParam"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="adjustAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deposit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberLineId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="topUpInfo" nillable="true" type="ns2:TopUpAccountParam"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="depositResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="depositExplicit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberLineId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="depositInfo" nillable="true" type="ns2:ExplicitTopUpParam"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="depositExplicitResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="enableDisablePostCallNotif">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="enable" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="enableDisablePostCallNotifResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastCreate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastCreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastModify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="accountIdType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastModifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="account" nillable="true" type="ns2:Account"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyRoamingLimit">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="roamingLimit" nillable="true" type="ns2:RoamingLimit"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyRoamingLimitResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="purgeAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountIdentifier" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="purgeAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllTheBuckets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllTheBucketsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllTheCounters">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="ns2:AccountIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllTheCountersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="adjust">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="identifierLogin" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="balance" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="adjustResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="remove">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="accountIdType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllBuckets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllBucketsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllCounters">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="accountId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeAllCountersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="help">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="attributeName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="helpResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ax21="http://web.api.icc.services.osp.in.alcatel.com/xsd">
+      <xs:complexType name="WSHighLevelAPIException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:int"/>
+          <xs:element minOccurs="0" name="correlationIdentifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notification" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ticket" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ax22="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd">
+      <xs:complexType name="Account">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="accountProfileRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="activityBeginDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="activityEndDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="admStatusBlocked" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusExhausted" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusInitSelDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusNoMoreCredit" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusPeriodicFee" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusPinBlocked" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusPwBlocked" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="admStatusScratchCardSuspended" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="balance" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="balanceVATVolume" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="beginDeactivity2" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="beginInactivity2" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="beginNoCreditDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="billingCycleSynchroDate" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="buckets" nillable="true" type="ax22:Bucket"/>
+          <xs:element minOccurs="0" name="businessAccountNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="cardNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="comOffAssignDate" nillable="true" type="xs:dateTime"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="counters" nillable="true" type="ax22:Counter"/>
+          <xs:element minOccurs="0" name="creationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="credusgCurrentCycle" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="credusgLastCycle" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="cycleStatus" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="deactive1TopUpFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="deactivity2FirstWarningDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="deactivity2SecondWarningDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="deactivityEndDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="defSubscriber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ecnFilter" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="firstCallBonusDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="firstCallDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="firstCallFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="fnfInternational" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="fnfOffNet" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="fnfOnNet" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="globalBadPassword" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="globalBadReload" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="globalMaxbadPin" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="guifield" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="historyCounter" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="identifierLogin" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="inactive1CallsFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="inactive2CallsFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="inactive2FirstWarningDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="inactive2SecondWarningDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="inactivePeriodEnd" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="information1" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="information2" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="initialQuantity" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="language" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastActicityDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastBonusDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastCreditReloadDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastCreditReloadValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastCreditUpdateDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastDepositDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastDepositNominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastDepositTopUp" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastFeeUpdate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastHistoryModificationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastModificationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastRefundDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastScratchCardNominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastScratchCardRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="location" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="lscepoolRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="lstEmergencyDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="mainBalanceAllRefill" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="mainBalanceUnusgCurrentCycle" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="mainBalanceUnusgLastCycle" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="marketIndication" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="msid" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="msidType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nActivityEnd" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nBucketValidity" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nCreditBundle" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nDeactivity1End" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nInactivity1End" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nInactivityEnd" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nLowCredit" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nLsceGrant" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nLsceTopup" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nMainBalanceRecurrence" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nNotifUSer" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="nPromoToolStartEnd" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nTopup" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nXDaysBeforePromoEnd" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nXDaysBeforeSupervisionEnd" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nbBadPasswordAttempt" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nbBadPinAttempt" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nbBadReloadAttempt" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nbBonusRefill" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="nbDirectRefill" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="neifBarringFAX" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="neifBarringGPRS" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="neifBarringSMS" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="neifBarringTC" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="neifHlrBarring" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="nextDateDiscount" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="nextDateFee" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="nextResetDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="nextattr_date" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="nextper_date" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="nmAllRefill" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="noVATFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="no_modif_credit" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="notifMainBalanceDelayed" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="operatorAccountFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="pinNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="prepaidFlag" nillable="true" type="xs:boolean"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="quotas" nillable="true" type="ax22:Quota"/>
+          <xs:element minOccurs="0" name="rbEndDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="rbNbRefill" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="scNbRefill" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="sepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="sharedAccountFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="spareInt1" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="spareInt2" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="spareInt3" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="spareInt4" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="spareInt5" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="spareLong1" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="spareString1" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="spareString2" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="spareString3" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="staticFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="syncDate1" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="threshold1" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="threshold2" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="threshold3" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="threshold4" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="threshold5" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="timeZoneRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="totalBonusNominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalBundleUsedUnits" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalCreditLoss" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalCreditLost" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalCreditLostOnBundle" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalRefillAmount" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalUsedUnits" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="validityPeriodBegin" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="validityPeriodEnd" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="voiceMailNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="warningExhaustionDone" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLimActPerDone1" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLimActPerDone2" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLimInactPerDone1" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLimInactPerDone2" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLowCreditDone1" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLowCreditDone2" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLowCreditDone3" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="warningLowCreditDone4" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="welcomeDone" nillable="true" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Bucket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="creationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="initialCost" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="initialQuantity" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastCreditReloadDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="limitDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="remainingUnits" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="rowIdentifier" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="usageLabelRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="validity" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="validityWarning1Done" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="validityWarning2Done" nillable="true" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Counter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="balanceLabelName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="bundleName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="community" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="currentValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="datePeriod1" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="datePeriod2" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="multiCount" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="periodicDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="previousValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberIdentifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="usageRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="usageType" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Quota">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="accountIdentifierLogin" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="balanceQuotas" nillable="true" type="ax22:BalanceQuota"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="quotaProfileRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="quotaRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberIdentifier" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BalanceQuota">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="lastResetDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="quotaConsumed" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="quotaNotificationRepeatFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="quotaSurcharge" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="quotaWarning1Done" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="quotaWarning2Done" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="quotaWarning3Done" nillable="true" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdditionalParameters">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chargingCommand" nillable="true" type="ax22:ChargingCommand"/>
+          <xs:element minOccurs="0" name="dateType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="depth" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="extCorrelationIdentifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notificationToUns" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ticketsToTe" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ChargingCommand">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="arenaFields" nillable="true" type="ax22:ArenaField"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dateOfEvent" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="event" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="identifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="identifierType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="notificationsToUns" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="quantity1" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="quantity2" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="quantity3" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArenaField">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AccountIdentifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="accountId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="accountIdentifierType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubscriberIdentifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="communityId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberLineId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberLineIdType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="validityDate" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AccountLabel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="accountIdentifierLogin" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="community" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="location" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="reSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberIdentifier" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReturnInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="extra1" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notifications" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ticket" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdjustAccountParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="balance" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TopUpAccountParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="topUpProfileName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ExplicitTopUpParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activityPeriodDuration" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="activityPeriodExtension" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="loadAlgorithm" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="mainBalance" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="nominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="periodicTopUpFlag" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="topUpBuckets" nillable="true" type="ax22:TopUpBucketParam"/>
+          <xs:element minOccurs="0" name="usagemn" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="wayFlag" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TopUpBucketParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activityPeriod" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="nominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="quantity" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="usageLabelRef" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RoamingLimit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="currentPeriodOnly" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="roamingLimit" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="zoneId" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="modifyRequest">
+    <wsdl:part name="parameters" element="ns0:modify">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyRoamingLimitResponse">
+    <wsdl:part name="parameters" element="ns0:modifyRoamingLimitResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="helpRequest">
+    <wsdl:part name="parameters" element="ns0:help">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listRequest">
+    <wsdl:part name="parameters" element="ns0:list">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="depositRequest">
+    <wsdl:part name="parameters" element="ns0:deposit">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountResponse">
+    <wsdl:part name="parameters" element="ns0:getAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyAccountRequest">
+    <wsdl:part name="parameters" element="ns0:modifyAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastModifyRequest">
+    <wsdl:part name="parameters" element="ns0:fastModify">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addAccountRequest">
+    <wsdl:part name="parameters" element="ns0:addAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyResponse">
+    <wsdl:part name="parameters" element="ns0:modifyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllTheBucketsRequest">
+    <wsdl:part name="parameters" element="ns0:removeAllTheBuckets">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listResponse">
+    <wsdl:part name="parameters" element="ns0:listResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllBucketsRequest">
+    <wsdl:part name="parameters" element="ns0:removeAllBuckets">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WSHighLevelAPIException">
+    <wsdl:part name="parameters" element="ns0:WSHighLevelAPIException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountRequest">
+    <wsdl:part name="parameters" element="ns0:getAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adjustAccountResponse">
+    <wsdl:part name="parameters" element="ns0:adjustAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastModifyResponse">
+    <wsdl:part name="parameters" element="ns0:fastModifyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllCountersResponse">
+    <wsdl:part name="parameters" element="ns0:removeAllCountersResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purgeAccountRequest">
+    <wsdl:part name="parameters" element="ns0:purgeAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllTheBucketsResponse">
+    <wsdl:part name="parameters" element="ns0:removeAllTheBucketsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addAccountResponse">
+    <wsdl:part name="parameters" element="ns0:addAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adjustRequest">
+    <wsdl:part name="parameters" element="ns0:adjust">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="depositExplicitRequest">
+    <wsdl:part name="parameters" element="ns0:depositExplicit">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllTheCountersRequest">
+    <wsdl:part name="parameters" element="ns0:removeAllTheCounters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableDisablePostCallNotifResponse">
+    <wsdl:part name="parameters" element="ns0:enableDisablePostCallNotifResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyRoamingLimitRequest">
+    <wsdl:part name="parameters" element="ns0:modifyRoamingLimit">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="helpResponse">
+    <wsdl:part name="parameters" element="ns0:helpResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResponse">
+    <wsdl:part name="parameters" element="ns0:getResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="depositResponse">
+    <wsdl:part name="parameters" element="ns0:depositResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyAccountResponse">
+    <wsdl:part name="parameters" element="ns0:modifyAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adjustResponse">
+    <wsdl:part name="parameters" element="ns0:adjustResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastCreateRequest">
+    <wsdl:part name="parameters" element="ns0:fastCreate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRequest">
+    <wsdl:part name="parameters" element="ns0:get">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adjustAccountRequest">
+    <wsdl:part name="parameters" element="ns0:adjustAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createResponse">
+    <wsdl:part name="parameters" element="ns0:createResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastCreateResponse">
+    <wsdl:part name="parameters" element="ns0:fastCreateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createRequest">
+    <wsdl:part name="parameters" element="ns0:create">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAccountRequest">
+    <wsdl:part name="parameters" element="ns0:removeAccount">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllTheCountersResponse">
+    <wsdl:part name="parameters" element="ns0:removeAllTheCountersResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllBucketsResponse">
+    <wsdl:part name="parameters" element="ns0:removeAllBucketsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purgeAccountResponse">
+    <wsdl:part name="parameters" element="ns0:purgeAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeResponse">
+    <wsdl:part name="parameters" element="ns0:removeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="depositExplicitResponse">
+    <wsdl:part name="parameters" element="ns0:depositExplicitResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeRequest">
+    <wsdl:part name="parameters" element="ns0:remove">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllCountersRequest">
+    <wsdl:part name="parameters" element="ns0:removeAllCounters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableDisablePostCallNotifRequest">
+    <wsdl:part name="parameters" element="ns0:enableDisablePostCallNotif">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAccountResponse">
+    <wsdl:part name="parameters" element="ns0:removeAccountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AccountManagerPortType">
+    <wsdl:operation name="removeAllCounters">
+      <wsdl:input message="ns0:removeAllCountersRequest" wsaw:Action="urn:removeAllCounters">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeAllCountersResponse" wsaw:Action="urn:removeAllCountersResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeAllCountersWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="fastModify">
+      <wsdl:input message="ns0:fastModifyRequest" wsaw:Action="urn:fastModify">
+    </wsdl:input>
+      <wsdl:output message="ns0:fastModifyResponse" wsaw:Action="urn:fastModifyResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:fastModifyWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="remove">
+      <wsdl:input message="ns0:removeRequest" wsaw:Action="urn:remove">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeResponse" wsaw:Action="urn:removeResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <wsdl:input message="ns0:getRequest" wsaw:Action="urn:get">
+    </wsdl:input>
+      <wsdl:output message="ns0:getResponse" wsaw:Action="urn:getResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:getWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deposit">
+      <wsdl:input message="ns0:depositRequest" wsaw:Action="urn:deposit">
+    </wsdl:input>
+      <wsdl:output message="ns0:depositResponse" wsaw:Action="urn:depositResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:depositWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllTheBuckets">
+      <wsdl:input message="ns0:removeAllTheBucketsRequest" wsaw:Action="urn:removeAllTheBuckets">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeAllTheBucketsResponse" wsaw:Action="urn:removeAllTheBucketsResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeAllTheBucketsWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAccount">
+      <wsdl:input message="ns0:getAccountRequest" wsaw:Action="urn:getAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:getAccountResponse" wsaw:Action="urn:getAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:getAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modify">
+      <wsdl:input message="ns0:modifyRequest" wsaw:Action="urn:modify">
+    </wsdl:input>
+      <wsdl:output message="ns0:modifyResponse" wsaw:Action="urn:modifyResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:modifyWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="list">
+      <wsdl:input message="ns0:listRequest" wsaw:Action="urn:list">
+    </wsdl:input>
+      <wsdl:output message="ns0:listResponse" wsaw:Action="urn:listResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:listWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableDisablePostCallNotif">
+      <wsdl:input message="ns0:enableDisablePostCallNotifRequest" wsaw:Action="urn:enableDisablePostCallNotif">
+    </wsdl:input>
+      <wsdl:output message="ns0:enableDisablePostCallNotifResponse" wsaw:Action="urn:enableDisablePostCallNotifResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:enableDisablePostCallNotifWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <wsdl:input message="ns0:createRequest" wsaw:Action="urn:create">
+    </wsdl:input>
+      <wsdl:output message="ns0:createResponse" wsaw:Action="urn:createResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:createWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAccount">
+      <wsdl:input message="ns0:removeAccountRequest" wsaw:Action="urn:removeAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeAccountResponse" wsaw:Action="urn:removeAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="help">
+      <wsdl:input message="ns0:helpRequest" wsaw:Action="urn:help">
+    </wsdl:input>
+      <wsdl:output message="ns0:helpResponse" wsaw:Action="urn:helpResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:helpWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyRoamingLimit">
+      <wsdl:input message="ns0:modifyRoamingLimitRequest" wsaw:Action="urn:modifyRoamingLimit">
+    </wsdl:input>
+      <wsdl:output message="ns0:modifyRoamingLimitResponse" wsaw:Action="urn:modifyRoamingLimitResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:modifyRoamingLimitWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="depositExplicit">
+      <wsdl:input message="ns0:depositExplicitRequest" wsaw:Action="urn:depositExplicit">
+    </wsdl:input>
+      <wsdl:output message="ns0:depositExplicitResponse" wsaw:Action="urn:depositExplicitResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:depositExplicitWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyAccount">
+      <wsdl:input message="ns0:modifyAccountRequest" wsaw:Action="urn:modifyAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:modifyAccountResponse" wsaw:Action="urn:modifyAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:modifyAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllBuckets">
+      <wsdl:input message="ns0:removeAllBucketsRequest" wsaw:Action="urn:removeAllBuckets">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeAllBucketsResponse" wsaw:Action="urn:removeAllBucketsResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeAllBucketsWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="purgeAccount">
+      <wsdl:input message="ns0:purgeAccountRequest" wsaw:Action="urn:purgeAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:purgeAccountResponse" wsaw:Action="urn:purgeAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:purgeAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="adjustAccount">
+      <wsdl:input message="ns0:adjustAccountRequest" wsaw:Action="urn:adjustAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:adjustAccountResponse" wsaw:Action="urn:adjustAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:adjustAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="fastCreate">
+      <wsdl:input message="ns0:fastCreateRequest" wsaw:Action="urn:fastCreate">
+    </wsdl:input>
+      <wsdl:output message="ns0:fastCreateResponse" wsaw:Action="urn:fastCreateResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:fastCreateWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllTheCounters">
+      <wsdl:input message="ns0:removeAllTheCountersRequest" wsaw:Action="urn:removeAllTheCounters">
+    </wsdl:input>
+      <wsdl:output message="ns0:removeAllTheCountersResponse" wsaw:Action="urn:removeAllTheCountersResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:removeAllTheCountersWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addAccount">
+      <wsdl:input message="ns0:addAccountRequest" wsaw:Action="urn:addAccount">
+    </wsdl:input>
+      <wsdl:output message="ns0:addAccountResponse" wsaw:Action="urn:addAccountResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:addAccountWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="adjust">
+      <wsdl:input message="ns0:adjustRequest" wsaw:Action="urn:adjust">
+    </wsdl:input>
+      <wsdl:output message="ns0:adjustResponse" wsaw:Action="urn:adjustResponse">
+    </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException" message="ns0:WSHighLevelAPIException" wsaw:Action="urn:adjustWSHighLevelAPIException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountManagerSOAP11Binding" type="ns0:AccountManagerPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="removeAllCounters">
+      <soap:operation soapAction="urn:removeAllCounters" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="fastModify">
+      <soap:operation soapAction="urn:fastModify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="remove">
+      <soap:operation soapAction="urn:remove" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <soap:operation soapAction="urn:get" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deposit">
+      <soap:operation soapAction="urn:deposit" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllTheBuckets">
+      <soap:operation soapAction="urn:removeAllTheBuckets" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAccount">
+      <soap:operation soapAction="urn:getAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modify">
+      <soap:operation soapAction="urn:modify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="list">
+      <soap:operation soapAction="urn:list" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableDisablePostCallNotif">
+      <soap:operation soapAction="urn:enableDisablePostCallNotif" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <soap:operation soapAction="urn:create" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAccount">
+      <soap:operation soapAction="urn:removeAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="help">
+      <soap:operation soapAction="urn:help" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyRoamingLimit">
+      <soap:operation soapAction="urn:modifyRoamingLimit" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="depositExplicit">
+      <soap:operation soapAction="urn:depositExplicit" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyAccount">
+      <soap:operation soapAction="urn:modifyAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllBuckets">
+      <soap:operation soapAction="urn:removeAllBuckets" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="purgeAccount">
+      <soap:operation soapAction="urn:purgeAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="adjustAccount">
+      <soap:operation soapAction="urn:adjustAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="fastCreate">
+      <soap:operation soapAction="urn:fastCreate" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllTheCounters">
+      <soap:operation soapAction="urn:removeAllTheCounters" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addAccount">
+      <soap:operation soapAction="urn:addAccount" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="adjust">
+      <soap:operation soapAction="urn:adjust" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault name="WSHighLevelAPIException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountManager">
+    <wsdl:port name="AccountManagerSOAP11port_http" binding="ns0:AccountManagerSOAP11Binding">
+      <soap:address location="http://LW7RAGUERO:8080/getAccount"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

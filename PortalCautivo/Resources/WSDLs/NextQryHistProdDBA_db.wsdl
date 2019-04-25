@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextQryHistProdDBA" name="NextQryHistProdDBA-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextQryHistProdDBA" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/NextQryHistProdDBA" location="NextQryHistProdDBA.wsdl"/>
+  <binding name="NextQryHistProdDBA_ptt-binding" type="tns:NextQryHistProdDBA_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="NextQryHistProdDBA">
+      <soap:operation soapAction="NextQryHistProdDBA"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="NextQryHistProdDBA-service">
+    <port name="NextQryHistProdDBA-port" binding="tns:NextQryHistProdDBA_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

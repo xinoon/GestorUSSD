@@ -1,0 +1,24 @@
+<?binding.jca getBolsaIlimitadaXPlan_db.jca?><wsdl:definitions name="getBolsaIlimitadaXPlan" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSBDesarrollo/Project1/getBolsaIlimitadaXPlan" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getBolsaIlimitadaXPlan" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSBDesarrollo/Project1/getBolsaIlimitadaXPlan" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getBolsaIlimitadaXPlan_plt">
+        <plt:role name="getBolsaIlimitadaXPlan_role">
+            <plt:portType name="tns:getBolsaIlimitadaXPlan_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getBolsaIlimitadaXPlan" schemaLocation="getBolsaIlimitadaXPlan.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getBolsaIlimitadaXPlanInput_msg">
+        <wsdl:part name="getBolsaIlimitadaXPlanInput_msg" element="db:getBolsaIlimitadaXPlanInput"/>
+    </wsdl:message>
+    <wsdl:message name="getBolsaIlimitadaXPlanOutputCollection_msg">
+        <wsdl:part name="getBolsaIlimitadaXPlanOutputCollection" element="db:getBolsaIlimitadaXPlanOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getBolsaIlimitadaXPlan_ptt">
+        <wsdl:operation name="getBolsaIlimitadaXPlan">
+            <wsdl:input message="tns:getBolsaIlimitadaXPlanInput_msg"/>
+            <wsdl:output message="tns:getBolsaIlimitadaXPlanOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

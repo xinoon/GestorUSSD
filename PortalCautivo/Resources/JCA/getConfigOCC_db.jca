@@ -1,0 +1,13 @@
+<adapter-config name="getConfigOCC" adapter="Database Adapter" wsdlLocation="../WSDLs/getConfigOCC.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getConfigOCC_ptt" operation="getConfigOCC">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_PORTAL_CAUTIVO_PKG"/>
+      <property name="ProcedureName" value="GET_CONFIG_OCC_PRC"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

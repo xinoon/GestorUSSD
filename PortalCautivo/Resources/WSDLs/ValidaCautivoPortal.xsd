@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://captive.portal.ws.ncl.nii.com"
+           xmlns:tns="http://captive.portal.ws.ncl.nii.com"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="setNextelActiveProduct" type="tns:setNextelActiveProduct"/>
+  <xs:element name="setNextelActiveProductResponse"
+              type="tns:msgCaptivePortalResponse"/>
+  <xs:complexType name="setNextelActiveProduct">
+    <xs:sequence>
+      <xs:element name="client_name" type="xs:string" minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="customer_id" type="xs:string" minOccurs="0"
+                  maxOccurs="1"/>
+      <xs:element name="client_type" type="xs:string" minOccurs="0"/>
+      <xs:element name="segment_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="rate_plan" type="xs:string" maxOccurs="1"/>
+      <xs:element name="category_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_pcrf_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_bscs_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="type_prod_bscs" type="xs:string" minOccurs="0"/>
+      <xs:element name="date" type="xs:string" maxOccurs="1"/>
+      <xs:element name="metodo_pago" type="xs:string" maxOccurs="1"/>
+      <xs:element name="pago_aplicado" type="xs:string" maxOccurs="1"/>
+      <xs:element name="transaction_code" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="msgCaptivePortalResponse">
+    <xs:sequence>
+      <xs:element name="id_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="id_pcrf_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="name_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="id_bscs_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="desc_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="category_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="promo" type="xs:string" minOccurs="1"/>
+      <xs:element name="tariff_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="unit_free" type="xs:string" minOccurs="1"/>
+      <xs:element name="type_prod_bscs" type="xs:string" minOccurs="1"/>
+      <xs:element name="traffic_type" type="xs:string" minOccurs="1"/>
+      <xs:element name="unit_type" type="xs:string" minOccurs="1"/>
+      <xs:element name="recurrence" type="xs:string" minOccurs="1"/>
+      <xs:element name="status" type="xs:string" minOccurs="1"/>
+      <xs:element name="level_pcrf_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="segment_prod" type="xs:string" minOccurs="1"/>
+      <xs:element name="channel_act" type="xs:string" minOccurs="1"/>
+      <xs:element name="platform_act" type="xs:string" minOccurs="1"/>
+      <xs:element name="family_plan" type="xs:string" minOccurs="1"/>
+      <xs:element name="bundle_type_flag" type="xs:string" minOccurs="1"/>
+      <xs:element name="cod_bundle_type" type="xs:string" minOccurs="1"/>
+      <xs:element name="des_bundle_type" type="xs:string" minOccurs="1"/>
+      <xs:element name="cod_tipo_trafico" type="xs:string" minOccurs="1"/>
+      <xs:element name="template_id" type="xs:string" minOccurs="1"/>
+      <xs:element name="spcode" type="xs:string" minOccurs="1"/>
+      <xs:element name="vigencia" type="xs:string" minOccurs="1"/>
+      <xs:element name="lc_customer" type="xs:string" minOccurs="1"/>
+      <xs:element name="lc_custCode" type="xs:string" minOccurs="1"/>
+      <xs:element name="lc_imsi" type="xs:string" minOccurs="1"/>
+      <xs:element name="lc_contractId" maxOccurs="1" type="xs:string"/>
+      <xs:element name="file1" type="xs:string" minOccurs="1"/>
+      <xs:element name="file2" type="xs:string" minOccurs="1"/>
+      <xs:element name="file3" type="xs:string" minOccurs="1"/>
+      <xs:element name="tmcode_shdes" type="xs:string" minOccurs="1"/>
+      <xs:element name="servicioKidPcrf" type="xs:string" minOccurs="1"/>
+      <xs:element name="tecnologia" type="xs:string" minOccurs="1"/>
+      <xs:element name="error_code" type="xs:string" minOccurs="1"/>
+      <xs:element name="err_description" maxOccurs="1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,14 @@
+<adapter-config name="SearchBSCSBundleService" adapter="Database Adapter" wsdlLocation="../WSDLs/SearchBSCSBundleService.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSE2E" adapterRef=""/>
+  <endpoint-interaction portType="SearchBSCSBundleService_ptt" operation="SearchBSCSBundleService">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_BUNDLES_PKG"/>
+      <property name="ProcedureName" value="GET_SEARCH_BSCS_BUNDLES_PRC"/>
+      <property name="QueryTimeout" value="600"/>     
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

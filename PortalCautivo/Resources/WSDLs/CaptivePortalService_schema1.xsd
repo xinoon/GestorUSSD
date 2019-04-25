@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0"
+           targetNamespace="http://captive.portal.ws.ncl.nii.com"
+           xmlns:tns="http://captive.portal.ws.ncl.nii.com"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="setNextelActiveProduct" type="tns:setNextelActiveProduct"/>
+  <xs:element name="setNextelActiveProductResponse"
+              type="tns:msgCaptivePortalResponse"/>
+  <xs:complexType name="setNextelActiveProduct">
+    <xs:sequence>
+      <xs:element name="client_name" type="xs:string" minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="customer_id" type="xs:string" minOccurs="0"
+                  maxOccurs="1"/>
+      <xs:element name="client_type" type="xs:string" minOccurs="0"/>
+      <xs:element name="segment_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="rate_plan" type="xs:string" maxOccurs="1"/>
+      <xs:element name="category_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_pcrf_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="id_bscs_prod" type="xs:string" maxOccurs="1"/>
+      <xs:element name="type_prod_bscs" type="xs:string" minOccurs="0"/>
+      <xs:element name="date" type="xs:string" maxOccurs="1"/>
+      <xs:element name="metodo_pago" type="xs:string" maxOccurs="1"/>
+      <xs:element name="pago_aplicado" type="xs:string" maxOccurs="1"/>
+      <xs:element name="transaction_code" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="msgCaptivePortalResponse">
+    <xs:sequence>
+      <xs:element name="transaction_code" type="xs:string" maxOccurs="1"/>
+      <xs:element name="error_code" type="xs:string" minOccurs="1"/>
+      <xs:element name="err_description" maxOccurs="1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getNextelCustomerInfo" type="tns:getNextelCustomerInfo"/>
+  <xs:complexType name="getNextelCustomerInfo">
+    <xs:sequence>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType> 
+  <xs:element name="getNextelCustomerInfoResponse"
+              type="tns:getNextelCustomerInfoResponse"/>
+  <xs:complexType name="getNextelCustomerInfoResponse">
+    <xs:sequence>
+      <xs:element name="firstName" type="xs:string" maxOccurs="1"/>
+      <xs:element name="lastName" type="xs:string" maxOccurs="1"/>
+      <xs:element name="technology" type="xs:string" maxOccurs="1"/>
+      <xs:element name="segment_client" type="xs:string" maxOccurs="1"/>
+      <xs:element name="billingCustomerCode" type="xs:string" maxOccurs="1"/>
+      <xs:element name="billCycle" type="xs:string" maxOccurs="1"/>
+      <xs:element name="iDPlan" type="xs:string" maxOccurs="1"/>
+      <xs:element name="Desc_IDPlan" type="xs:string" maxOccurs="1"/>
+      <xs:element name="status" type="xs:string" maxOccurs="1"/>
+      <xs:element name="begin_cycle" type="xs:dateTime" maxOccurs="1"/>
+      <xs:element name="end_cycle" type="xs:dateTime" maxOccurs="1"/>
+      <xs:element name="iDFormPago" type="xs:string" maxOccurs="1"/>
+      <xs:element name="error_code" type="xs:string" maxOccurs="1"/>
+      <xs:element name="err_description" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="isNextelUserValidate" type="tns:isNextelUserValidate"/>
+  <xs:complexType name="isNextelUserValidate">
+    <xs:sequence>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/>
+      <xs:element name="rut" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/>
+      <xs:element name="passwd" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="isNextelUserValidateResponse"
+              type="tns:msgCaptivePortalResponse"/>
+  <xs:element name="getNextelProductCatalog"
+              type="tns:getNextelProductCatalog"/>
+  <xs:complexType name="getNextelProductCatalog">
+    <xs:sequence>
+      <xs:element name="client_name" type="xs:string" maxOccurs="1"/>
+      <xs:element name="all_product" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getNextelProductCatalogResponse"
+              type="tns:getNextelProductCatalogResponse"/>
+  <xs:complexType name="getNextelProductCatalogResponse">
+    <xs:sequence>
+      <xs:element name="prod_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="listProduct" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="itm_product" type="tns:product"
+                        maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="error_code" type="xs:string" maxOccurs="1"/>
+      <xs:element name="err_description" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="product">
+    <xs:sequence>
+      <xs:element name="name_product" type="xs:string"/>
+      <xs:element name="desc_prod" type="xs:string"/>
+      <xs:element name="id_prod" type="xs:string"/>
+      <xs:element name="id_pcrf_product" type="xs:string"/>
+      <xs:element name="id_bscs_prod" type="xs:string"/>
+      <xs:element name="level_pcrf_prod" type="xs:string" minOccurs="0"/>
+      <xs:element name="type_prod_bscs" type="xs:string"/>
+      <xs:element name="tariff_prod" type="xs:string"/>
+      <xs:element name="unit_free" type="xs:string" minOccurs="1"/>
+      <xs:element name="promo" type="xs:string"/>
+      <xs:element name="category_prod" type="xs:string"/>
+      <xs:element name="recurrence" type="xs:string"/>
+      <xs:element name="segment_prod" type="xs:string"/>
+      <xs:element name="family_plan" type="xs:string"/>
+      <xs:element name="status" type="xs:string"/>
+      <xs:element name="vigencia" type="xs:string"/>
+      <xs:element name="trafficType" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getNextQryHistProd" type="tns:getNextQryHistProd"/>
+  <xs:complexType name="getNextQryHistProd">
+    <xs:sequence>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="qty_period" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getNextQryHistProdResponse"
+              type="tns:getNextQryHistProdResponse"/>
+  <xs:complexType name="getNextQryHistProdResponse">
+    <xs:sequence>
+      <xs:element name="listProduct" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="itm_product" type="tns:productHist"
+                        maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="error_code" type="xs:string" maxOccurs="1"/>
+      <xs:element name="err_description" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productHist">
+    <xs:sequence>
+      <xs:element name="name_product" type="xs:string"/>
+      <xs:element name="id_prod" type="xs:string"/>
+      <xs:element name="id_pcrf_prod" type="xs:string"/>
+      <xs:element name="id_bscs_prod" type="xs:string"/>
+      <xs:element name="tariff_prod" type="xs:string"/>
+      <xs:element name="unit_free" type="xs:string"/>
+      <xs:element name="promo" type="xs:string"/>
+      <xs:element name="category_prod" type="xs:string"/>
+      <xs:element name="date_buy" type="xs:string"/>
+      <xs:element name="transaction_code_buy" type="xs:string"/>
+      <xs:element name="unsubscribe" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="setNextDeactiveProd" type="tns:setNextDeactiveProd"/>
+  <xs:complexType name="setNextDeactiveProd">
+    <xs:sequence>
+      <xs:element name="client_name" type="xs:string" maxOccurs="1"/>
+      <xs:element name="phone_number" type="xs:string" maxOccurs="1"/>
+      <xs:element name="customer_id" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/> 	
+      <xs:element name="id_prod" type="xs:string" maxOccurs="1"/>
+      
+      <xs:element name="id_pcrf_prod" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/>
+      <xs:element name="id_bscs_prod" type="xs:string" maxOccurs="1"
+                  minOccurs="0"/>
+      <xs:element name="date_buy" type="xs:string" maxOccurs="1"/>
+      <xs:element name="reason" type="xs:string" maxOccurs="1"/>
+      <xs:element name="date_deactivate" type="xs:string" maxOccurs="1"/>
+      <xs:element name="billcycle_limit" type="xs:string" maxOccurs="1"/>
+      <xs:element name="transaction_code_buy" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="setNextDeactiveProdResponse"
+              type="tns:msgCaptivePortalResponse"/>
+</xs:schema>

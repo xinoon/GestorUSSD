@@ -1,0 +1,14 @@
+<adapter-config name="IsCustomerLevel10Service" adapter="Database Adapter" wsdlLocation="../WSDLs/IsCustomerLevel10Service.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSRC" adapterRef=""/>
+  <endpoint-interaction portType="IsCustomerLevel10Service_ptt" operation="IsCustomerLevel10Service">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_BUNDLES_PKG"/>
+      <property name="ProcedureName" value="IS_CUSTOMER_LEVEL_10_FN"/>
+       <property name="QueryTimeout" value="600"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

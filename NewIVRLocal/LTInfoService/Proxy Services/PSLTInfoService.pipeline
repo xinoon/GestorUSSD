@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="NewIVRLocal/LTInfoService/Resources/WSDLs/LTInfoWSDL" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>LTInfoBinding</con:name>
+                <con:namespace>http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoWSDL/v1</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+        <con:pipeline type="request" name="PipelinePairNode1_request">
+            <con:stage name="in_stg_infoCuotaDatos">
+                <con:context>
+                    <con2:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoPlanCicloDBA" prefix="ns1"/>
+                    <con2:varNsDecl namespace="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1" prefix="v1"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-7910592654652064010--378417f8.14952145787.-7f91</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="NewIVRLocal/LTInfoService/Business Services/BSGetInfoPlanCiclo" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getInfoPlanCicloDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>getInfoPlan</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>getInfoPlanResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="getInfoPlan">
+                                <con2:id>_ActionId-7910592654652064010--378417f8.14952145787.-7f23</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/IN_XQ_LTInfoCuotaDatos"/>
+                                        <con2:param name="infoCuotaDatos1">
+                                            <con2:path>$body/v1:infoCuotaDatos</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="imsi">
+                                <con2:id>_ActionId-4172871423433587978-1d006bff.1495c254590.-7ec3</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($getInfoPlanResponse/ns1:getInfoPlanCicloDBAOutput/ns1:IMSI)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_getAllInfomation">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-4172871423433587978-1d006bff.1495c254590.-7f84</con2:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getSubscriberAllInf</con1:operation>
+                        <con1:request>
+                            <con1:param>
+                                <con1:name>inPara</con1:name>
+                                <con1:variable>getSubscriberAllInf</con1:variable>
+                            </con1:param>
+                        </con1:request>
+                        <con1:response>
+                            <con1:param>
+                                <con1:name>result</con1:name>
+                                <con1:variable>getSubscriberAllInfResp</con1:variable>
+                            </con1:param>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="getSubscriberAllInf">
+                                <con2:id>_ActionId-4172871423433587978-1d006bff.1495c254590.-7f4c</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<inPara>
+    <subscriber>
+        <!--1 or more repetitions:-->
+        <attribute>
+            <key>USRIDENTIFIER</key>
+            <value>{$imsi}</value>
+        </attribute>
+    </subscriber>
+</inPara>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_OrdenXml">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="salidaXML">
+                        <con2:id>_ActionId-4172871423433587978-1d006bff.1495c254590.-7d5d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/XQ_OrdenBolsaDato"/>
+                                <con2:param name="sReturnVO1">
+                                    <con2:path>$getSubscriberAllInfResp</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response">
+            <con:stage name="out_stg_infoCuotaDatos">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyOut">
+                        <con2:id>_ActionId-7910592654652064010--378417f8.14952145787.-7dd5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/OUT_XQ_LTInfoCuotaDatos"/>
+                                <con2:param name="getInfoPlanCicloDBAOutputCollection1">
+                                    <con2:path>$getInfoPlanResponse</con2:path>
+                                </con2:param>
+                                <con2:param name="listXmlBundle1">
+                                    <con2:path>$salidaXML</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7910592654652064010--378417f8.14952145787.-7d9d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyOut</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode2_request">
+            <con:stage name="stg_in_getInfoPlan">
+                <con:context>
+                    <con2:varNsDecl namespace="http://nii.com/EnterpriseProxyService/ServiceManagement/LTInfoXSD/v1" prefix="v1"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-7405557528242235999-754dfc44.14943438394.-7d8e</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="NewIVRLocal/LTInfoService/Business Services/BSGetInfoPlanCiclo" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getInfoPlanCicloDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>infoPlanCiclo</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>infoPlanCicloResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="infoPlanCiclo" contents-only="false">
+                                <con2:id>_ActionId-7405557528242235999-754dfc44.14943438394.-7d8f</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/IN_XQ_LTIInfoPlanCiclo"/>
+                                        <con2:param name="infoPlanCiclo1">
+                                            <con2:path>$body/v1:infoPlanCiclo</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode2_response">
+            <con:stage name="stg_out_getInfoPlan">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyOut">
+                        <con2:id>_ActionId-7405557528242235999-754dfc44.14943438394.-7e01</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/OUT_XQ_LTIInfoPlanCiclo"/>
+                                <con2:param name="getInfoPlanCicloDBAOutputCollection1">
+                                    <con2:path>$infoPlanCicloResponse</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7405557528242235999-754dfc44.14943438394.-7e00</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyOut</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode3_request"/>
+        <con:pipeline type="response" name="PipelinePairNode3_response">
+            <con:stage name="sdasd">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyOut1">
+                        <con2:id>_ActionId-9159739725938585351--7e7c5020.14861a4c91b.-7d4c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="NewIVRLocal/LTInfoService/Resources/XQuery/OUT_XQ_LTInfoCicloReset"/>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-1135643950732514187-3d09908c.1486bc87185.-7f72</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyOut1</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="LTInfoCuotaDatos">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="LTIInfoPlanCiclo">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>PipelinePairNode2_request</con:request>
+                                <con:response>PipelinePairNode2_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="LTInfoCicloReset">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode3">
+                                <con:request>PipelinePairNode3_request</con:request>
+                                <con:response>PipelinePairNode3_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

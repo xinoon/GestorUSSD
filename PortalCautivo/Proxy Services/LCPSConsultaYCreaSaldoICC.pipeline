@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="PortalCautivo/Resources/WSDLs/ConsultaICCPortal" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>CaptivePortalPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelinePairNode1_request" errorHandler="_onErrorHandler-4952591388299401645-3a5ea217.13faf2b6b35.-7be9">
+            <con:stage name="in_stg_ConsultaSaldoICC">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7eed</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="SearchBalancesICC/Proxy Services/PSSearchBalancesICCService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>getSearchBalanceIcc</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getSearchBalanceIccRespo</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con1:assign varName="getSearchBalanceIcc" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7ef0</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<get:searchBalancesICC-request 	xmlns:get="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+<!--Optional:-->
+<get:phone_number>{data($body/cap:setNextelActiveProduct/phone_number)}</get:phone_number>
+<!--Optional:-->
+<get:detail_bucket>Y</get:detail_bucket>
+</get:searchBalancesICC-request>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="getSearchRespo">
+                                <con1:id>_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7eef</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getSearchBalanceIccRespo</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="currentBalance">
+                                <con1:id>_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7eee</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(empty(data($getSearchRespo/get:totalBalance)) or data($getSearchRespo/get:totalBalance) eq '')then
+0
+else
+(data($getSearchRespo/get:totalBalance))</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                    <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7eec</con4:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                    <con4:compExpr operator="&lt;">
+                                        <con4:leftPath>xs:decimal($currentBalance)</con4:leftPath>
+                                        <con4:rightPath>xs:decimal($body/cap:setNextelActiveProduct/tariff_prod)</con4:rightPath>
+                                    </con4:compExpr>
+                                </con4:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7eeb</con4:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Saldo Insuficiente.</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_valida_Existencia">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f87</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>empty($body/cap:setNextelActiveProduct/flagDesactivaExiste/text()) or
+fn-bea:trim($body/cap:setNextelActiveProduct/flagDesactivaExiste/text()) = ''</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f7b</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>getSubscriberAllInf</con2:operation>
+                                    <con2:request>
+                                        <con2:param>
+                                            <con2:name>inPara</con2:name>
+                                            <con2:variable>getSubscriberAllInf</con2:variable>
+                                        </con2:param>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:param>
+                                            <con2:name>result</con2:name>
+                                            <con2:variable>getSubscriberAllInfResp</con2:variable>
+                                        </con2:param>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="getSubscriberAllInf">
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f80</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText><![CDATA[<inPara>
+    <subscriber>
+        <!--1 or more repetitions:-->
+        <attribute>
+            <key>USRIDENTIFIER</key>
+            <value>{data($body/cap:setNextelActiveProduct/imsi)}</value>
+        </attribute>
+    </subscriber>
+</inPara>]]></con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="SubscriberAllInfResp">
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f7f</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>$getSubscriberAllInfResp</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f7e</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryText>$SubscriberAllInfResp/resultCode/text() != '0'</con1:xqueryText>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:replace varName="body" contents-only="true">
+                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f7d</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{$SubscriberAllInfResp/resultCode/text()}</error_code>
+ <err_description>{fn:concat('Error al obtener información PCRF, Key: ',data($SubscriberAllInfResp/paras/key),' - Value: ' ,data($SubscriberAllInfResp/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:replace>
+                                                    <con1:reply>
+                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f7c</con1:id>
+                                                    </con1:reply>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default/>
+                                        </con2:ifThenElse>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                                <con2:assign varName="countS">
+                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f79</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>fn:count($getSubscriberAllInfResp/subscribedService/attribute)</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:foreach>
+                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f0d</con1:id>
+                                    <con2:variable>SubscriberAllInfResp</con2:variable>
+                                    <con2:expression>
+                                        <con1:xpathText>./subscribedService/attribute</con1:xpathText>
+                                    </con2:expression>
+                                    <con2:value-variable>serviceColl</con2:value-variable>
+                                    <con2:index-variable>currIndexS</con2:index-variable>
+                                    <con2:total-variable>countS</con2:total-variable>
+                                    <con2:actions>
+                                        <con2:assign varName="servicioKey">
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f42</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($serviceColl/key)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="servicioValue">
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f41</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($serviceColl/value)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="ServicioASuscribir">
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f40</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($body/cap:setNextelActiveProduct/id_pcrf_prod)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3f</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryConditionExpr>
+                                                        <con1:compExpr operator="=">
+                                                            <con1:leftPath>$servicioKey</con1:leftPath>
+                                                            <con1:rightPath>'SRVNAME'</con1:rightPath>
+                                                        </con1:compExpr>
+                                                    </con1:xqueryConditionExpr>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:ifThenElse>
+                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3e</con1:id>
+                                                        <con2:case>
+                                                            <con2:condition>
+                                                                <con1:xqueryConditionExpr>
+                                                                    <con1:compExpr operator="=">
+                                                                        <con1:leftPath>$servicioValue</con1:leftPath>
+                                                                        <con1:rightPath>$ServicioASuscribir</con1:rightPath>
+                                                                    </con1:compExpr>
+                                                                </con1:xqueryConditionExpr>
+                                                            </con2:condition>
+                                                            <con2:actions>
+                                                                <con2:assign varName="saldoBolsa">
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3d</con1:id>
+                                                                    <con2:expr>
+                                                                        <con1:xqueryText>for $subscriberQuota in $getSubscriberAllInfResp/subscriberQuota
+	let $qtaBalance := $subscriberQuota/attribute[key eq 'QTABALANCE']/value/text()
+	let $cuotaValida := if($servicioValue = $subscriberQuota/attribute[key eq 'SRVNAME']/value/text()) then (
+	   $qtaBalance
+		)else('F')
+		
+	let $cuota :=if($cuotaValida != 'F') then(
+		$qtaBalance)else()	
+	return
+		$cuota</con1:xqueryText>
+                                                                    </con2:expr>
+                                                                </con2:assign>
+                                                                <con2:assign varName="cuotaInicialSrv">
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3c</con1:id>
+                                                                    <con2:expr>
+                                                                        <con1:xqueryText>for $subscriberQuota in $getSubscriberAllInfResp/subscriberQuota
+	let $cuotaInicial := $subscriberQuota/attribute[key eq 'QTAVALUE']/value/text()
+	let $cuotaInicialValida := if($servicioValue = $subscriberQuota/attribute[key eq 'SRVNAME']/value/text()) then (
+	   $cuotaInicial
+		)else('F')
+		
+	let $cuota :=if($cuotaInicialValida != 'F') then(
+		$cuotaInicial)else()	
+	return
+		$cuota</con1:xqueryText>
+                                                                    </con2:expr>
+                                                                </con2:assign>
+                                                                <con2:assign varName="consumidoSrv">
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3b</con1:id>
+                                                                    <con2:expr>
+                                                                        <con1:xqueryText>for $subscriberQuota in $getSubscriberAllInfResp/subscriberQuota
+	let $consumido := $subscriberQuota/attribute[key eq 'QTACONSUMPTION']/value/text()
+	let $consumidoValida := if($servicioValue = $subscriberQuota/attribute[key eq 'SRVNAME']/value/text()) then (
+	   $consumido
+		)else('F')
+		
+	let $consumidoInicial :=if($consumidoValida != 'F') then(
+		$consumido)else()	
+	return
+		$consumidoInicial</con1:xqueryText>
+                                                                    </con2:expr>
+                                                                </con2:assign>
+                                                                <con2:assign varName="fechaFinSrv">
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f3a</con1:id>
+                                                                    <con2:expr>
+                                                                        <con1:xqueryText>for $subscribedService in $getSubscriberAllInfResp/subscribedService
+	let $fchFin := $subscribedService/attribute[key eq 'SRVENDDATETIME']/value/text()
+	let $validaFecha := if($servicioValue = $subscribedService/attribute[key eq 'SRVNAME']/value/text()) then (
+	   $fchFin
+		)else('F')
+		
+	let $fechaFin :=if($validaFecha != 'F') then(
+		$fchFin)else()	
+	return
+		$fechaFin</con1:xqueryText>
+                                                                    </con2:expr>
+                                                                </con2:assign>
+                                                                <con2:ifThenElse>
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f39</con1:id>
+                                                                    <con2:case>
+                                                                        <con2:condition>
+                                                                            <con1:xqueryText>$fechaFinSrv = '-1'</con1:xqueryText>
+                                                                        </con2:condition>
+                                                                        <con2:actions>
+                                                                            <con1:Error xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f38</con4:id>
+                                                                                <con1:errCode>1</con1:errCode>
+                                                                                <con1:message>Error no es posible realizar venta de bolsa de tipo BASAL</con1:message>
+                                                                            </con1:Error>
+                                                                        </con2:actions>
+                                                                    </con2:case>
+                                                                    <con2:default/>
+                                                                </con2:ifThenElse>
+                                                                <con2:assign varName="concatSrvFin">
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f37</con1:id>
+                                                                    <con2:expr>
+                                                                        <con1:xqueryText>xs:dateTime(replace($fechaFinSrv,"^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$","$1-$2-$3T$4:$5:$6"))</con1:xqueryText>
+                                                                    </con2:expr>
+                                                                </con2:assign>
+                                                                <con2:ifThenElse>
+                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f36</con1:id>
+                                                                    <con2:case>
+                                                                        <con2:condition>
+                                                                            <con1:xqueryText>xs:dateTime($concatSrvFin) >= data($body/cap:setNextelActiveProduct/iniciaDate)</con1:xqueryText>
+                                                                        </con2:condition>
+                                                                        <con2:actions>
+                                                                            <con2:ifThenElse>
+                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f35</con1:id>
+                                                                                <con2:case>
+                                                                                    <con2:condition>
+                                                                                        <con1:xqueryText>xs:int($saldoBolsa) &lt; 1</con1:xqueryText>
+                                                                                    </con2:condition>
+                                                                                    <con2:actions>
+                                                                                        <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2f</con4:id>
+                                                                                            <con1:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                            <con1:operation>unSubscribeService</con1:operation>
+                                                                                            <con1:request>
+                                                                                                <con1:param>
+                                                                                                    <con1:name>inPara</con1:name>
+                                                                                                    <con1:variable>unSubscribeServiceReq</con1:variable>
+                                                                                                </con1:param>
+                                                                                            </con1:request>
+                                                                                            <con1:response>
+                                                                                                <con1:param>
+                                                                                                    <con1:name>result</con1:name>
+                                                                                                    <con1:variable>unSubscribeServiceResponse</con1:variable>
+                                                                                                </con1:param>
+                                                                                            </con1:response>
+                                                                                            <con1:requestTransform>
+                                                                                                <con1:assign varName="unSubscribeServiceReq">
+                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f34</con4:id>
+                                                                                                    <con1:expr>
+                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{data($body/cap:setNextelActiveProduct/imsi)}</value>
+	   </attribute>
+	</subscriber>
+	<!--Zero or more repetitions:-->
+	<subscribedService>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>SRVNAME</key>
+		  <value>{data($body/cap:setNextelActiveProduct/id_pcrf_prod)}</value>
+	   </attribute>
+	</subscribedService>
+ </inPara>]]></con4:xqueryText>
+                                                                                                    </con1:expr>
+                                                                                                </con1:assign>
+                                                                                            </con1:requestTransform>
+                                                                                            <con1:responseTransform>
+                                                                                                <con1:assign varName="unSubscribServResponse">
+                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f33</con4:id>
+                                                                                                    <con1:expr>
+                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$unSubscribeServiceResponse</con4:xqueryText>
+                                                                                                    </con1:expr>
+                                                                                                </con1:assign>
+                                                                                                <con1:ifThenElse>
+                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f32</con4:id>
+                                                                                                    <con1:case>
+                                                                                                        <con1:condition>
+                                                                                                            <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                                <con4:compExpr operator="!=">
+                                                                                                                    <con4:leftPath>data($unSubscribServResponse/resultCode)</con4:leftPath>
+                                                                                                                    <con4:rightPath>'0'</con4:rightPath>
+                                                                                                                </con4:compExpr>
+                                                                                                            </con4:xqueryConditionExpr>
+                                                                                                        </con1:condition>
+                                                                                                        <con1:actions>
+                                                                                                            <con1:replace varName="body" contents-only="true">
+                                                                                                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f31</con4:id>
+                                                                                                                <con1:expr>
+                                                                                                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{data($unSubscribServResponse/resultCode)}</error_code>
+ <err_description>{fn:concat('Error al intentar borrar la bolsa, Key: ',data($unSubscribServResponse/paras/key),' - Value: ' ,data($unSubscribServResponse/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                                                                                                </con1:expr>
+                                                                                                            </con1:replace>
+                                                                                                            <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                                <con4:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f30</con4:id>
+                                                                                                            </con4:reply>
+                                                                                                        </con1:actions>
+                                                                                                    </con1:case>
+                                                                                                    <con1:default/>
+                                                                                                </con1:ifThenElse>
+                                                                                            </con1:responseTransform>
+                                                                                        </con1:wsCallout>
+                                                                                    </con2:actions>
+                                                                                </con2:case>
+                                                                                <con2:default>
+                                                                                    <con2:assign varName="sumaTotalBolsa">
+                                                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2e</con1:id>
+                                                                                        <con2:expr>
+                                                                                            <con1:xqueryText>xs:int($saldoBolsa) + xs:int($body/cap:setNextelActiveProduct/unitFree/text())</con1:xqueryText>
+                                                                                        </con2:expr>
+                                                                                    </con2:assign>
+                                                                                    <con2:wsCallout>
+                                                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f28</con1:id>
+                                                                                        <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                        <con2:operation>updateSubscriberQuota</con2:operation>
+                                                                                        <con2:request>
+                                                                                            <con2:param>
+                                                                                                <con2:name>inPara</con2:name>
+                                                                                                <con2:variable>updateSubscriberQuotaReq</con2:variable>
+                                                                                            </con2:param>
+                                                                                        </con2:request>
+                                                                                        <con2:response>
+                                                                                            <con2:param>
+                                                                                                <con2:name>result</con2:name>
+                                                                                                <con2:variable>updateSubscriberQuotaResp</con2:variable>
+                                                                                            </con2:param>
+                                                                                        </con2:response>
+                                                                                        <con2:requestTransform>
+                                                                                            <con2:assign varName="updateSubscriberQuotaReq">
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2d</con1:id>
+                                                                                                <con2:expr>
+                                                                                                    <con1:xqueryText><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{$body/cap:setNextelActiveProduct/imsi/text()}</value>
+	   </attribute>
+	</subscriber>
+	<!--Zero or more repetitions:-->
+	<subscriberQuota>
+	   <attribute>
+		  <key>QTANAME</key>
+		  <value>{$body/cap:setNextelActiveProduct/id_pcrf_prod/text()}</value>
+	   </attribute>
+	   <attribute>
+		  <key>QTACONSUMPTION</key>
+		  <value>{$consumidoSrv}</value>
+	   </attribute>
+	   <attribute>
+		  <key>QTAVALUE</key>
+		  <value>{xs:int($body/cap:setNextelActiveProduct/unitFree/text()) + xs:int($cuotaInicialSrv)}</value>
+	   </attribute>
+	   <attribute>
+		  <key>QTABALANCE</key>
+		  <value>{$sumaTotalBolsa}</value>
+	   </attribute>
+	</subscriberQuota>
+</inPara>]]></con1:xqueryText>
+                                                                                                </con2:expr>
+                                                                                            </con2:assign>
+                                                                                        </con2:requestTransform>
+                                                                                        <con2:responseTransform>
+                                                                                            <con2:assign varName="errorUpdatePCRF">
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2c</con1:id>
+                                                                                                <con2:expr>
+                                                                                                    <con1:xqueryText>$updateSubscriberQuotaResp/resultCode/text()</con1:xqueryText>
+                                                                                                </con2:expr>
+                                                                                            </con2:assign>
+                                                                                            <con2:ifThenElse>
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2b</con1:id>
+                                                                                                <con2:case>
+                                                                                                    <con2:condition>
+                                                                                                        <con1:xqueryText>$updateSubscriberQuotaResp/resultCode/text() != '0'</con1:xqueryText>
+                                                                                                    </con2:condition>
+                                                                                                    <con2:actions>
+                                                                                                        <con2:replace varName="body" contents-only="true">
+                                                                                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f2a</con1:id>
+                                                                                                            <con2:expr>
+                                                                                                                <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{$updateSubscriberQuotaResp/resultCode/text()}</error_code>
+ <err_description>{fn:concat('Error al actualizar la cuota de la bolsa en PCRF, Key: ',data($updateSubscriberQuotaResp/paras/key),' - Value: ' ,data($updateSubscriberQuotaResp/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                                                                                                            </con2:expr>
+                                                                                                        </con2:replace>
+                                                                                                        <con1:reply>
+                                                                                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f29</con1:id>
+                                                                                                        </con1:reply>
+                                                                                                    </con2:actions>
+                                                                                                </con2:case>
+                                                                                                <con2:default/>
+                                                                                            </con2:ifThenElse>
+                                                                                        </con2:responseTransform>
+                                                                                    </con2:wsCallout>
+                                                                                    <con2:wsCallout>
+                                                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f16</con1:id>
+                                                                                        <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                        <con2:operation>updateSubscriber</con2:operation>
+                                                                                        <con2:request>
+                                                                                            <con2:param>
+                                                                                                <con2:name>inPara</con2:name>
+                                                                                                <con2:variable>updateSubscriberReq</con2:variable>
+                                                                                            </con2:param>
+                                                                                        </con2:request>
+                                                                                        <con2:response>
+                                                                                            <con2:param>
+                                                                                                <con2:name>result</con2:name>
+                                                                                                <con2:variable>updateSubscriberResp</con2:variable>
+                                                                                            </con2:param>
+                                                                                        </con2:response>
+                                                                                        <con2:requestTransform>
+                                                                                            <con2:assign varName="updateSubscriberReq">
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f27</con1:id>
+                                                                                                <con2:expr>
+                                                                                                    <con1:xqueryText><![CDATA[<inPara>
+	<subscriber>
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{$body/cap:setNextelActiveProduct/imsi/text()}</value>
+	   </attribute>
+	</subscriber>
+	<modifyService>
+	  <attribute>
+		  <key>SRVNAME</key>
+		  <value>{$body/cap:setNextelActiveProduct/id_pcrf_prod/text()}</value>
+	   </attribute>
+		<attribute>
+		  <key>SRVSTARTDATETIME</key>
+		  <value>{$body/cap:setNextelActiveProduct/startDateTime/text()}</value>
+	   </attribute>
+	   <attribute>
+		  <key>SRVENDDATETIME</key>
+		  <value>{$body/cap:setNextelActiveProduct/endDateTime/text()}</value>
+	   </attribute>
+	</modifyService>
+</inPara>]]></con1:xqueryText>
+                                                                                                </con2:expr>
+                                                                                            </con2:assign>
+                                                                                        </con2:requestTransform>
+                                                                                        <con2:responseTransform>
+                                                                                            <con2:assign varName="errorUpdateServicePCRF">
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f26</con1:id>
+                                                                                                <con2:expr>
+                                                                                                    <con1:xqueryText>$updateSubscriberResp/resultCode/text()</con1:xqueryText>
+                                                                                                </con2:expr>
+                                                                                            </con2:assign>
+                                                                                            <con2:ifThenElse>
+                                                                                                <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f25</con1:id>
+                                                                                                <con2:case>
+                                                                                                    <con2:condition>
+                                                                                                        <con1:xqueryText>$updateSubscriberResp/resultCode/text() = '0'</con1:xqueryText>
+                                                                                                    </con2:condition>
+                                                                                                    <con2:actions>
+                                                                                                        <con2:wsCallout>
+                                                                                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f1c</con1:id>
+                                                                                                            <con2:service xsi:type="ref:ProxyRef" ref="PortalCautivo/Proxy Services/PSAjustaICCPortal" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                                            <con2:operation>setAjustaICCPortal</con2:operation>
+                                                                                                            <con2:request>
+                                                                                                                <con2:body>AjustaICCPortal</con2:body>
+                                                                                                            </con2:request>
+                                                                                                            <con2:response>
+                                                                                                                <con2:body>AjustaICCPortalResponse</con2:body>
+                                                                                                            </con2:response>
+                                                                                                            <con2:requestTransform>
+                                                                                                                <con2:replace varName="AjustaICCPortal">
+                                                                                                                    <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f24</con1:id>
+                                                                                                                    <con2:expr>
+                                                                                                                        <con1:xqueryTransform>
+                                                                                                                            <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_AjustaICCPortal"/>
+                                                                                                                            <con1:param name="setNextelActiveProduct1">
+                                                                                                                                <con1:path>$body/cap:setNextelActiveProduct</con1:path>
+                                                                                                                            </con1:param>
+                                                                                                                        </con1:xqueryTransform>
+                                                                                                                    </con2:expr>
+                                                                                                                </con2:replace>
+                                                                                                            </con2:requestTransform>
+                                                                                                            <con2:responseTransform>
+                                                                                                                <con1:assign varName="valResp" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f23</con4:id>
+                                                                                                                    <con1:expr>
+                                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$AjustaICCPortalResponse</con4:xqueryText>
+                                                                                                                    </con1:expr>
+                                                                                                                </con1:assign>
+                                                                                                                <con1:assign varName="LCErrorOCC" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f22</con4:id>
+                                                                                                                    <con1:expr>
+                                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($valResp/error_code)</con4:xqueryText>
+                                                                                                                    </con1:expr>
+                                                                                                                </con1:assign>
+                                                                                                                <con1:assign varName="cadenaBucket" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f21</con4:id>
+                                                                                                                    <con1:expr>
+                                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($valResp/cadenaBucket)</con4:xqueryText>
+                                                                                                                    </con1:expr>
+                                                                                                                </con1:assign>
+                                                                                                                <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f20</con4:id>
+                                                                                                                    <con1:case>
+                                                                                                                        <con1:condition>
+                                                                                                                            <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                                                <con4:compExpr operator="!=">
+                                                                                                                                    <con4:leftPath>$LCErrorOCC</con4:leftPath>
+                                                                                                                                    <con4:rightPath>'0'</con4:rightPath>
+                                                                                                                                </con4:compExpr>
+                                                                                                                            </con4:xqueryConditionExpr>
+                                                                                                                        </con1:condition>
+                                                                                                                        <con1:actions>
+                                                                                                                            <con1:replace varName="body" contents-only="true">
+                                                                                                                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f1e</con4:id>
+                                                                                                                                <con1:expr>
+                                                                                                                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{$LCErrorOCC}</error_code>
+ <err_description>{data($valResp/err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                                                                                                                </con1:expr>
+                                                                                                                            </con1:replace>
+                                                                                                                            <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                                                <con4:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f1d</con4:id>
+                                                                                                                            </con4:reply>
+                                                                                                                        </con1:actions>
+                                                                                                                    </con1:case>
+                                                                                                                    <con1:default/>
+                                                                                                                </con1:ifThenElse>
+                                                                                                            </con2:responseTransform>
+                                                                                                        </con2:wsCallout>
+                                                                                                        <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f1a</con4:id>
+                                                                                                            <con1:expr>
+                                                                                                                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                                                                                            </con1:expr>
+                                                                                                        </con1:replace>
+                                                                                                        <con1:reply>
+                                                                                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f19</con1:id>
+                                                                                                        </con1:reply>
+                                                                                                    </con2:actions>
+                                                                                                </con2:case>
+                                                                                                <con2:default>
+                                                                                                    <con2:replace varName="body" contents-only="true">
+                                                                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f18</con1:id>
+                                                                                                        <con2:expr>
+                                                                                                            <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{$updateSubscriberQuotaResp/resultCode/text()}</error_code>
+ <err_description>{fn:concat('Error al actualizar la cuota de la bolsa en PCRF, Key: ',data($updateSubscriberQuotaResp/paras/key),' - Value: ' ,data($updateSubscriberQuotaResp/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                                                                                                        </con2:expr>
+                                                                                                    </con2:replace>
+                                                                                                    <con1:reply>
+                                                                                                        <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f17</con1:id>
+                                                                                                    </con1:reply>
+                                                                                                </con2:default>
+                                                                                            </con2:ifThenElse>
+                                                                                        </con2:responseTransform>
+                                                                                    </con2:wsCallout>
+                                                                                </con2:default>
+                                                                            </con2:ifThenElse>
+                                                                        </con2:actions>
+                                                                    </con2:case>
+                                                                    <con2:case>
+                                                                        <con2:condition>
+                                                                            <con1:xqueryText>xs:dateTime($concatSrvFin) &lt; data($body/cap:setNextelActiveProduct/iniciaDate)</con1:xqueryText>
+                                                                        </con2:condition>
+                                                                        <con2:actions>
+                                                                            <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f10</con4:id>
+                                                                                <con1:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                <con1:operation>unSubscribeService</con1:operation>
+                                                                                <con1:request>
+                                                                                    <con1:param>
+                                                                                        <con1:name>inPara</con1:name>
+                                                                                        <con1:variable>unSubscribeServiceReq</con1:variable>
+                                                                                    </con1:param>
+                                                                                </con1:request>
+                                                                                <con1:response>
+                                                                                    <con1:param>
+                                                                                        <con1:name>result</con1:name>
+                                                                                        <con1:variable>unSubscribeServiceResponse</con1:variable>
+                                                                                    </con1:param>
+                                                                                </con1:response>
+                                                                                <con1:requestTransform>
+                                                                                    <con1:assign varName="unSubscribeServiceReq">
+                                                                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f15</con4:id>
+                                                                                        <con1:expr>
+                                                                                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{data($body/cap:setNextelActiveProduct/imsi)}</value>
+	   </attribute>
+	</subscriber>
+	<!--Zero or more repetitions:-->
+	<subscribedService>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>SRVNAME</key>
+		  <value>{data($body/cap:setNextelActiveProduct/id_pcrf_prod)}</value>
+	   </attribute>
+	</subscribedService>
+ </inPara>]]></con4:xqueryText>
+                                                                                        </con1:expr>
+                                                                                    </con1:assign>
+                                                                                </con1:requestTransform>
+                                                                                <con1:responseTransform>
+                                                                                    <con1:assign varName="unSubscribServResponse">
+                                                                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f14</con4:id>
+                                                                                        <con1:expr>
+                                                                                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$unSubscribeServiceResponse</con4:xqueryText>
+                                                                                        </con1:expr>
+                                                                                    </con1:assign>
+                                                                                    <con1:ifThenElse>
+                                                                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f13</con4:id>
+                                                                                        <con1:case>
+                                                                                            <con1:condition>
+                                                                                                <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                    <con4:compExpr operator="!=">
+                                                                                                        <con4:leftPath>data($unSubscribServResponse/resultCode)</con4:leftPath>
+                                                                                                        <con4:rightPath>'0'</con4:rightPath>
+                                                                                                    </con4:compExpr>
+                                                                                                </con4:xqueryConditionExpr>
+                                                                                            </con1:condition>
+                                                                                            <con1:actions>
+                                                                                                <con1:replace varName="body" contents-only="true">
+                                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f12</con4:id>
+                                                                                                    <con1:expr>
+                                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{data($unSubscribServResponse/resultCode)}</error_code>
+ <err_description>{fn:concat('Error al intentar borrar la bolsa, Key: ',data($unSubscribServResponse/paras/key),' - Value: ' ,data($unSubscribServResponse/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                                                                                    </con1:expr>
+                                                                                                </con1:replace>
+                                                                                                <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                                    <con4:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f11</con4:id>
+                                                                                                </con4:reply>
+                                                                                            </con1:actions>
+                                                                                        </con1:case>
+                                                                                        <con1:default/>
+                                                                                    </con1:ifThenElse>
+                                                                                </con1:responseTransform>
+                                                                            </con1:wsCallout>
+                                                                        </con2:actions>
+                                                                    </con2:case>
+                                                                    <con2:default>
+                                                                        <con2:replace varName="body" contents-only="true">
+                                                                            <con1:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f0f</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>1</error_code>
+ <err_description>Error: No es posible activar la nueva bolsa</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:replace>
+                                                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                            <con4:id>_ActionId-420686186915220181-416f242f.154bf1e50a2.-7f0e</con4:id>
+                                                                        </con4:reply>
+                                                                    </con2:default>
+                                                                </con2:ifThenElse>
+                                                            </con2:actions>
+                                                        </con2:case>
+                                                        <con2:default/>
+                                                    </con2:ifThenElse>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default/>
+                                        </con2:ifThenElse>
+                                    </con2:actions>
+                                </con2:foreach>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_suscribe_service">
+                <con:context>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e29</con4:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>subscribeService</con1:operation>
+                        <con1:request>
+                            <con1:param>
+                                <con1:name>inPara</con1:name>
+                                <con1:variable>subscribeServiceReq</con1:variable>
+                            </con1:param>
+                        </con1:request>
+                        <con1:response>
+                            <con1:param>
+                                <con1:name>result</con1:name>
+                                <con1:variable>subscribeServiceResponse</con1:variable>
+                            </con1:param>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="subscribeServiceReq">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e2f</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{data($body/cap:setNextelActiveProduct/imsi)}</value>
+	   </attribute>
+	</subscriber>
+	<!--Zero or more repetitions:-->
+	<subscribedService>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>SRVNAME</key>
+		  <value>{data($body/cap:setNextelActiveProduct/id_pcrf_prod)}</value>
+	   </attribute>
+	   <attribute>
+		  <key>srvStartDateTime</key>
+		  <value>{data($body/cap:setNextelActiveProduct/startDateTime)}</value>
+	   </attribute>
+	   <attribute>
+		  <key>srvEndDateTime</key>
+		  <value>{data($body/cap:setNextelActiveProduct/endDateTime)}</value>
+	   </attribute>
+	</subscribedService>
+ </inPara>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="subscribeServResp">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e2e</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$subscribeServiceResponse</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e2d</con4:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="!=">
+                                                <con4:leftPath>data($subscribeServResp/resultCode)</con4:leftPath>
+                                                <con4:rightPath>'0'</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e2b</con4:id>
+                                            <con1:expr>
+                                                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket></cadenaBucket>
+   <error_code>{data($subscribeServResp/resultCode)}</error_code>
+   <err_description>{fn:concat('Key: ',data($subscribeServResp/paras/key),' - Value: ' ,data($subscribeServResp/paras/value))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-762536332110606387-6d9d073b.14c32939fb6.-7e2a</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="Descuento_Bucked">
+                <con:context>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7c72</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PortalCautivo/Proxy Services/PSAjustaICCPortal" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>setAjustaICCPortal</con2:operation>
+                        <con2:request>
+                            <con2:body>AjustaICCPortal</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>AjustaICCPortalResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:replace varName="AjustaICCPortal">
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7bcd</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_AjustaICCPortal"/>
+                                        <con1:param name="setNextelActiveProduct1">
+                                            <con1:path>$body/cap:setNextelActiveProduct</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:replace>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con1:assign varName="valResp" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7b49</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$AjustaICCPortalResponse</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LCErrorOCC" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7b4d</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($valResp/error_code)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="cadenaBucket" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1376109233886975474-555a41a7.14a0c2ec05f.-7f35</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($valResp/cadenaBucket)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7b54</con4:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="!=">
+                                                <con4:leftPath>$LCErrorOCC</con4:leftPath>
+                                                <con4:rightPath>'0'</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7b52</con4:id>
+                                            <con1:expr>
+                                                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+ <error_code>{$LCErrorOCC}</error_code>
+ <err_description>{data($valResp/err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7b51</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response" errorHandler="_onErrorHandler-4952591388299401645-3a5ea217.13faf2b6b35.-7b7c">
+            <con:stage name="Out_stg_ConsultaSaldoICC">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-4952591388299401645-3a5ea217.13faf2b6b35.-7835</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4952591388299401645-3a5ea217.13faf2b6b35.-7be9">
+            <con:stage name="In_stg_error_ConsultaICC">
+                <con:context>
+                    <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-4952591388299401645-3a5ea217.13faf2b6b35.-7ad2</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>1</error_code>
+   <err_description>{fn:concat(data($fault/ctx:reason),'. - ',data($fault/ctx:details/con1:ReceivedFaultDetail/con1:faultstring))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-4952591388299401645-3a5ea217.13faf2b6b35.-7ad1</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4952591388299401645-3a5ea217.13faf2b6b35.-7b7c">
+            <con:stage name="Out_stg_error_ConsultaICC">
+                <con:context>
+                    <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-4952591388299401645-3a5ea217.13faf2b6b35.-7a5d</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>1</error_code>
+   <err_description>{fn:concat(data($fault/ctx:reason),'. - ',data($fault/ctx:details/con1:ReceivedFaultDetail/con1:faultstring))}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-4952591388299401645-3a5ea217.13faf2b6b35.-7a5c</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="setNextelActiveProduct">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

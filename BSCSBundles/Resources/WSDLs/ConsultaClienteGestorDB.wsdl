@@ -1,0 +1,24 @@
+<?binding.jca ConsultaClienteGestorDB_db.jca?><wsdl:definitions name="ConsultaClienteGestorDB" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB/ConsultaInfoLineaCliente/ConsultaClienteGestorDB" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/ConsultaClienteGestorDB" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB/ConsultaInfoLineaCliente/ConsultaClienteGestorDB" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="ConsultaClienteGestorDB_plt">
+        <plt:role name="ConsultaClienteGestorDB_role">
+            <plt:portType name="tns:ConsultaClienteGestorDB_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ConsultaClienteGestorDB" schemaLocation="ConsultaClienteGestorDB.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ConsultaClienteGestorDBInput_msg">
+        <wsdl:part name="ConsultaClienteGestorDBInput_msg" element="db:ConsultaClienteGestorDBInput"/>
+    </wsdl:message>
+    <wsdl:message name="ConsultaClienteGestorDBOutputCollection_msg">
+        <wsdl:part name="ConsultaClienteGestorDBOutputCollection" element="db:ConsultaClienteGestorDBOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="ConsultaClienteGestorDB_ptt">
+        <wsdl:operation name="ConsultaClienteGestorDB">
+            <wsdl:input message="tns:ConsultaClienteGestorDBInput_msg"/>
+            <wsdl:output message="tns:ConsultaClienteGestorDBOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

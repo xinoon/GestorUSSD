@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/BSCSUpsellingBolsasDBA" name="BSCSUpsellingBolsasDBA-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/BSCSUpsellingBolsasDBA" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/BSCSUpsellingBolsasDBA" location="BSCSUpsellingBolsasDBA.wsdl"/>
+  <binding name="BSCSUpsellingBolsasDBA_ptt-binding" type="tns:BSCSUpsellingBolsasDBA_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="BSCSUpsellingBolsasDBA">
+      <soap:operation soapAction="BSCSUpsellingBolsasDBA"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="BSCSUpsellingBolsasDBA-service">
+    <port name="BSCSUpsellingBolsasDBA-port" binding="tns:BSCSUpsellingBolsasDBA_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

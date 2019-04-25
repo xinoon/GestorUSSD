@@ -1,0 +1,14 @@
+<adapter-config name="getInfoDeuda" adapter="Database Adapter" wsdlLocation="../WSDL/getInfoDeuda.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/FTOLERANCE" UIConnectionName="FTOLERANCE" adapterRef=""/>
+  <endpoint-interaction portType="getInfoDeuda_ptt" operation="getInfoDeuda">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="FTOLERANCE"/>
+      <property name="PackageName" value="NII_IVR_CONSULTS_PKG"/>
+      <property name="ProcedureName" value="NII_DEBT_CONSULT_PRC"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,13 @@
+<adapter-config name="timsiBymsisdnDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/timsiBymsisdnDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="timsiBymsisdnDBA_ptt" operation="timsiBymsisdnDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_PORTAL_CAUTIVO_PKG"/>
+      <property name="ProcedureName" value="GETIMSI_BYMSISDN"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

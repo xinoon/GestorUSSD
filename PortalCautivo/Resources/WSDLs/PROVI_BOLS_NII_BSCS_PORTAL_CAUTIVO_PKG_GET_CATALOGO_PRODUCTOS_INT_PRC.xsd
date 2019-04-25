@@ -1,0 +1,54 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_ID_PCRF_PROD" type="string" db:index="1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_ID_BSCS_PROD" type="string" db:index="2" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_ID_PROD" type="string" db:index="3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_MONTO_RECARGA" type="string" db:index="4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_CLIENT_NAME" type="string" db:index="5" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_PHONE_NUMBER" type="string" db:index="6" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="SN_ID_PCRF_PROD" type="string" db:index="7" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_ID_BSCS_PROD" type="string" db:index="8" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_ID_PROD" type="string" db:index="9" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_NAME_PROD" type="string" db:index="10" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_DESC_PROD" type="string" db:index="11" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_CATEGORY_PROD" type="string" db:index="12" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_PROMO" type="string" db:index="13" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_TARIFF_PROD" type="decimal" db:index="14" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SN_UNIT_FREE" type="decimal" db:index="15" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_TYPE_PROD_BSCS" type="string" db:index="16" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_TRAFFIC_TYPE" type="string" db:index="17" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_UNIT_TYPE" type="string" db:index="18" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_RECURRENCE" type="string" db:index="19" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_STATUS" type="string" db:index="20" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_LEVEL_PCRF_PROD" type="string" db:index="21" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_SEGMENT_PROD" type="string" db:index="22" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_CHANNEL_ACT" type="string" db:index="23" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_PLATFORM_ACT" type="string" db:index="24" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_FAMILY_PLAN" type="string" db:index="25" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_BUNDLE_TYPE_FLAG" type="string" db:index="26" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_BUNDLE_TYPE" type="decimal" db:index="27" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_DES_BUNDLE_TYPE" type="string" db:index="28" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_TIPO_TRAFICO" type="decimal" db:index="29" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SN_TEMPLATE_ID" type="decimal" db:index="30" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SN_SPCODE" type="decimal" db:index="31" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SN_VIGENCIA" type="decimal" db:index="32" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_FILE1" type="string" db:index="33" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_FILE2" type="string" db:index="34" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_FILE3" type="string" db:index="35" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_TECNOLOGIA" type="string" db:index="36" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_DATOS_KID_PCRF" type="string" db:index="37" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_RETORNO" type="decimal" db:index="38" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_MENS_RETORNO" type="string" db:index="39" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_NUM_EVENTO" type="decimal" db:index="40" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

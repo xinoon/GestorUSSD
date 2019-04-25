@@ -1,0 +1,13 @@
+<adapter-config name="ProductoCatalogDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/ProductoCatalogDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ProductoCatalogDBA_ptt" operation="ProductoCatalogDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_PORTAL_CAUTIVO_PKG"/>
+      <property name="ProcedureName" value="NEXTEL_PRODUCT_CATALOG_PRC"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

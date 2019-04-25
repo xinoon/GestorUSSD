@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:intf="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 21, 2010 (11:39:14 CEST)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <complexType name="BaseSOIBean">
+    <sequence/>
+   </complexType>
+   <complexType name="ContractReadBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="syncWithDb" nillable="true" type="xsd:boolean"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="bsgId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="preferedCugId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="DateBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="date" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="bsgAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="bsgId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="basicservicegroupassigments" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn"/>
+       <element minOccurs="0" name="cugId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="advanceAccessOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="advanceAccessOvwPrd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="advanceAccessOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="bsgConfiguration" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn"/>
+       <element minOccurs="0" name="cosAccfeeOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="cosAccfeeOvwPrd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosAccfeeOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cosPendingStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosPendingStatusDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="cosQuantity" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosSubfeeOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="cosSubfeeOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cosTrialEndDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="csPaymentConditionUsgInd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="csPrepaidTpId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csPrepaidTpIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cugAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cugMemberships" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn"/>
+       <element minOccurs="0" name="extServiceId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="extServiceIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="opAssistedAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="profileId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesContactId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesContactIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="salesZoneId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesZoneIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="userReason" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="ContractServicesWriteBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="gmdPrio" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="services" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.target_param_values.MultValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="validFrom" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="valueDes" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="valuePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="valueSeqno" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.target_param_values.MultValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.target_param_values.MultValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.TargetParamValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="multValues" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.target_param_values.MultValuesBeanIn"/>
+       <element minOccurs="0" name="targetSiblingNo" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.TargetParamValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.TargetParamValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.ParamValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="complexLevel" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="complexNo" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="cosAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="parentNo" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="prmNo" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="siblingNo" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="targetParamValues" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.param_values.TargetParamValuesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.ParamValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.ParamValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="ContractServiceParametersWriteBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="extServiceId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="extServiceIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="gmdPrio" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="paramValues" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_service_parameters_write.ParamValuesBeanIn"/>
+       <element minOccurs="0" name="profileId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="spcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="spcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="templId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractServiceParametersWrite" nillable="true" type="impl:ContractServiceParametersWriteBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractServicesWrite" nillable="true" type="impl:ContractServicesWriteBeanIn"/>
+       <element minOccurs="0" name="parameters" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="JcontractServicesUpdateBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractRead" nillable="true" type="impl:ContractReadBeanIn"/>
+       <element minOccurs="0" name="services" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="key" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="SessionChangeBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="values" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="JcontractServicesUpdate" type="tns1:com.lhs.ws.beans.v2_NII_1.JcontractServicesUpdateBeanServiceIn"/>
+   <complexType name="DateTimeBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="date" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_read.RelatedContractsBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coType" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_read.RelatedContractsBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_read.RelatedContractsBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_read.ServicesBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coReqPending" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coSnPendingStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="coSnStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="profileId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="spcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="spcodePub" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_read.ServicesBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_read.ServicesBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="MoneyBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="amount" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="currency" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ContractReadBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="accPackId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="altRpcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="altRpcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="anPackageId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="anPackageIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="areaCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="bmId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="bmIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="callDetail" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coActivated" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="coArchive" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="coEntdate" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="coEquipmentStatus" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coExpirDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coLastReason" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coLastStatusChangeDate" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="coModdate" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="coNonexplServPaymentType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coOpDir" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="coPendingDate" nillable="true" type="impl:DateTimeBean"/>
+       <element minOccurs="0" name="coPendingStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="coPstnDir" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="coSignedDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="coStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="coStmedno" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="coTrialEndDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="coTrialStartDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="coType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="comEndDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="comMinDuration" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="comMinRenocoMonths" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="comStartDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="contractRequest" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="contractTypeId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="creditQualCategoryId" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="creditQualCheck" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="creditQualScoreId" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="creditQualValue" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="csId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="currencyId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="currencyIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="description" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="extProductId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="extProductIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="firstCsId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="firstCsIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="fleetId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="fleetIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="foreignBidGroupId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="hlcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="hlcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="homeBidGroupId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="ihlrcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="ihlrcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="lastRateplanChangeDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="lastRateplanCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="newCoId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="newCoIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="oldCoId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="oldCoIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="pendingRpcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="pendingRpcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="plcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="plcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="preratedTapRp" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="reason" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="relatedContracts" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_read.RelatedContractsBeanOut"/>
+       <element minOccurs="0" name="resourceReplacementDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="resourceReplacementReason" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="roamingPartnerContactId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="roamingPartnerContactIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="rpcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="rpcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="salesContactId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesContactIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="salesZoneId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesZoneIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="sccode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sccodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="services" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_read.ServicesBeanOut"/>
+       <element minOccurs="0" name="submId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="submIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="totalAccessFees" nillable="true" type="impl:MoneyBean"/>
+       <element minOccurs="0" name="urbanId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="urbanIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="userinstallationAdr" nillable="true" type="xsd:boolean"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ContractServicesWriteBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ContractServiceParametersWriteBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractServiceParametersWrite" nillable="true" type="impl:ContractServiceParametersWriteBeanOut"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractServicesWrite" nillable="true" type="impl:ContractServicesWriteBeanOut"/>
+       <element minOccurs="0" name="parameters" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.services.ParametersBeanOut"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="JcontractServicesUpdateBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="contractRead" nillable="true" type="impl:ContractReadBeanOut"/>
+       <element minOccurs="0" name="services" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.jcontract_services_update.ServicesBeanOut"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="JcontractServicesUpdateReturn" type="impl:JcontractServicesUpdateBeanOut"/>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://www.lhsgroup.com/ws_v2_NII_1"/>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.JcontractServicesUpdateBeanServiceIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="input" nillable="true" type="impl:JcontractServicesUpdateBeanIn"/>
+       <element minOccurs="0" name="sessionChange" nillable="true" type="impl:SessionChangeBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="executeResponse">
+
+      <wsdl:part element="impl:JcontractServicesUpdateReturn" name="JcontractServicesUpdateReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRequest">
+
+      <wsdl:part element="impl:JcontractServicesUpdate" name="JcontractServicesUpdate"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="JcontractServicesUpdateService">
+
+      <wsdl:operation name="execute" parameterOrder="JcontractServicesUpdate">
+
+         <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+         <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="JcontractServicesUpdateServiceSoapBinding" type="impl:JcontractServicesUpdateService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="JcontractServicesUpdateService">
+
+      <wsdl:port binding="impl:JcontractServicesUpdateServiceSoapBinding" name="JcontractServicesUpdateService">
+
+         <wsdlsoap:address location="http://10.120.145.87:11003/ws_v2_NII_1/services/JcontractServicesUpdate"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

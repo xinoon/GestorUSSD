@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="PortalCautivo/Resources/WSDLs/ValidaVentaBolsas" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>ValidaVentaBolsasPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+        <con:pipeline type="request" name="PipelineValidaVenta_request" errorHandler="_onErrorHandler-669149913408902538--3a9c6999.142bf47cf89.-7e4e">
+            <con:stage name="in_stg_validaParametro">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7f93</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>data($body/cap:getValidaVentaBolsas/client_name)</con2:leftPath>
+                                        <con2:rightPath>''</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7cf5</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Se debe ingresar el parámetro "client_name".</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>data($body/cap:getValidaVentaBolsas/phone_number)</con2:leftPath>
+                                        <con2:rightPath>''</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7c17</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Se debe ingresar el parámetro "phone_number".</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>data($body/cap:getValidaVentaBolsas/segment_prod)</con2:leftPath>
+                                        <con2:rightPath>''</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7bdd</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Se debe ingresar el parámetro "segment_prod".</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:compExpr operator="=">
+                                        <con2:leftPath>data($body/cap:getValidaVentaBolsas/trafic_type)</con2:leftPath>
+                                        <con2:rightPath>''</con2:rightPath>
+                                    </con2:compExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7ba3</con2:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Se debe ingresar el parámetro "trafic_type".</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_validaVentaBols">
+                <con:context>
+                    <con2:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-913369153547449420--7f7915ac.142bebbd291.-7dae</con2:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSValidaVentaBolsasDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>ValidaVentaBolsasDBA</con1:operation>
+                        <con1:request>
+                            <con1:body>ValidaVentaBolsas</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>ValidaVentaBolsasResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:replace varName="ValidaVentaBolsas">
+                                <con2:id>_ActionId-120260318201001824-b96ad0c.142bf19f0ed.-7fc8</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_ValidaVentaBols"/>
+                                        <con2:param name="getValidaVentaBolsas1">
+                                            <con2:path>$body/cap:getValidaVentaBolsas</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="ValidaVentaBolsasResp">
+                                <con2:id>_ActionId-120260318201001824-b96ad0c.142bf19f0ed.-7f90</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>$ValidaVentaBolsasResponse</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelineValidaVenta_response" errorHandler="_onErrorHandler-669149913408902538--3a9c6999.142bf47cf89.-7e4d">
+            <con:stage name="out_stg_validaVentaBols">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-120260318201001824-b96ad0c.142bf19f0ed.-7f58</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_ValidaVentaBols"/>
+                                <con2:param name="outputParameters1">
+                                    <con2:path>$ValidaVentaBolsasResp</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-669149913408902538--3a9c6999.142bf47cf89.-7e4e">
+            <con:stage name="In_error">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config"/>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-76a5</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:boolExpr operator="or">
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'0'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'1'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'2'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'3'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'100'</con2:rightPath>
+                                        </con2:compExpr>
+                                    </con2:boolExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:assign varName="bodyError">
+                                    <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-75c7</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText><![CDATA[<cap:getValidaVentaBolsasResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <error_code>{data($fault/ctx:errorCode)}</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getValidaVentaBolsasResponse>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:assign>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:assign varName="bodyError">
+                                <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-75c9</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<cap:getValidaVentaBolsasResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <error_code>1</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getValidaVentaBolsasResponse>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7dd9</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7dd8</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-669149913408902538--3a9c6999.142bf47cf89.-7e4d">
+            <con:stage name="Out_error">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config"/>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7554</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con2:xqueryConditionExpr>
+                                    <con2:boolExpr operator="or">
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'0'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'1'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'2'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'3'</con2:rightPath>
+                                        </con2:compExpr>
+                                        <con2:compExpr operator="=">
+                                            <con2:leftPath>xs:string(data($fault/ctx:errorCode))</con2:leftPath>
+                                            <con2:rightPath>'100'</con2:rightPath>
+                                        </con2:compExpr>
+                                    </con2:boolExpr>
+                                </con2:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:assign varName="bodyError">
+                                    <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7553</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText><![CDATA[<cap:getValidaVentaBolsasResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <error_code>{data($fault/ctx:errorCode)}</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getValidaVentaBolsasResponse>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:assign>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:assign varName="bodyError">
+                                <con2:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7552</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<cap:getValidaVentaBolsasResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+  <error_code>1</error_code>
+  <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:getValidaVentaBolsasResponse>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7d2e</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$bodyError</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                        <con2:id>_ActionId-669149913408902538--3a9c6999.142bf47cf89.-7d2d</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelineValidaVenta">
+                <con:request>PipelineValidaVenta_request</con:request>
+                <con:response>PipelineValidaVenta_response</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

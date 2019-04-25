@@ -1,0 +1,14 @@
+<adapter-config name="LocalWebPortalDba" adapter="Database Adapter" wsdlLocation="../WSDLs/LocalWebPortalDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCS" UIConnectionName="BSCSE2E" adapterRef=""/>
+  <endpoint-interaction portType="LocalWebPortalDba_ptt" operation="LocalWebPortalDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select a.port_num FROM port a, CONTR_DEVICES B, contr_services_cap c, DIRECTORY_NUMBER D where d.dn_num = #cel_num AND d.dn_id = c.dn_id AND c.sncode = 3 AND c.cs_deactiv_date IS NULL AND c.co_id = b.co_id and B.CD_DEACTIV_DATE is null and B.PORT_ID = a.PORT_ID"/>
+      <property name="QueryTimeout" value="600"/>      
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

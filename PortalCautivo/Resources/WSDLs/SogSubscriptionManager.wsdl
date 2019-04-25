@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ns1="http://web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <wsdl:documentation>SogSubscriptionManager</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:ns="http://implementation.web.api.icc.services.osp.in.alcatel.com">
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WSHighLevelAPIException">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="WSHighLevelAPIException" nillable="true" type="ns1:WSHighLevelAPIException"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="estimateCost">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="sog" nillable="true" type="ns2:Sog"/>
+            <xs:element minOccurs="0" name="AdditionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="estimateCostResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:EstimateCostResponse"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncActivate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subscriberIdList" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncActivateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncCreate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncCreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncModify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="asyncModifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createSogSubscription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createSogSubscriptionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastCreate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastCreateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastModify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fastModifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifySogSubscription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifySogSubscriptionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeSubscriptions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="removeSubscriptionParam" nillable="true" type="ns2:RemoveSubscriptionsParam"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeSubscriptionsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="replaceSubscription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="replaceSubscriptionParams" nillable="true" type="ns2:ReplaceSubscriptionParams"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="replaceSubscriptionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:ReturnInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="create">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="get">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="communityName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getSogSubscription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getSogSubscriptionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modify">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="modifyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="list">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSubscription" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="listResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="listSogSubscription">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ns2:SubscriberIdentifier"/>
+            <xs:element minOccurs="0" name="sogSubscription" nillable="true" type="ns2:SogSubscription"/>
+            <xs:element minOccurs="0" name="additionalParameters" nillable="true" type="ns2:AdditionalParameters"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="listSogSubscriptionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="remove">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="subLineIdentifier" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="idType" type="xs:int"/>
+            <xs:element minOccurs="0" name="sogSub" nillable="true" type="ns2:SogSubscription"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="removeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="help">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="attributeName" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="helpResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ax223="http://web.api.icc.services.osp.in.alcatel.com/xsd">
+      <xs:complexType name="WSHighLevelAPIException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:int"/>
+          <xs:element minOccurs="0" name="correlationIdentifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notification" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ticket" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" xmlns:ax224="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd">
+      <xs:complexType name="Sog">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="barring" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="dmofield" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="feat_flags" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="maxInstances" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="status" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="stopDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="subscribable" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="version" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="weight_order" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdditionalParameters">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chargingCommand" nillable="true" type="ax224:ChargingCommand"/>
+          <xs:element minOccurs="0" name="dateType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="depth" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="extCorrelationIdentifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notificationToUns" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ticketsToTe" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ChargingCommand">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="arenaFields" nillable="true" type="ax224:ArenaField"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dateOfEvent" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="event" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="identifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="identifierType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="notificationsToUns" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="quantity1" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="quantity2" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="quantity3" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArenaField">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EstimateCostResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="queryResponse" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="sog" nillable="true" type="ax224:Sog"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubscriberIdentifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="communityId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberLineId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="subscriberLineIdType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="validityDate" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReturnInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="extra1" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="notifications" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ticket" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SogSubscription">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="amountAddedMB" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="ceSepGroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="checkDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="communityName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="creationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="dynamicSubscFlag" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="feeAmountMB" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="feeAvailableFlag" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="guifield" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="instanceId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="nominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="platformName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="reActivationDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="serviceOfferGroupRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="serviceRetailerName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="state" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="status" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="statusDesc" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="stopDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="suspensionDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="synchronizationChargingDate" nillable="true" type="xs:dateTime"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="topUpBuckets" nillable="true" type="ax224:TopUpBucketParam"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TopUpBucketParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activityPeriod" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="nominalValue" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="quantity" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="usageLabelRef" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RemoveSubscriptionsParam">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="forceRemoval" nillable="true" type="xs:boolean"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="sogSubs" nillable="true" type="ax224:SogSubscription"/>
+          <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ax224:SubscriberIdentifier"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReplaceSubscriptionParams">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="forceRemoval" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="newSogSubscription" nillable="true" type="ax224:SogSubscription"/>
+          <xs:element minOccurs="0" name="oldSogSubscription" nillable="true" type="ax224:SogSubscription"/>
+          <xs:element minOccurs="0" name="subscriberId" nillable="true" type="ax224:SubscriberIdentifier"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="fastModifyRequest">
+    <wsdl:part name="parameters" element="ns0:fastModify"/>
+  </wsdl:message>
+  <wsdl:message name="fastModifyResponse">
+    <wsdl:part name="parameters" element="ns0:fastModifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="WSHighLevelAPIException">
+    <wsdl:part name="parameters" element="ns0:WSHighLevelAPIException"/>
+  </wsdl:message>
+  <wsdl:message name="replaceSubscriptionRequest">
+    <wsdl:part name="parameters" element="ns0:replaceSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="replaceSubscriptionResponse">
+    <wsdl:part name="parameters" element="ns0:replaceSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeRequest">
+    <wsdl:part name="parameters" element="ns0:remove"/>
+  </wsdl:message>
+  <wsdl:message name="removeResponse">
+    <wsdl:part name="parameters" element="ns0:removeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="asyncCreateRequest">
+    <wsdl:part name="parameters" element="ns0:asyncCreate"/>
+  </wsdl:message>
+  <wsdl:message name="asyncCreateResponse">
+    <wsdl:part name="parameters" element="ns0:asyncCreateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getRequest">
+    <wsdl:part name="parameters" element="ns0:get"/>
+  </wsdl:message>
+  <wsdl:message name="getResponse">
+    <wsdl:part name="parameters" element="ns0:getResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getSogSubscriptionRequest">
+    <wsdl:part name="parameters" element="ns0:getSogSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="getSogSubscriptionResponse">
+    <wsdl:part name="parameters" element="ns0:getSogSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="asyncModifyRequest">
+    <wsdl:part name="parameters" element="ns0:asyncModify"/>
+  </wsdl:message>
+  <wsdl:message name="asyncModifyResponse">
+    <wsdl:part name="parameters" element="ns0:asyncModifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="modifyRequest">
+    <wsdl:part name="parameters" element="ns0:modify"/>
+  </wsdl:message>
+  <wsdl:message name="modifyResponse">
+    <wsdl:part name="parameters" element="ns0:modifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="listRequest">
+    <wsdl:part name="parameters" element="ns0:list"/>
+  </wsdl:message>
+  <wsdl:message name="listResponse">
+    <wsdl:part name="parameters" element="ns0:listResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createRequest">
+    <wsdl:part name="parameters" element="ns0:create"/>
+  </wsdl:message>
+  <wsdl:message name="createResponse">
+    <wsdl:part name="parameters" element="ns0:createResponse"/>
+  </wsdl:message>
+  <wsdl:message name="helpRequest">
+    <wsdl:part name="parameters" element="ns0:help"/>
+  </wsdl:message>
+  <wsdl:message name="helpResponse">
+    <wsdl:part name="parameters" element="ns0:helpResponse"/>
+  </wsdl:message>
+  <wsdl:message name="estimateCostRequest">
+    <wsdl:part name="parameters" element="ns0:estimateCost"/>
+  </wsdl:message>
+  <wsdl:message name="estimateCostResponse">
+    <wsdl:part name="parameters" element="ns0:estimateCostResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeSubscriptionsRequest">
+    <wsdl:part name="parameters" element="ns0:removeSubscriptions"/>
+  </wsdl:message>
+  <wsdl:message name="removeSubscriptionsResponse">
+    <wsdl:part name="parameters" element="ns0:removeSubscriptionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="fastCreateRequest">
+    <wsdl:part name="parameters" element="ns0:fastCreate"/>
+  </wsdl:message>
+  <wsdl:message name="fastCreateResponse">
+    <wsdl:part name="parameters" element="ns0:fastCreateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="listSogSubscriptionRequest">
+    <wsdl:part name="parameters" element="ns0:listSogSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="listSogSubscriptionResponse">
+    <wsdl:part name="parameters" element="ns0:listSogSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="asyncActivateRequest">
+    <wsdl:part name="parameters" element="ns0:asyncActivate"/>
+  </wsdl:message>
+  <wsdl:message name="asyncActivateResponse">
+    <wsdl:part name="parameters" element="ns0:asyncActivateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createSogSubscriptionRequest">
+    <wsdl:part name="parameters" element="ns0:createSogSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="createSogSubscriptionResponse">
+    <wsdl:part name="parameters" element="ns0:createSogSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="modifySogSubscriptionRequest">
+    <wsdl:part name="parameters" element="ns0:modifySogSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="modifySogSubscriptionResponse">
+    <wsdl:part name="parameters" element="ns0:modifySogSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SogSubscriptionManagerPortType">
+    <wsdl:operation name="fastModify">
+      <wsdl:input message="ns0:fastModifyRequest" wsaw:Action="urn:fastModify"/>
+      <wsdl:output message="ns0:fastModifyResponse" wsaw:Action="urn:fastModifyResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:fastModifyWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="replaceSubscription">
+      <wsdl:input message="ns0:replaceSubscriptionRequest" wsaw:Action="urn:replaceSubscription"/>
+      <wsdl:output message="ns0:replaceSubscriptionResponse" wsaw:Action="urn:replaceSubscriptionResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:replaceSubscriptionWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="remove">
+      <wsdl:input message="ns0:removeRequest" wsaw:Action="urn:remove"/>
+      <wsdl:output message="ns0:removeResponse" wsaw:Action="urn:removeResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:removeWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="asyncCreate">
+      <wsdl:input message="ns0:asyncCreateRequest" wsaw:Action="urn:asyncCreate"/>
+      <wsdl:output message="ns0:asyncCreateResponse" wsaw:Action="urn:asyncCreateResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:asyncCreateWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <wsdl:input message="ns0:getRequest" wsaw:Action="urn:get"/>
+      <wsdl:output message="ns0:getResponse" wsaw:Action="urn:getResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:getWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getSogSubscription">
+      <wsdl:input message="ns0:getSogSubscriptionRequest" wsaw:Action="urn:getSogSubscription"/>
+      <wsdl:output message="ns0:getSogSubscriptionResponse" wsaw:Action="urn:getSogSubscriptionResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:getSogSubscriptionWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="asyncModify">
+      <wsdl:input message="ns0:asyncModifyRequest" wsaw:Action="urn:asyncModify"/>
+      <wsdl:output message="ns0:asyncModifyResponse" wsaw:Action="urn:asyncModifyResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:asyncModifyWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="modify">
+      <wsdl:input message="ns0:modifyRequest" wsaw:Action="urn:modify"/>
+      <wsdl:output message="ns0:modifyResponse" wsaw:Action="urn:modifyResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:modifyWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="list">
+      <wsdl:input message="ns0:listRequest" wsaw:Action="urn:list"/>
+      <wsdl:output message="ns0:listResponse" wsaw:Action="urn:listResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:listWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <wsdl:input message="ns0:createRequest" wsaw:Action="urn:create"/>
+      <wsdl:output message="ns0:createResponse" wsaw:Action="urn:createResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:createWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="help">
+      <wsdl:input message="ns0:helpRequest" wsaw:Action="urn:help"/>
+      <wsdl:output message="ns0:helpResponse" wsaw:Action="urn:helpResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:helpWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="estimateCost">
+      <wsdl:input message="ns0:estimateCostRequest" wsaw:Action="urn:estimateCost"/>
+      <wsdl:output message="ns0:estimateCostResponse" wsaw:Action="urn:estimateCostResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:estimateCostWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeSubscriptions">
+      <wsdl:input message="ns0:removeSubscriptionsRequest" wsaw:Action="urn:removeSubscriptions"/>
+      <wsdl:output message="ns0:removeSubscriptionsResponse" wsaw:Action="urn:removeSubscriptionsResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:removeSubscriptionsWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="fastCreate">
+      <wsdl:input message="ns0:fastCreateRequest" wsaw:Action="urn:fastCreate"/>
+      <wsdl:output message="ns0:fastCreateResponse" wsaw:Action="urn:fastCreateResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:fastCreateWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="listSogSubscription">
+      <wsdl:input message="ns0:listSogSubscriptionRequest" wsaw:Action="urn:listSogSubscription"/>
+      <wsdl:output message="ns0:listSogSubscriptionResponse" wsaw:Action="urn:listSogSubscriptionResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:listSogSubscriptionWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="asyncActivate">
+      <wsdl:input message="ns0:asyncActivateRequest" wsaw:Action="urn:asyncActivate"/>
+      <wsdl:output message="ns0:asyncActivateResponse" wsaw:Action="urn:asyncActivateResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:asyncActivateWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createSogSubscription">
+      <wsdl:input message="ns0:createSogSubscriptionRequest" wsaw:Action="urn:createSogSubscription"/>
+      <wsdl:output message="ns0:createSogSubscriptionResponse" wsaw:Action="urn:createSogSubscriptionResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:createSogSubscriptionWSHighLevelAPIException"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifySogSubscription">
+      <wsdl:input message="ns0:modifySogSubscriptionRequest" wsaw:Action="urn:modifySogSubscription"/>
+      <wsdl:output message="ns0:modifySogSubscriptionResponse" wsaw:Action="urn:modifySogSubscriptionResponse"/>
+      <wsdl:fault message="ns0:WSHighLevelAPIException" name="WSHighLevelAPIException" wsaw:Action="urn:modifySogSubscriptionWSHighLevelAPIException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SogSubscriptionManagerSOAP11Binding" type="ns0:SogSubscriptionManagerPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="fastModify">
+      <soap:operation soapAction="urn:fastModify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="replaceSubscription">
+      <soap:operation soapAction="urn:replaceSubscription" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="remove">
+      <soap:operation soapAction="urn:remove" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="asyncCreate">
+      <soap:operation soapAction="urn:asyncCreate" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <soap:operation soapAction="urn:get" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSogSubscription">
+      <soap:operation soapAction="urn:getSogSubscription" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="asyncModify">
+      <soap:operation soapAction="urn:asyncModify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modify">
+      <soap:operation soapAction="urn:modify" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="list">
+      <soap:operation soapAction="urn:list" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <soap:operation soapAction="urn:create" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="help">
+      <soap:operation soapAction="urn:help" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="estimateCost">
+      <soap:operation soapAction="urn:estimateCost" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeSubscriptions">
+      <soap:operation soapAction="urn:removeSubscriptions" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="fastCreate">
+      <soap:operation soapAction="urn:fastCreate" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listSogSubscription">
+      <soap:operation soapAction="urn:listSogSubscription" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="asyncActivate">
+      <soap:operation soapAction="urn:asyncActivate" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createSogSubscription">
+      <soap:operation soapAction="urn:createSogSubscription" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifySogSubscription">
+      <soap:operation soapAction="urn:modifySogSubscription" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WSHighLevelAPIException">
+        <soap:fault use="literal" name="WSHighLevelAPIException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+
+
+  <wsdl:service name="SogSubscriptionManager">
+    <wsdl:port name="SogSubscriptionManagerSOAP11port_http" binding="ns0:SogSubscriptionManagerSOAP11Binding">
+      <soap:address location="http://10.98.18.33:8081/HighLevelApiWS-5.8/services/SogSubscriptionManager"/>
+    </wsdl:port>
+
+
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:intf="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 21, 2010 (11:39:14 CEST)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <complexType name="BaseSOIBean">
+    <sequence/>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DntypesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="dnCode" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DntypesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DntypesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.ParameterValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="prmNo" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="prmValueString" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="resourceLike" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.ParameterValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.ParameterValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.StatusesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="dnStatus" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.StatusesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.StatusesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="GenericDirectoryNumberSearchBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="areaCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="dirnum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="dntypes" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DntypesBeanIn"/>
+       <element minOccurs="0" name="fleetId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="fleetIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="hlcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="hlcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="hmcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="hmcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="matchingDnId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="matchingDnNum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="maxBlkSize" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="minBlkSize" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="npcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="npcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="onlyReservedToCs" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="onlyReservedToService" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="onlyReservedToSubmPorting" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="parameterValues" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.ParameterValuesBeanIn"/>
+       <element minOccurs="0" name="plcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="plcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="prefix" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="publicDnNum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="publicNpcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="publicNpcodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="requiredMappingRule" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="reservation" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="reservedByCsId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="reservedByCsIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="reservedBySncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="reservedBySncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="searchBlock" nillable="true" type="xsd:boolean"/>
+       <element minOccurs="0" name="searchCount" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="statuses" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.StatusesBeanIn"/>
+       <element minOccurs="0" name="submId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="submIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="urbanId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="urbanIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="vpnId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="vpnIdPub" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="key" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="SessionChangeBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="values" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="GenericDirectoryNumberSearch" type="tns1:com.lhs.ws.beans.v2_NII_1.GenericDirectoryNumberSearchBeanServiceIn"/>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.directorynumbers.BlocksBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="dnBlockSeqno" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="dnBlockStatus" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="high" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="low" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="size" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.directorynumbers.BlocksBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.directorynumbers.BlocksBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DirectorynumbersBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="areaCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="blocks" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.directorynumbers.BlocksBeanOut"/>
+       <element minOccurs="0" name="des" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="dirnum" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="dnCode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="dnId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="dnStatus" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="hlcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="npcode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="portId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="vpnId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DirectorynumbersBeanOut">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DirectorynumbersBeanOut"/>
+    </sequence>
+   </complexType>
+   <complexType name="GenericDirectoryNumberSearchBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="directorynumbers" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.generic_directory_number_search.DirectorynumbersBeanOut"/>
+       <element minOccurs="0" name="searchIsComplete" nillable="true" type="xsd:boolean"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="GenericDirectoryNumberSearchReturn" type="impl:GenericDirectoryNumberSearchBeanOut"/>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://www.lhsgroup.com/ws_v2_NII_1"/>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.GenericDirectoryNumberSearchBeanServiceIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="input" nillable="true" type="impl:GenericDirectoryNumberSearchBeanIn"/>
+       <element minOccurs="0" name="sessionChange" nillable="true" type="impl:SessionChangeBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="executeResponse">
+
+      <wsdl:part element="impl:GenericDirectoryNumberSearchReturn" name="GenericDirectoryNumberSearchReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRequest">
+
+      <wsdl:part element="impl:GenericDirectoryNumberSearch" name="GenericDirectoryNumberSearch"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="GenericDirectoryNumberSearchService">
+
+      <wsdl:operation name="execute" parameterOrder="GenericDirectoryNumberSearch">
+
+         <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+         <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="GenericDirectoryNumberSearchServiceSoapBinding" type="impl:GenericDirectoryNumberSearchService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="GenericDirectoryNumberSearchService">
+
+      <wsdl:port binding="impl:GenericDirectoryNumberSearchServiceSoapBinding" name="GenericDirectoryNumberSearchService">
+
+         <wsdlsoap:address location="http://10.101.241.42:11137/ws_v2_NII_1/services/GenericDirectoryNumberSearch"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

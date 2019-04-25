@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="PortalCautivo/Resources/WSDLs/ConsultaOCCPortal" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/services/bindings/config"/>
+            <con:binding>
+                <con:name>CaptivePortalPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+        <con:pipeline type="request" name="PipelinePairNode1_request" errorHandler="_onErrorHandler-6931282285397435755--48d94ae3.13fbeb8cd9a.-5e24">
+            <con:stage name="In_stg_consultaOCC">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CONFIG_OCC_PRC/" prefix="get"/>
+                    <con1:userNsDecl namespace="http://www.lhsgroup.com/ws_v2_NII_1" prefix="wsd"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="header" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7ca4</con4:id>
+                        <con1:location>
+                            <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">.</con4:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Header>
+      <wsse:Security soap-env:actor="http://schemas.xmlsoap.org/soap/actor/next" soap-env:mustUnderstand="0" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+         <wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+            <wsse:Username>BOLSAPP</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">SY</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+</soap-env:Header>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5f56</con4:id>
+                        <con1:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSGetConfigOCC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getConfigOCC</con1:operation>
+                        <con1:request>
+                            <con1:body>ConfigOCCRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>ConfigOCCResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="ConfigOCCRequest">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5f57</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CONFIG_OCC_PRC/">
+    <!--Optional:-->
+    <get:P_SNCODE>{data($body/cap:setNextelActiveProduct/sn_code)}</get:P_SNCODE>
+    <!--Optional:-->
+    <get:P_TPO_TRAFICO>{data($body/cap:setNextelActiveProduct/traffic_type)}</get:P_TPO_TRAFICO>
+</get:InputParameters>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="ConfigOCCResp">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7b55</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$ConfigOCCResponse</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LSN_COD_RETORNO">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7dd4</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($ConfigOCCResp/get:SN_COD_RETORNO)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                    <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5f55</con4:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                    <con4:compExpr operator="=">
+                                        <con4:leftPath>$LSN_COD_RETORNO</con4:leftPath>
+                                        <con4:rightPath>'0'</con4:rightPath>
+                                    </con4:compExpr>
+                                </con4:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions/>
+                        </con1:case>
+                        <con1:default>
+                            <con1:Error>
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5f54</con4:id>
+                                <con1:errCode>1</con1:errCode>
+                                <con1:message>Error al obtener la OCC del producto.</con1:message>
+                            </con1:Error>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5f52</con4:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="3GBSCS/Proxy Services/PSBookingRequestWrite" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body>BookingRequest</con1:body>
+                            <con1:header>BookingHeaderRequest</con1:header>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>BookingResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="BookingHeaderRequest">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7c56</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$header</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:replace varName="BookingRequest" contents-only="false">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7bc3</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                        <con4:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_ConsultaOCC"/>
+                                        <con4:param name="lc_tmcode">
+                                            <con4:path>data($body/cap:setNextelActiveProduct/lc_tmcode)</con4:path>
+                                        </con4:param>
+                                        <con4:param name="tariff_prod">
+                                            <con4:path>data($body/cap:setNextelActiveProduct/tariff_prod)</con4:path>
+                                        </con4:param>
+                                        <con4:param name="lc_customer">
+                                            <con4:path>data($body/cap:setNextelActiveProduct/lc_customer)</con4:path>
+                                        </con4:param>
+                                        <con4:param name="contractId">
+                                            <con4:path>data($body/cap:setNextelActiveProduct/contractId)</con4:path>
+                                        </con4:param>
+                                        <con4:param name="fechaActivacion">
+                                            <con4:path>data($body/cap:setNextelActiveProduct/fechaActivacion)</con4:path>
+                                        </con4:param>
+                                        <con4:param name="outputParameters1">
+                                            <con4:path>$ConfigOCCResp</con4:path>
+                                        </con4:param>
+                                    </con4:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="BookingResp">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7590</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$BookingResponse</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="ErrorRespuestaOCC">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-758e</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($BookingResp/wsd:error_code)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="asdadsds">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7061473206436240289-1ca811e4.13fd381832a.-7ce2</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($BookingResp/wsd:err_description)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7599</con4:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="!=">
+                                                <con4:leftPath>$ErrorRespuestaOCC</con4:leftPath>
+                                                <con4:rightPath>'0'</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7597</con4:id>
+                                            <con1:expr>
+                                                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+ <error_code>{$ErrorRespuestaOCC}</error_code>
+ <err_description>{data($BookingResp/wsd:err_description)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:id>_ActionId-3290315005037505538-75f7824b.13fc3cfef00.-7596</con4:id>
+                                        </con4:reply>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response" errorHandler="_onErrorHandler-6931282285397435755--48d94ae3.13fbeb8cd9a.-5de7">
+            <con:stage name="Out_stg_consultaOCC">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5c92</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-6931282285397435755--48d94ae3.13fbeb8cd9a.-5e24">
+            <con:stage name="In_stg_error_occ">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5de9</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5de8</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-6931282285397435755--48d94ae3.13fbeb8cd9a.-5de7">
+            <con:stage name="Out_stg_error_occ1">
+                <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+                <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5d73</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{data($fault/ctx:reason)}</err_description>
+</cap:setNextelActiveProductResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-6931282285397435755--48d94ae3.13fbeb8cd9a.-5d72</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="setNextelActiveProduct">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

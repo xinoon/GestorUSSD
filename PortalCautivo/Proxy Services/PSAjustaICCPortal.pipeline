@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con2:wsdl ref="PortalCautivo/Resources/WSDLs/AjustaICCPortal" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>AjustaICCPortalPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+        <con:pipeline type="request" name="Pipeline_ajustaIccPortal_request" errorHandler="_onErrorHandler-2870691322981300978-4fff2fdc.14266f2d85b.-7238">
+            <con:stage name="In_stg_VARIABLE_LC1">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con2:assign varName="ppm_ri">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7d18</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>''</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="BucketName">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7d17</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>''</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="Currency">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7d16</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>''</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_ConsultaSaldoICC">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:userNsDecl namespace="http://nii.com/EnterpriseProxyService/ServiceManagement/QueryAccountBalanceXSD/v1" prefix="v1"/>
+                    <con1:userNsDecl namespace="http://ws.server.ws.nextel.devetel.cl/" prefix="ns2"/>
+                    <con1:userNsDecl namespace="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" prefix="ns3"/>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                    <con1:userNsDecl namespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" prefix="ns"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7241</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="SearchBalancesICC/Proxy Services/PSSearchBalancesICCService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>getSearchBalanceIcc</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getSearchBalanceIccRespo</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con1:assign varName="getSearchBalanceIcc" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7244</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<get:searchBalancesICC-request 	xmlns:get="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+<!--Optional:-->
+<get:phone_number>{data($body/cap:setAjustaICCPortal/phone_number)}</get:phone_number>
+<!--Optional:-->
+<get:detail_bucket>Y</get:detail_bucket>
+</get:searchBalancesICC-request>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="getSearchRespo">
+                                <con1:id>_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7243</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getSearchBalanceIccRespo</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="currentBalance">
+                                <con1:id>_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7242</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($getSearchRespo/get:totalBalance)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                    <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7240</con4:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                    <con4:compExpr operator="&lt;">
+                                        <con4:leftPath>xs:decimal($currentBalance)</con4:leftPath>
+                                        <con4:rightPath>xs:decimal($body/cap:setAjustaICCPortal/tariff_prod)</con4:rightPath>
+                                    </con4:compExpr>
+                                </con4:xqueryConditionExpr>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:Error>
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723f</con4:id>
+                                    <con1:errCode>1</con1:errCode>
+                                    <con1:message>Saldo Insuficiente.</con1:message>
+                                </con1:Error>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                    <con1:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-7239</con4:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="Alcatel-HighLevelApiWS/SubscriberLineManager/Proxy Services/PSSubscriberLineManagerService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getAllInformation</con1:operation>
+                        <con1:request>
+                            <con1:body>getAllInformation</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body>getAllInformationResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="getAllInformation">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723e</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<imp:getAllInformation xmlns:imp="http://implementation.web.api.icc.services.osp.in.alcatel.com">
+	<!--Optional:-->
+	<imp:subscriberLineId>{data($body/cap:setAjustaICCPortal/phone_number)}</imp:subscriberLineId>
+	<!--Optional:-->
+	<imp:subscriberLineIdType>3</imp:subscriberLineIdType>
+	<!--Optional:-->
+	<imp:allBuckets></imp:allBuckets>
+</imp:getAllInformation>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="getAllInformationRes">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723d</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$getAllInformationResponse</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="ppm_ri">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723c</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($getAllInformationRes/ns:return/ns3:defaultAccountIdentifierLogin)</con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:ifThenElse>
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723b</con4:id>
+                                <con1:case>
+                                    <con1:condition>
+                                        <con4:xqueryConditionExpr xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                            <con4:compExpr operator="=">
+                                                <con4:leftPath>$ppm_ri</con4:leftPath>
+                                                <con4:rightPath>''</con4:rightPath>
+                                            </con4:compExpr>
+                                        </con4:xqueryConditionExpr>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:Error>
+                                            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-723a</con4:id>
+                                            <con1:errCode>1</con1:errCode>
+                                            <con1:message>Error: al obtener ppm_ri (Consulta ICC).</con1:message>
+                                        </con1:Error>
+                                    </con1:actions>
+                                </con1:case>
+                                <con1:default/>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="stg_in_getConfig_bucket">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-6091392610753323946-1baa55bd.14272539a6e.-74c6</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSGetConfigBucketDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getConfigBucketDBA</con2:operation>
+                        <con2:request>
+                            <con2:body>getConfigBucket</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getConfigBucketResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="getConfigBucket">
+                                <con1:id>_ActionId-6091392610753323946-1baa55bd.14272539a6e.-74c8</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>&lt;get:getConfigBucketDBAInput xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA"/></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="getConfigBucketRes">
+                                <con1:id>_ActionId-6091392610753323946-1baa55bd.14272539a6e.-74c7</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getConfigBucketResponse</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="stg_in_froCountConfig1">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA" prefix="get"/>
+                    <con1:userNsDecl namespace="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd" prefix="ns3"/>
+                    <con1:userNsDecl namespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" prefix="ns"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con2:assign varName="countBody">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb6</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$getConfigBucketRes/get:getConfigBucketDBAOutput</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="countB">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb5</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn:count($getConfigBucketRes/get:getConfigBucketDBAOutput)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="tarifaInDesc">
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb4</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($body/cap:setAjustaICCPortal/tariff_prod)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:foreach>
+                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e63</con1:id>
+                        <con2:variable>getConfigBucketRes</con2:variable>
+                        <con2:expression>
+                            <con1:xpathText>./get:getConfigBucketDBAOutput</con1:xpathText>
+                        </con2:expression>
+                        <con2:value-variable>ConfigBucketResColl</con2:value-variable>
+                        <con2:index-variable>currIndexB</con2:index-variable>
+                        <con2:total-variable>countB</con2:total-variable>
+                        <con2:actions>
+                            <con2:assign varName="asd">
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb3</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$ConfigBucketResColl</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="BUCKET">
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb2</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($ConfigBucketResColl/get:BUCKET)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="ID_SECUENCIAL">
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb1</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($ConfigBucketResColl/get:ID_SECUENCIAL)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="asdadadass">
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eb0</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getAllInformationRes</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eaf</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="=">
+                                                <con1:leftPath>xs:string($ID_SECUENCIAL)</con1:leftPath>
+                                                <con1:rightPath>xs:string($currIndexB)</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:assign varName="countAlB">
+                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eae</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>fn:count($getAllInformationRes/ns:return/ns3:defaultAccount/ns3:buckets)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ead</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryConditionExpr>
+                                                        <con1:compExpr operator="=">
+                                                            <con1:leftPath>$BUCKET</con1:leftPath>
+                                                            <con1:rightPath>'MAIN_BALANCE'</con1:rightPath>
+                                                        </con1:compExpr>
+                                                    </con1:xqueryConditionExpr>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:ifThenElse>
+                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7eac</con1:id>
+                                                        <con2:case>
+                                                            <con2:condition>
+                                                                <con1:xqueryConditionExpr>
+                                                                    <con1:compExpr operator="&lt;=">
+                                                                        <con1:leftPath>xs:double($tarifaInDesc)</con1:leftPath>
+                                                                        <con1:rightPath>0</con1:rightPath>
+                                                                    </con1:compExpr>
+                                                                </con1:xqueryConditionExpr>
+                                                            </con2:condition>
+                                                            <con2:actions>
+                                                                <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7eaa</con4:id>
+                                                                    <con1:expr>
+                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                                                                    </con1:expr>
+                                                                </con1:replace>
+                                                                <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                    <con4:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea9</con4:id>
+                                                                </con4:reply>
+                                                            </con2:actions>
+                                                        </con2:case>
+                                                        <con2:default>
+                                                            <con2:ifThenElse>
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea8</con1:id>
+                                                                <con2:case>
+                                                                    <con2:condition>
+                                                                        <con1:xqueryConditionExpr>
+                                                                            <con1:compExpr operator="=">
+                                                                                <con1:leftPath>$currIndexB</con1:leftPath>
+                                                                                <con1:rightPath>$countB</con1:rightPath>
+                                                                            </con1:compExpr>
+                                                                        </con1:xqueryConditionExpr>
+                                                                    </con2:condition>
+                                                                    <con2:actions>
+                                                                        <con2:replace varName="tarifaInDesc" contents-only="false">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea7</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>round-half-to-even(xs:double($tarifaInDesc), 2)</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:replace>
+                                                                        <con2:assign varName="tarifaInDecimal">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea6</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>substring-after(xs:string(xs:double($tarifaInDesc)), '.')</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:assign>
+                                                                        <con2:assign varName="tarifalargoDecimal">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea5</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>fn:string-length($tarifaInDecimal)</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:assign>
+                                                                        <con2:ifThenElse>
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea4</con1:id>
+                                                                            <con2:case>
+                                                                                <con2:condition>
+                                                                                    <con1:xqueryConditionExpr>
+                                                                                        <con1:compExpr operator="&lt;">
+                                                                                            <con1:leftPath>xs:integer($tarifalargoDecimal)</con1:leftPath>
+                                                                                            <con1:rightPath>2</con1:rightPath>
+                                                                                        </con1:compExpr>
+                                                                                    </con1:xqueryConditionExpr>
+                                                                                </con2:condition>
+                                                                                <con2:actions>
+                                                                                    <con2:assign varName="tarifaIn">
+                                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea3</con1:id>
+                                                                                        <con2:expr>
+                                                                                            <con1:xqueryText>fn:concat(fn:translate(xs:string(xs:double($tarifaInDesc)), '.', ''),'0')</con1:xqueryText>
+                                                                                        </con2:expr>
+                                                                                    </con2:assign>
+                                                                                </con2:actions>
+                                                                            </con2:case>
+                                                                            <con2:default>
+                                                                                <con2:assign varName="tarifaIn">
+                                                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea2</con1:id>
+                                                                                    <con2:expr>
+                                                                                        <con1:xqueryText>fn:translate(xs:string(xs:double($tarifaInDesc)), '.', '')</con1:xqueryText>
+                                                                                    </con2:expr>
+                                                                                </con2:assign>
+                                                                            </con2:default>
+                                                                        </con2:ifThenElse>
+                                                                        <con2:assign varName="largoTarifaInDesc">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea1</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>fn:string-length($tarifaIn)</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:assign>
+                                                                        <con2:assign varName="entroAlIf">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7ea0</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>fn:concat($currIndexB,' - ',$countB)</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:assign>
+                                                                        <con2:wsCallout>
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9e</con1:id>
+                                                                            <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSRatingEngineManager" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                            <con2:operation>modifyAdjust</con2:operation>
+                                                                            <con2:request>
+                                                                                <con2:body wrapped="false">modAdRequest</con2:body>
+                                                                            </con2:request>
+                                                                            <con2:response>
+                                                                                <con2:body wrapped="false">modAdResponse</con2:body>
+                                                                            </con2:response>
+                                                                            <con2:requestTransform>
+                                                                                <con2:assign varName="modAdRequest">
+                                                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9f</con1:id>
+                                                                                    <con2:expr>
+                                                                                        <con1:xqueryText><![CDATA[<rat:modifyAdjust xmlns:rat="http://ratingengine.web.api.icc.services.osp.in.alcatel.com">
+    <!--Optional:-->
+    <rat:adjust xmlns:xsd="http://web.ratingengine.web.api.icc.services.osp.in.alcatel.com/xsd">
+        <!--Optional:-->
+        <xsd:balance>{fn:concat('(',$tarifaIn,')')}</xsd:balance>
+        <!--Optional:-->
+        <xsd:glcode></xsd:glcode>
+        <!--Optional:-->
+        <xsd:ppm_ri>{$ppm_ri}</xsd:ppm_ri>
+        <!--Optional - antes <xsd:reason>Descto</xsd:reason>:-->
+        <xsd:reason>COMPRA DE BOLSAS</xsd:reason>
+        <!--Optional:-->
+        <xsd:servret>nextelret</xsd:servret>
+    </rat:adjust>
+</rat:modifyAdjust>]]></con1:xqueryText>
+                                                                                    </con2:expr>
+                                                                                </con2:assign>
+                                                                            </con2:requestTransform>
+                                                                            <con2:responseTransform/>
+                                                                        </con2:wsCallout>
+                                                                        <con2:replace varName="cadenaBucket" contents-only="false">
+                                                                            <con1:id>_ActionId-1376109233886975474-555a41a7.14a0c2ec05f.-7f70</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>if (xs:integer(fn:string-length((xs:string($tarifaIn)))) &lt;= 2) then fn:concat($cadenaBucket,'|MAIN_BALANCE-',$tarifaIn) else ( fn:concat($cadenaBucket,'|MAIN_BALANCE-',substring(xs:string($tarifaIn),1,xs:integer(fn:string-length((xs:string($tarifaIn))))-2)))</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:replace>
+                                                                        <con2:replace varName="tarifaInDesc">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9d</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>xs:double($tarifaInDesc)-xs:double($tarifaInDesc)</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:replace>
+                                                                    </con2:actions>
+                                                                </con2:case>
+                                                                <con2:default/>
+                                                            </con2:ifThenElse>
+                                                        </con2:default>
+                                                    </con2:ifThenElse>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default/>
+                                        </con2:ifThenElse>
+                                        <con2:assign varName="bodyCountAllInf">
+                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9c</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>$getAllInformationRes/ns:return/ns3:defaultAccount/ns3:buckets</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:foreach>
+                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e65</con1:id>
+                                            <con2:variable>getAllInformationRes</con2:variable>
+                                            <con2:expression>
+                                                <con1:xpathText>./ns:return/ns3:defaultAccount/ns3:buckets</con1:xpathText>
+                                            </con2:expression>
+                                            <con2:value-variable>getAllInformationColl</con2:value-variable>
+                                            <con2:index-variable>currIndexAlB</con2:index-variable>
+                                            <con2:total-variable>countAlB</con2:total-variable>
+                                            <con2:actions>
+                                                <con2:assign varName="asdasd">
+                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9b</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>$getAllInformationColl</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="AllBuckets">
+                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e9a</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>data($getAllInformationColl/ns3:usageLabelRef)</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="rowIdentifier">
+                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e99</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>data($getAllInformationColl/ns3:rowIdentifier)</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:ifThenElse>
+                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e98</con1:id>
+                                                    <con2:case>
+                                                        <con2:condition>
+                                                            <con1:xqueryConditionExpr>
+                                                                <con1:compExpr operator="=">
+                                                                    <con1:leftPath>xs:string($AllBuckets)</con1:leftPath>
+                                                                    <con1:rightPath>xs:string($BUCKET)</con1:rightPath>
+                                                                </con1:compExpr>
+                                                            </con1:xqueryConditionExpr>
+                                                        </con2:condition>
+                                                        <con2:actions>
+                                                            <con2:assign varName="tarifaSumis">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e97</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>data($getAllInformationColl/ns3:remainingUnits)</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:ifThenElse>
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e96</con1:id>
+                                                                <con2:case>
+                                                                    <con2:condition>
+                                                                        <con1:xqueryConditionExpr>
+                                                                            <con1:compExpr operator="=">
+                                                                                <con1:leftPath>xs:string($tarifaSumis)</con1:leftPath>
+                                                                                <con1:rightPath>''</con1:rightPath>
+                                                                            </con1:compExpr>
+                                                                        </con1:xqueryConditionExpr>
+                                                                    </con2:condition>
+                                                                    <con2:actions>
+                                                                        <con2:assign varName="tarifaSumis">
+                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e95</con1:id>
+                                                                            <con2:expr>
+                                                                                <con1:xqueryText>0</con1:xqueryText>
+                                                                            </con2:expr>
+                                                                        </con2:assign>
+                                                                    </con2:actions>
+                                                                </con2:case>
+                                                                <con2:default/>
+                                                            </con2:ifThenElse>
+                                                            <con2:assign varName="tarifaSumisTot">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e94</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>$tarifaSumis</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:assign varName="DivisionValueSuminis">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e93</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>xs:double($tarifaSumis)div 100</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:assign varName="SumisInDecimal">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e92</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>substring-after(xs:string(xs:double($DivisionValueSuminis)), '.')</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:assign varName="largoDes">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e91</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>fn:string-length($SumisInDecimal)</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:assign varName="tarifaSumisTotComa">
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e90</con1:id>
+                                                                <con2:expr>
+                                                                    <con1:xqueryText>$DivisionValueSuminis</con1:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:assign>
+                                                            <con2:wsCallout>
+                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e78</con1:id>
+                                                                <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSBucketManager" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                <con2:operation>adjust</con2:operation>
+                                                                <con2:request>
+                                                                    <con2:body>adjustRequest</con2:body>
+                                                                </con2:request>
+                                                                <con2:response>
+                                                                    <con2:body>adjustResponse</con2:body>
+                                                                </con2:response>
+                                                                <con2:requestTransform>
+                                                                    <con2:ifThenElse>
+                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e8f</con1:id>
+                                                                        <con2:case>
+                                                                            <con2:condition>
+                                                                                <con1:xqueryConditionExpr>
+                                                                                    <con1:compExpr operator="=">
+                                                                                        <con1:leftPath>xs:double($tarifaInDesc)</con1:leftPath>
+                                                                                        <con1:rightPath>0</con1:rightPath>
+                                                                                    </con1:compExpr>
+                                                                                </con1:xqueryConditionExpr>
+                                                                            </con2:condition>
+                                                                            <con2:actions>
+                                                                                <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7e8d</con4:id>
+                                                                                    <con1:expr>
+                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                                                                                    </con1:expr>
+                                                                                </con1:replace>
+                                                                                <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                    <con4:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e8c</con4:id>
+                                                                                </con4:reply>
+                                                                            </con2:actions>
+                                                                        </con2:case>
+                                                                        <con2:default/>
+                                                                    </con2:ifThenElse>
+                                                                    <con2:assign varName="asdsss">
+                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e8b</con1:id>
+                                                                        <con2:expr>
+                                                                            <con1:xqueryText>xs:double($tarifaSumisTotComa) &lt;= xs:double($tarifaInDesc)</con1:xqueryText>
+                                                                        </con2:expr>
+                                                                    </con2:assign>
+                                                                    <con2:assign varName="LargoSumisTotInDesc">
+                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e8a</con1:id>
+                                                                        <con2:expr>
+                                                                            <con1:xqueryText>fn:string-length($tarifaSumisTot)</con1:xqueryText>
+                                                                        </con2:expr>
+                                                                    </con2:assign>
+                                                                    <con2:ifThenElse>
+                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e89</con1:id>
+                                                                        <con2:case>
+                                                                            <con2:condition>
+                                                                                <con1:xqueryConditionExpr>
+                                                                                    <con1:compExpr operator="&lt;=">
+                                                                                        <con1:leftPath>xs:double($tarifaSumisTotComa)</con1:leftPath>
+                                                                                        <con1:rightPath>xs:double($tarifaInDesc)</con1:rightPath>
+                                                                                    </con1:compExpr>
+                                                                                </con1:xqueryConditionExpr>
+                                                                            </con2:condition>
+                                                                            <con2:actions>
+                                                                                <con2:assign varName="adjustRequest">
+                                                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e88</con1:id>
+                                                                                    <con2:expr>
+                                                                                        <con1:xqueryText><![CDATA[<imp:adjust xmlns:imp="http://implementation.web.api.icc.services.osp.in.alcatel.com">
+    <!--Optional:-->
+    <imp:bucketRowId>{$rowIdentifier}</imp:bucketRowId>
+    <!--Optional:-->
+    <imp:identifierLogin>{$ppm_ri}</imp:identifierLogin>
+    <!--Optional:-->
+    <imp:bundleName>{$BUCKET}</imp:bundleName>
+    <!--Optional:-->
+    <imp:loadAlgorithm>1</imp:loadAlgorithm>
+    <!--Optional:-->
+    <imp:remainingUnits>{fn:concat('(',$tarifaSumisTot,')')}</imp:remainingUnits>
+    <!--Optional:-->
+    <imp:startDate></imp:startDate>
+    <!--Optional:-->
+    <imp:stopDate></imp:stopDate>
+    <!--Optional:-->
+    <imp:glCode></imp:glCode>
+    <!--Optional:-->
+    <imp:reason></imp:reason>
+</imp:adjust>]]></con1:xqueryText>
+                                                                                    </con2:expr>
+                                                                                </con2:assign>
+                                                                                <con2:replace varName="cadenaBucket">
+                                                                                    <con1:id>_ActionId-5067760539376897430--348da08c.14a0752f93e.-7d7b</con1:id>
+                                                                                    <con2:expr>
+                                                                                        <con1:xqueryText>if (xs:integer(fn:string-length((xs:string($tarifaSumisTot)))) &lt;= 2) then fn:concat($cadenaBucket,'|',$BUCKET,'-',$tarifaSumisTot) else ( fn:concat($cadenaBucket,'|',$BUCKET,'-',substring(xs:string($tarifaSumisTot),1,xs:integer(fn:string-length((xs:string($tarifaSumisTot))))-2)))</con1:xqueryText>
+                                                                                    </con2:expr>
+                                                                                </con2:replace>
+                                                                                <con2:replace varName="tarifaInDesc">
+                                                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e87</con1:id>
+                                                                                    <con2:expr>
+                                                                                        <con1:xqueryText>xs:double($tarifaInDesc)-xs:double($tarifaSumisTotComa)</con1:xqueryText>
+                                                                                    </con2:expr>
+                                                                                </con2:replace>
+                                                                            </con2:actions>
+                                                                        </con2:case>
+                                                                        <con2:default>
+                                                                            <con2:replace varName="tarifaInDesc" contents-only="false">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e86</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>round-half-to-even(xs:double($tarifaInDesc), 2)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                            <con2:assign varName="tarifaInDecimal_1">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e85</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>substring-after(xs:string(xs:double($tarifaInDesc)), '.')</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="tarifalargoDecimal_1">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e84</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:string-length($tarifaInDecimal_1)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:ifThenElse>
+                                                                                <con1:comment/>
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e83</con1:id>
+                                                                                <con2:case>
+                                                                                    <con2:condition>
+                                                                                        <con1:xqueryConditionExpr>
+                                                                                            <con1:compExpr operator="&lt;">
+                                                                                                <con1:leftPath>xs:integer($tarifalargoDecimal_1)</con1:leftPath>
+                                                                                                <con1:rightPath>2</con1:rightPath>
+                                                                                            </con1:compExpr>
+                                                                                        </con1:xqueryConditionExpr>
+                                                                                    </con2:condition>
+                                                                                    <con2:actions>
+                                                                                        <con2:assign varName="tarifaIn_1">
+                                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e82</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat(fn:translate(xs:string(xs:double($tarifaInDesc)), '.', ''),'0')</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:assign>
+                                                                                    </con2:actions>
+                                                                                </con2:case>
+                                                                                <con2:default>
+                                                                                    <con2:assign varName="tarifaIn_1">
+                                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e81</con1:id>
+                                                                                        <con2:expr>
+                                                                                            <con1:xqueryText>fn:translate(xs:string(xs:double($tarifaInDesc)), '.', '')</con1:xqueryText>
+                                                                                        </con2:expr>
+                                                                                    </con2:assign>
+                                                                                </con2:default>
+                                                                            </con2:ifThenElse>
+                                                                            <con2:assign varName="largoTarifaInDesc_1">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e80</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:string-length($tarifaIn_1)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="largoTarifaInDesc">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e7f</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:string-length($tarifaInDesc)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="adjustRequest">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e7e</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText><![CDATA[<imp:adjust xmlns:imp="http://implementation.web.api.icc.services.osp.in.alcatel.com">
+    <!--Optional:-->
+    <imp:bucketRowId>{$rowIdentifier}</imp:bucketRowId>
+    <!--Optional:-->
+    <imp:identifierLogin>{$ppm_ri}</imp:identifierLogin>
+    <!--Optional:-->
+    <imp:bundleName>{$BUCKET}</imp:bundleName>
+    <!--Optional:-->
+    <imp:loadAlgorithm>1</imp:loadAlgorithm>
+    <!--Optional:-->
+    <imp:remainingUnits>{fn:concat('(',$tarifaIn_1,')')}</imp:remainingUnits>
+    <!--Optional:-->
+    <imp:startDate></imp:startDate>
+    <!--Optional:-->
+    <imp:stopDate></imp:stopDate>
+    <!--Optional:-->
+    <imp:glCode></imp:glCode>
+    <!--Optional:-->
+    <imp:reason></imp:reason>
+</imp:adjust>]]></con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:replace varName="cadenaBucket">
+                                                                                <con1:id>_ActionId-5067760539376897430--348da08c.14a0752f93e.-7d42</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>if (xs:integer(fn:string-length((xs:string($tarifaIn_1)))) &lt;= 2) then fn:concat($cadenaBucket,'|',$BUCKET,'-',$tarifaIn_1) else ( fn:concat($cadenaBucket,'|',$BUCKET,'-',substring(xs:string($tarifaIn_1),1,xs:integer(fn:string-length((xs:string($tarifaIn_1))))-2)))</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                            <con2:replace varName="tarifaInDesc">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e7d</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>xs:double($tarifaInDesc)-xs:double($tarifaInDesc)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                        </con2:default>
+                                                                    </con2:ifThenElse>
+                                                                </con2:requestTransform>
+                                                                <con2:responseTransform>
+                                                                    <con2:ifThenElse>
+                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e7c</con1:id>
+                                                                        <con2:case>
+                                                                            <con2:condition>
+                                                                                <con1:xqueryConditionExpr>
+                                                                                    <con1:compExpr operator="&lt;=">
+                                                                                        <con1:leftPath>xs:double($tarifaInDesc)</con1:leftPath>
+                                                                                        <con1:rightPath>0</con1:rightPath>
+                                                                                    </con1:compExpr>
+                                                                                </con1:xqueryConditionExpr>
+                                                                            </con2:condition>
+                                                                            <con2:actions>
+                                                                                <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7e7a</con4:id>
+                                                                                    <con1:expr>
+                                                                                        <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                                                                                    </con1:expr>
+                                                                                </con1:replace>
+                                                                                <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                                    <con4:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e79</con4:id>
+                                                                                </con4:reply>
+                                                                            </con2:actions>
+                                                                        </con2:case>
+                                                                        <con2:default/>
+                                                                    </con2:ifThenElse>
+                                                                </con2:responseTransform>
+                                                            </con2:wsCallout>
+                                                        </con2:actions>
+                                                    </con2:case>
+                                                    <con2:default>
+                                                        <con2:assign varName="ELSEBUCKET">
+                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e77</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>'ELSE'</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:assign varName="entroAlIfINICIA">
+                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e76</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>fn:concat($currIndexB,' - ',$countB)</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:ifThenElse>
+                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e75</con1:id>
+                                                            <con2:case>
+                                                                <con2:condition>
+                                                                    <con1:xqueryConditionExpr>
+                                                                        <con1:compExpr operator="&lt;=">
+                                                                            <con1:leftPath>xs:double($tarifaInDesc)</con1:leftPath>
+                                                                            <con1:rightPath>0</con1:rightPath>
+                                                                        </con1:compExpr>
+                                                                    </con1:xqueryConditionExpr>
+                                                                </con2:condition>
+                                                                <con2:actions>
+                                                                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-8566270949559657258--258dad78.14290a50b80.-7e73</con4:id>
+                                                                        <con1:expr>
+                                                                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                                                                        </con1:expr>
+                                                                    </con1:replace>
+                                                                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                                                                        <con4:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e72</con4:id>
+                                                                    </con4:reply>
+                                                                </con2:actions>
+                                                            </con2:case>
+                                                            <con2:default>
+                                                                <con2:ifThenElse>
+                                                                    <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e71</con1:id>
+                                                                    <con2:case>
+                                                                        <con2:condition>
+                                                                            <con1:xqueryConditionExpr>
+                                                                                <con1:compExpr operator="=">
+                                                                                    <con1:leftPath>$currIndexB</con1:leftPath>
+                                                                                    <con1:rightPath>$countB</con1:rightPath>
+                                                                                </con1:compExpr>
+                                                                            </con1:xqueryConditionExpr>
+                                                                        </con2:condition>
+                                                                        <con2:actions>
+                                                                            <con2:replace varName="tarifaInDesc" contents-only="false">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e70</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>round-half-to-even(xs:double($tarifaInDesc), 2)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                            <con2:assign varName="tarifaInDecimal">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6f</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>substring-after(xs:string(xs:double($tarifaInDesc)), '.')</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="tarifalargoDecimal">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6e</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:string-length($tarifaInDecimal)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:ifThenElse>
+                                                                                <con1:comment/>
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6d</con1:id>
+                                                                                <con2:case>
+                                                                                    <con2:condition>
+                                                                                        <con1:xqueryConditionExpr>
+                                                                                            <con1:compExpr operator="&lt;">
+                                                                                                <con1:leftPath>xs:integer($tarifalargoDecimal)</con1:leftPath>
+                                                                                                <con1:rightPath>2</con1:rightPath>
+                                                                                            </con1:compExpr>
+                                                                                        </con1:xqueryConditionExpr>
+                                                                                    </con2:condition>
+                                                                                    <con2:actions>
+                                                                                        <con2:assign varName="tarifaIn">
+                                                                                            <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6c</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat(fn:translate(xs:string(xs:double($tarifaInDesc)), '.', ''),'0')</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:assign>
+                                                                                    </con2:actions>
+                                                                                </con2:case>
+                                                                                <con2:default>
+                                                                                    <con2:assign varName="tarifaIn">
+                                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6b</con1:id>
+                                                                                        <con2:expr>
+                                                                                            <con1:xqueryText>fn:translate(xs:string(xs:double($tarifaInDesc)), '.', '')</con1:xqueryText>
+                                                                                        </con2:expr>
+                                                                                    </con2:assign>
+                                                                                </con2:default>
+                                                                            </con2:ifThenElse>
+                                                                            <con2:assign varName="largoTarifaInDesc">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e6a</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:string-length($tarifaIn)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="entroAlIf">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e69</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>fn:concat($currIndexB,' - ',$countB)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:wsCallout>
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e67</con1:id>
+                                                                                <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSRatingEngineManager" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                                <con2:operation>modifyAdjust</con2:operation>
+                                                                                <con2:request>
+                                                                                    <con2:body wrapped="false">modAdRequest</con2:body>
+                                                                                </con2:request>
+                                                                                <con2:response>
+                                                                                    <con2:body wrapped="false">modAdResponse</con2:body>
+                                                                                </con2:response>
+                                                                                <con2:requestTransform>
+                                                                                    <con2:assign varName="modAdRequest">
+                                                                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e68</con1:id>
+                                                                                        <con2:expr>
+                                                                                            <con1:xqueryText><![CDATA[<rat:modifyAdjust xmlns:rat="http://ratingengine.web.api.icc.services.osp.in.alcatel.com">
+    <!--Optional:-->
+    <rat:adjust xmlns:xsd="http://web.ratingengine.web.api.icc.services.osp.in.alcatel.com/xsd">
+        <!--Optional:-->
+        <xsd:balance>{fn:concat('(',$tarifaIn,')')}</xsd:balance>
+        <!--Optional:-->
+        <xsd:glcode></xsd:glcode>
+        <!--Optional:-->
+        <xsd:ppm_ri>{$ppm_ri}</xsd:ppm_ri>
+        <!--Optional - antes <xsd:reason>Descto</xsd:reason>:-->
+        <xsd:reason>COMPRA DE BOLSAS</xsd:reason>
+        <!--Optional:-->
+        <xsd:servret>nextelret</xsd:servret>
+    </rat:adjust>
+</rat:modifyAdjust>]]></con1:xqueryText>
+                                                                                        </con2:expr>
+                                                                                    </con2:assign>
+                                                                                </con2:requestTransform>
+                                                                                <con2:responseTransform/>
+                                                                            </con2:wsCallout>
+                                                                            <con2:replace varName="cadenaBucket">
+                                                                                <con1:id>_ActionId-1376109233886975474-555a41a7.14a0c2ec05f.-7f6e</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>if (xs:integer(fn:string-length((xs:string($tarifaIn)))) &lt;= 2) then fn:concat($cadenaBucket,'|MAIN_BALANCE-',$tarifaIn) else ( fn:concat($cadenaBucket,'|MAIN_BALANCE-',substring(xs:string($tarifaIn),1,xs:integer(fn:string-length((xs:string($tarifaIn))))-2)))</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                            <con2:replace varName="tarifaInDesc">
+                                                                                <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e66</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>xs:double($tarifaInDesc)-xs:double($tarifaInDesc)</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:replace>
+                                                                        </con2:actions>
+                                                                    </con2:case>
+                                                                    <con2:default/>
+                                                                </con2:ifThenElse>
+                                                            </con2:default>
+                                                        </con2:ifThenElse>
+                                                    </con2:default>
+                                                </con2:ifThenElse>
+                                            </con2:actions>
+                                        </con2:foreach>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default>
+                                    <con2:assign varName="asdElse">
+                                        <con1:id>_ActionId-8566270949559657258--258dad78.14290a50b80.-7e64</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>'ELSE'</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                </con2:default>
+                            </con2:ifThenElse>
+                        </con2:actions>
+                    </con2:foreach>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="Pipeline_ajustaIccPortal_response" errorHandler="_onErrorHandler-6091392610753323946-1baa55bd.14272539a6e.-72b5">
+            <con:stage name="Out_stg_ConsultaSaldoICC">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6091392610753323946-1baa55bd.14272539a6e.-72b6</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>0</error_code>
+   <err_description>OK</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-2870691322981300978-4fff2fdc.14266f2d85b.-7238">
+            <con:stage name="In_stg_error_ConsultaICC">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-71c4</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <cadenaBucket>{$cadenaBucket}</cadenaBucket>
+   <error_code>1</error_code>
+   <err_description>{fn:concat(data($fault/ctx:reason),'. - ',data($fault/ctx:details/con1:ReceivedFaultDetail/con1:faultstring))}</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-2870691322981300978-4fff2fdc.14266f2d85b.-71c3</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-6091392610753323946-1baa55bd.14272539a6e.-72b5">
+            <con:stage name="Out_stg_error_ConsultaICC1">
+                <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="con1"/>
+                </con:context>
+                <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-6091392610753323946-1baa55bd.14272539a6e.-7241</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<cap:setAjustaICCPortalResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>1</error_code>
+   <err_description>{fn:concat(data($fault/ctx:reason),'. - ',data($fault/ctx:details/con1:ReceivedFaultDetail/con1:faultstring))}</err_description>
+</cap:setAjustaICCPortalResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-6091392610753323946-1baa55bd.14272539a6e.-7240</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="setAjustaICCPortal">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline_ajustaIccPortal">
+                                <con:request>Pipeline_ajustaIccPortal_request</con:request>
+                                <con:response>Pipeline_ajustaIccPortal_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

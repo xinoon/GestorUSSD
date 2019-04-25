@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://cm.mobilytix.comviva.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://cm.mobilytix.comviva.com" xmlns:intf="http://cm.mobilytix.comviva.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://cm.mobilytix.comviva.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="eventNotifier">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="event" type="impl:Event"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Param">
+    <sequence>
+     <element name="param"  type="xsd:string"/>
+     <element name="value"  type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Event">
+    <sequence>
+     <element name="MSISDN" type="xsd:string"/>
+     <element name="eventNode"  type="xsd:string"/>
+     <element name="eventType"  type="xsd:string"/>
+     <element name="params"  maxOccurs="unbounded" minOccurs="0" type="impl:Param"/>
+     <element name="timeStamp"  type="xsd:dateTime"/>
+     <element name="transactionID"  type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="eventNotifierResponse">
+    <complexType>
+     <sequence>
+      <element name="eventNotifierReturn" type="impl:eventNotifierResponse"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="eventNotifierResponse">
+    <sequence>
+     <element name="statusCode" type="xsd:int"/>
+     <element name="statusMessage" type="xsd:string"/>
+     <element name="transactionID" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="getOffers">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="MSISDN" type="xsd:string"/>
+      <element name="Channel" type="xsd:string"/>
+      <element name="TransactionID" type="xsd:string"/>
+      <element name="params"  maxOccurs="unbounded" minOccurs="0" type="impl:Param"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOffersResponse">
+    <complexType>
+     <sequence>
+      <element name="getOffersReturn"  type="impl:getOffersResponse"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Offer">
+    <sequence>
+     <element name="campaignID"  type="xsd:string"/>
+     <element name="channel"  type="xsd:string"/>
+     <element name="chargeAmount" type="xsd:long"/>
+     <element name="maxInstances" type="xsd:int"/>
+     <element name="offerDescription1" nillable="true" type="xsd:string"/>
+     <element name="offerDescription2" nillable="true" type="xsd:string"/>
+     <element name="offerDescription3" nillable="true" type="xsd:string"/>
+     <element name="offerDescription4" nillable="true" type="xsd:string"/>
+     <element name="offerID"  type="xsd:string"/>
+     <element name="offerImage1" nillable="true" type="xsd:string"/>
+     <element name="offerImage2" nillable="true" type="xsd:string"/>
+     <element name="offerImage3" nillable="true" type="xsd:string"/>
+     <element name="offerImage4" nillable="true" type="xsd:string"/>
+     <element name="offerMessage"  type="xsd:string"/>
+     <element name="offerQtyUnit"  type="xsd:string"/>
+     <element name="offerQuantity" type="xsd:int"/>
+     <element name="offerShortName"  type="xsd:string"/>
+     <element name="offerTermsCond" nillable="true" type="xsd:string"/>
+     <element name="pcrfProdID"  type="xsd:string"/>
+     <element name="priority" type="xsd:long"/>
+     <element name="prodID"  type="xsd:string"/>
+     <element name="subsOfferID"  type="xsd:string"/>
+     <element name="type"  type="xsd:string"/>
+     <element name="validDays" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="getOffersResponse">
+    <sequence>
+     <element name="offers" maxOccurs="unbounded" minOccurs="0" type="impl:Offer"/>
+     <element name="statusCode" type="xsd:int"/>
+     <element name="statusMessage"  type="xsd:string"/>
+     <element name="transactionID" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="getOfferUserActivities">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="MSISDN" type="xsd:string"/>
+      <element name="StartDate" type="xsd:dateTime"/>
+      <element name="EndDate" type="xsd:dateTime"/>
+      <element name="TransactionID" type="xsd:string"/>
+      <element name="params"  maxOccurs="unbounded" minOccurs="0" type="impl:Param"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfferUserActivitiesResponse">
+    <complexType>
+     <sequence>
+      <element name="getOfferUserActivitiesReturn" type="impl:OfferUserActivitiesResponse"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Activities">
+    <sequence>
+    <element name="actionType"  type="xsd:string"/>
+     <element name="campaignID"  type="xsd:string"/>
+     <element name="channel"  type="xsd:string"/>
+     <element name="chargeAmount" type="xsd:float"/>
+     <element name="date"  type="xsd:dateTime"/>
+     <element name="offerDescription1" nillable="true" type="xsd:string"/>
+     <element name="offerDescription2" nillable="true" type="xsd:string"/>
+     <element name="offerDescription3" nillable="true" type="xsd:string"/>
+     <element name="offerDescription4" nillable="true" type="xsd:string"/>
+     <element name="offerID"  type="xsd:string"/>
+     <element name="offerImage1" nillable="true" type="xsd:string"/>
+     <element name="offerImage2" nillable="true" type="xsd:string"/>
+     <element name="offerImage3" nillable="true" type="xsd:string"/>
+     <element name="offerImage4" nillable="true" type="xsd:string"/>
+     <element name="offerMessage"  type="xsd:string"/>
+     <element name="offerQtyUnit"  type="xsd:string"/>
+     <element name="offerQuantity" type="xsd:float"/>
+     <element name="offerShortName"  type="xsd:string"/>
+     <element name="offerTermsCond" nillable="true" type="xsd:string"/>
+     <element name="subsOfferID"  type="xsd:string"/>
+     <element name="type"  type="xsd:string"/>
+     <element name="validDays" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="OfferUserActivitiesResponse">
+    <sequence>
+     <element name="activities"  maxOccurs="unbounded" minOccurs="0" type="impl:Activities"/>
+     <element name="statusCode" type="xsd:int"/>
+     <element name="statusMessage" nillable="true" type="xsd:string"/>
+     <element name="transactionID" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="getUserActiveOffers">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="MSISDN" type="xsd:string"/>
+      <element name="TransactionID" type="xsd:string"/>
+      <element name="params"  maxOccurs="unbounded" minOccurs="0" type="impl:Param"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getUserActiveOffersResponse">
+    <complexType>
+     <sequence>
+      <element name="getUserActiveOffersReturn" type="impl:UserActiveOfferResponse"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Activeoffers">
+    <sequence>
+     <element name="acquiredDate"  type="xsd:dateTime"/>
+     <element name="campaignID"  type="xsd:string"/>
+     <element name="channel"  type="xsd:string"/>
+     <element name="chargeAmount" type="xsd:long"/>
+     <element name="expirationDate"  type="xsd:dateTime"/>
+     <element name="offerDescription1" nillable="true" type="xsd:string"/>
+     <element name="offerDescription2" nillable="true" type="xsd:string"/>
+     <element name="offerDescription3" nillable="true" type="xsd:string"/>
+     <element name="offerDescription4" nillable="true" type="xsd:string"/>
+     <element name="offerID"  type="xsd:string"/>
+     <element name="offerImage1" nillable="true" type="xsd:string"/>
+     <element name="offerImage2" nillable="true" type="xsd:string"/>
+     <element name="offerImage3" nillable="true" type="xsd:string"/>
+     <element name="offerImage4" nillable="true" type="xsd:string"/>
+     <element name="offerMessage"  type="xsd:string"/>
+     <element name="offerQtyUnit"  type="xsd:string"/>
+     <element name="offerQuantity" type="xsd:int"/>
+     <element name="offerShortName"  type="xsd:string"/>
+     <element name="offerTermsCond" nillable="true" type="xsd:string"/>
+     <element name="subsOfferID"  type="xsd:string"/>
+     <element name="type"  type="xsd:string"/>
+     <element name="validDays" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="UserActiveOfferResponse">
+    <sequence>
+     <element name="activeOffers" maxOccurs="unbounded" minOccurs="0" type="impl:Activeoffers"/>
+     <element name="statusCode" type="xsd:int"/>
+     <element name="statusMessage"  type="xsd:string"/>
+     <element name="transactionID"  type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getOfferUserActivitiesResponse">
+
+      <wsdl:part element="impl:getOfferUserActivitiesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOffersResponse">
+
+      <wsdl:part element="impl:getOffersResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfferUserActivitiesRequest">
+
+      <wsdl:part element="impl:getOfferUserActivities" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="eventNotifierRequest">
+
+      <wsdl:part element="impl:eventNotifier" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="eventNotifierResponse">
+
+      <wsdl:part element="impl:eventNotifierResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserActiveOffersRequest">
+
+      <wsdl:part element="impl:getUserActiveOffers" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOffersRequest">
+
+      <wsdl:part element="impl:getOffers" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserActiveOffersResponse">
+
+      <wsdl:part element="impl:getUserActiveOffersResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="CMInterfaceImpl">
+
+      <wsdl:operation name="eventNotifier">
+
+         <wsdl:input message="impl:eventNotifierRequest" name="eventNotifierRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:eventNotifierResponse" name="eventNotifierResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOffers">
+
+         <wsdl:input message="impl:getOffersRequest" name="getOffersRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOffersResponse" name="getOffersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfferUserActivities">
+
+         <wsdl:input message="impl:getOfferUserActivitiesRequest" name="getOfferUserActivitiesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOfferUserActivitiesResponse" name="getOfferUserActivitiesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserActiveOffers">
+
+         <wsdl:input message="impl:getUserActiveOffersRequest" name="getUserActiveOffersRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getUserActiveOffersResponse" name="getUserActiveOffersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CMInterfaceImplSoapBinding" type="impl:CMInterfaceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="eventNotifier">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="eventNotifierRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="eventNotifierResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOffers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOffersRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOffersResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfferUserActivities">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOfferUserActivitiesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOfferUserActivitiesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserActiveOffers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUserActiveOffersRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUserActiveOffersResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CMInterfaceImplService">
+
+      <wsdl:port binding="impl:CMInterfaceImplSoapBinding" name="CMInterfaceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/Test_Project11/services/CMInterfaceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

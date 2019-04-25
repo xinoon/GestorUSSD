@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:intf="http://www.lhsgroup.com/ws_v2_NII_1" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 21, 2010 (11:39:14 CEST)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://www.lhsgroup.com/ws_v2_NII_1" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <complexType name="BaseSOIBean">
+    <sequence/>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="bsgId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="preferedCugId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="DateBean">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="date" nillable="true" type="xsd:dateTime"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="bsgAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="bsgId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="basicservicegroupassigments" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.cug_memberships.BasicservicegroupassigmentsBeanIn"/>
+       <element minOccurs="0" name="cugId" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="advanceAccessOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="advanceAccessOvwPrd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="advanceAccessOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="bsgConfiguration" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.BsgConfigurationBeanIn"/>
+       <element minOccurs="0" name="cosAccfeeOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="cosAccfeeOvwPrd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosAccfeeOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cosPendingStatus" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosPendingStatusDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="cosQuantity" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="cosSubfeeOvw" nillable="true" type="xsd:double"/>
+       <element minOccurs="0" name="cosSubfeeOvwType" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cosTrialEndDate" nillable="true" type="impl:DateBean"/>
+       <element minOccurs="0" name="csPaymentConditionUsgInd" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="csPrepaidTpId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="csPrepaidTpIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cugAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="cugMemberships" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.services.CugMembershipsBeanIn"/>
+       <element minOccurs="0" name="extServiceId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="extServiceIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="opAssistedAction" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="profileId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesContactId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesContactIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="salesZoneId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="salesZoneIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="sncode" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="sncodePub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="userReason" nillable="true" type="xsd:long"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="ContractServicesWriteBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="coId" nillable="true" type="xsd:long"/>
+       <element minOccurs="0" name="coIdPub" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="gmdPrio" nillable="true" type="xsd:int"/>
+       <element minOccurs="0" name="services" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.contract_services_write.ServicesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="key" nillable="true" type="xsd:string"/>
+       <element minOccurs="0" name="value" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:com.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+    </sequence>
+   </complexType>
+   <complexType name="SessionChangeBeanIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="values" nillable="true" type="impl:ArrayOfcom.lhs.ws.beans.v2_NII_1.session_change.ValuesBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="ContractServicesWrite" type="tns1:com.lhs.ws.beans.v2_NII_1.ContractServicesWriteBeanServiceIn"/>
+   <complexType name="ContractServicesWriteBeanOut">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="ContractServicesWriteReturn" type="impl:ContractServicesWriteBeanOut"/>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://www.lhsgroup.com/ws_v2_NII_1"/>
+   <complexType name="com.lhs.ws.beans.v2_NII_1.ContractServicesWriteBeanServiceIn">
+    <complexContent>
+     <extension base="impl:BaseSOIBean">
+      <sequence>
+       <element minOccurs="0" name="input" nillable="true" type="impl:ContractServicesWriteBeanIn"/>
+       <element minOccurs="0" name="sessionChange" nillable="true" type="impl:SessionChangeBeanIn"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="executeResponse">
+
+      <wsdl:part element="impl:ContractServicesWriteReturn" name="ContractServicesWriteReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRequest">
+
+      <wsdl:part element="impl:ContractServicesWrite" name="ContractServicesWrite"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ContractServicesWriteService">
+
+      <wsdl:operation name="execute" parameterOrder="ContractServicesWrite">
+
+         <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+         <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ContractServicesWriteServiceSoapBinding" type="impl:ContractServicesWriteService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ContractServicesWriteService">
+
+      <wsdl:port binding="impl:ContractServicesWriteServiceSoapBinding" name="ContractServicesWriteService">
+
+         <wsdlsoap:address location="http://10.101.241.42:11137/ws_v2_NII_1/services/ContractServicesWrite"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo"
+            targetNamespace="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo"
+            xmlns:tns="http://operaciones.extracredito.wom.ws.ncl.com/ConsultaExtraSaldo"
+            elementFormDefault="qualified">
+
+   <xsd:element name="consultaExtraCreditoRequest" type="tns:consultaExtraCreditoRequest"/>
+   <xsd:element name="consultaExtraCreditoResponse" type="tns:consultaExtraCreditoResponse"/>
+   
+   <xsd:complexType name="consultaExtraCreditoRequest">
+      <xsd:sequence>
+         <xsd:element name="nroCelular" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="consultaExtraCreditoResponse">
+      <xsd:sequence>
+		<xsd:element name="errorCode" type="xsd:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xsd:element name="errorDescription" type="xsd:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+                 <xsd:element minOccurs="0" name="detalleConsulta" nillable="true" type="tns:detalle"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+
+
+ <xsd:complexType name="detalle">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="estadoExtraSaldo" nillable="true" type="xsd:boolean"/>
+            <xsd:element minOccurs="0" name="saldoPendiente" nillable="true" type="xsd:int"/>
+            <xsd:element minOccurs="0" name="fechaSolicitud" nillable="true" type="xsd:dateTime"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>

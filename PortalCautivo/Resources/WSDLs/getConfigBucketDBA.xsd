@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getConfigBucketDBA" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getConfigBucketDBAInput" type="getConfigBucketDBAInput"/>
+   <xs:complexType name="getConfigBucketDBAInput">
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:element name="getConfigBucketDBAOutputCollection" type="getConfigBucketDBAOutputCollection"/>
+   <xs:complexType name="getConfigBucketDBAOutputCollection">
+      <xs:sequence>
+         <xs:element name="getConfigBucketDBAOutput" type="getConfigBucketDBAOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getConfigBucketDBAOutput">
+      <xs:sequence>
+         <xs:element name="ID_SECUENCIAL" type="xs:decimal" nillable="true"/>
+         <xs:element name="BUCKET" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,17 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventoRecargaNoSeqDba" name="setEventoRecargaNoSeqDba-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventoRecargaNoSeqDba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventoRecargaNoSeqDba" location="setEventoRecargaNoSeqDba.wsdl"/>
+  <binding name="setEventoRecargaNoSeqDba_ptt-binding" type="tns:setEventoRecargaNoSeqDba_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="setEventoRecargaNoSeqDba">
+      <soap:operation soapAction="setEventoRecargaNoSeqDba"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="setEventoRecargaNoSeqDba-service">
+    <port name="setEventoRecargaNoSeqDba-port" binding="tns:setEventoRecargaNoSeqDba_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

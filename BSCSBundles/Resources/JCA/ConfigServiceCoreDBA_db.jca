@@ -1,0 +1,14 @@
+<adapter-config name="ConfigServiceCoreDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/ConfigServiceCoreDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ConfigServiceCoreDBA_ptt" operation="ConfigServiceCoreDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT SPCODE,SNCODE,PLAN,DESCRIPCION,TEMPLATE_ID FROM SERVICIOS_CORE WHERE APLICACION = #InAplicacion"/>
+      <property name="QueryTimeout" value="600"/>      
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

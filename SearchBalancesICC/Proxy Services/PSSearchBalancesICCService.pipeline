@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SearchBalancesICC/Resources/WSDL/searchBalancesICC"/>
+            <con:binding>
+                <con:name>SearchBalanceIccPortTypeServiceSOAP11Binding</con:name>
+                <con:namespace>http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router errorHandler="_onErrorHandler-5017533134140733220-6068d737.14108c1413d.-73bb" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelinePairNode__request">
+            <con:stage name="stage_inicio">
+                <con:context>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions/>
+            </con:stage>
+            <con:stage name="stage_call_getAllInfo">
+                <con:context>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con3:assign varName="requestBody">
+                        <con1:id>_ActionId-5017533134140733220-6068d737.14108c1413d.-7863</con1:id>
+                        <con3:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="SearchBalancesICC/Resources/XQ/IN_PSSearchBalancesICCService_TO_IN_PSSubscriberLineManagerService"/>
+                                <con1:param name="searchBalancesICC_request1">
+                                    <con1:path>$body/get:searchBalancesICC-request</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con3:expr>
+                    </con3:assign>
+                    <con3:wsCallout>
+                        <con1:id>_ActionId-5017533134140733220-6068d737.14108c1413d.-78d1</con1:id>
+                        <con3:service xsi:type="ref:ProxyRef" ref="Alcatel-HighLevelApiWS/SubscriberLineManager/Proxy Services/PSSubscriberLineManagerService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>getAllInformation</con3:operation>
+                        <con3:request>
+                            <con3:body>requestBody</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body>responseBody</con3:body>
+                        </con3:response>
+                        <con3:requestTransform/>
+                        <con3:responseTransform/>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode__response">
+            <con:stage name="stage_fin">
+                <con:context>
+                    <con1:varNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-5017533134140733220-6068d737.14108c1413d.-77d6</con1:id>
+                        <con3:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="SearchBalancesICC/Resources/XQ/OUT_PSSubscriberLineManagerService_TO_IN_PSSearchBalancesICCService"/>
+                                <con1:param name="viewBucket">
+                                    <con1:path>data($body/get:searchBalancesICC-request/get:detail_bucket)</con1:path>
+                                </con1:param>
+                                <con1:param name="getAllInformationResponse1">
+                                    <con1:path>$responseBody</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con3:expr>
+                    </con3:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-5017533134140733220-6068d737.14108c1413d.-73bb">
+            <con:stage name="stage_error">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-5017533134140733220-6068d737.14108c1413d.-7365</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns1:searchBalancesICC-response xmlns:ns1="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation">
+  <ns1:totalBalance></ns1:totalBalance>
+  <ns1:err_description>ocurrió un error en la ejecución del Servicio ICC</ns1:err_description>
+  <ns1:error_code>1</ns1:error_code>
+  <ns1:buckets/>
+</ns1:searchBalancesICC-response>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-5882726335195840625-682c85f7.156a2ead36d.-7fd8</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode_">
+                <con:request>PipelinePairNode__request</con:request>
+                <con:response>PipelinePairNode__response</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

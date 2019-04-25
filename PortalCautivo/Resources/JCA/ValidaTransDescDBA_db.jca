@@ -1,0 +1,13 @@
+<adapter-config name="ValidaTransDescDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/ValidaTransDescDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ValidaTransDescDBA_ptt" operation="ValidaTransDescDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT count(0) AS LCount from  DESACTIVA_PRODUCTOS  where TRANSACTION_CODE_BUY=#P_TRANSACTION_CODE_BUY"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

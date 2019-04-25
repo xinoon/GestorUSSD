@@ -1,0 +1,24 @@
+<?binding.jca LocalWebPortalDba_db.jca?><wsdl:definitions name="LocalWebPortalDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/LocalWebPortalDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/LocalWebPortalDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SearchBSCSBundleService/SearchBSCSBundleService/LocalWebPortalDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="LocalWebPortalDba_plt">
+        <plt:role name="LocalWebPortalDba_role">
+            <plt:portType name="tns:LocalWebPortalDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/LocalWebPortalDba" schemaLocation="LocalWebPortalDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="LocalWebPortalDbaInput_msg">
+        <wsdl:part name="LocalWebPortalDbaInput_msg" element="db:LocalWebPortalDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="LocalWebPortalDbaOutputCollection_msg">
+        <wsdl:part name="LocalWebPortalDbaOutputCollection" element="db:LocalWebPortalDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="LocalWebPortalDba_ptt">
+        <wsdl:operation name="LocalWebPortalDba">
+            <wsdl:input message="tns:LocalWebPortalDbaInput_msg"/>
+            <wsdl:output message="tns:LocalWebPortalDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

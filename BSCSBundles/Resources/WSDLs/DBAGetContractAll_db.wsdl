@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOAGestorBolsas/GestorBolsas/DBAGetContractAll" name="DBAGetContractAll-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOAGestorBolsas/GestorBolsas/DBAGetContractAll" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOAGestorBolsas/GestorBolsas/DBAGetContractAll" location="DBAGetContractAll.wsdl"/>
+  <binding name="DBAGetContractAll_ptt-binding" type="tns:DBAGetContractAll_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="DBAGetContractAll">
+      <soap:operation soapAction="DBAGetContractAll"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="DBAGetContractAll-service">
+    <port name="DBAGetContractAll-port" binding="tns:DBAGetContractAll_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation"
+	targetNamespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation"
+	xmlns:com="http://osb.nextel.cl/schemas/evaluacion/domain"
+	elementFormDefault="qualified">
+
+	<xs:element name="searchBalancesICC-response"
+             type="searchBalancesICC-response"/>
+ <xs:complexType name="Bucket">
+  <xs:sequence>
+   <xs:element minOccurs="0" name="creationDate" nillable="true"
+               type="xs:dateTime"/>
+   <xs:element minOccurs="0" name="glCode" nillable="true" type="xs:string"/>
+   <xs:element minOccurs="0" name="initialCost" nillable="true" type="xs:long"/>
+   <xs:element minOccurs="0" name="initialQuantity" nillable="true"
+               type="xs:long"/>
+   <xs:element minOccurs="0" name="limitDate" nillable="true"
+               type="xs:dateTime"/>
+   <xs:element minOccurs="0" name="remainingUnits" nillable="true"
+               type="xs:long"/>
+   <xs:element minOccurs="0" name="rowIdentifier" nillable="true"
+               type="xs:long"/>
+   <xs:element minOccurs="0" name="startDate" nillable="true"
+               type="xs:dateTime"/>
+   <xs:element minOccurs="0" name="usageLabelRef" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="validity" nillable="true" type="xs:long"/>
+   <xs:element minOccurs="0" name="tipoTrafico" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="promo" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="tecnologia" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="plataforma" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="basal" nillable="true"
+               type="xs:string"/>
+   <xs:element minOccurs="0" name="tematica" nillable="true"
+               type="xs:string"/>            
+  </xs:sequence>
+ </xs:complexType>
+ <xs:complexType name="searchBalancesICC-response">
+  <xs:sequence>
+   <xs:element minOccurs="0" maxOccurs="1" name="totalBalance"
+            type="xs:string"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="descPlan"
+            type="xs:string"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="balance"
+            type="xs:string"/>
+   <xs:element minOccurs="0" name="dateBalance" nillable="true"
+               type="xs:dateTime"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="err_description"
+            type="xs:string"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="error_code"
+            type="xs:string"/>
+   <xs:element maxOccurs="unbounded" minOccurs="0" name="buckets"
+               nillable="true" type="Bucket"/>
+  </xs:sequence>
+ </xs:complexType>
+</xs:schema>

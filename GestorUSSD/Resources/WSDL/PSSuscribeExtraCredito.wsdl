@@ -1,0 +1,59 @@
+<WL5G3N0:definitions targetNamespace="http://operaciones.extracredito.wom.ws.ncl.com" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://operaciones.extracredito.wom.ws.ncl.com" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://operaciones.extracredito.wom.ws.ncl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://operaciones.extracredito.wom.ws.ncl.com" schemaLocation="PSSuscribeExtraCredito.xsd"/>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://operaciones.extracredito.wom.ws.ncl.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://operaciones.extracredito.wom.ws.ncl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="SuscribeExtraCreditoWS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SuscribeExtraCreditoWSResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="SuscribeExtraCredito">
+    <WL5G3N0:part element="WL5G3N1:SuscribeExtraCredito" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="SuscribeExtraCreditoResponse">
+    <WL5G3N0:part element="WL5G3N1:SuscribeExtraCreditoResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="SuscribeExtraCreditoWSRequest">
+    <WL5G3N0:part element="WL5G3N1:SuscribeExtraCreditoWS" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="SuscribeExtraCreditoWSResponse">
+    <WL5G3N0:part element="WL5G3N1:SuscribeExtraCreditoWSResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="SuscribeExtraCreditoPort">
+    <WL5G3N0:operation name="SuscribeExtraCreditoWS">
+      <WL5G3N0:input message="WL5G3N1:SuscribeExtraCredito"/>
+      <WL5G3N0:output message="WL5G3N1:SuscribeExtraCreditoResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="SuscribeExtraCreditoPortBinding" type="WL5G3N1:SuscribeExtraCreditoPort">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="SuscribeExtraCreditoWS">
+      <WL5G3N2:operation soapAction="http://SuscribeExtraCredito/SuscribeExtraCreditoWS"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="SuscribeExtraCreditoPortBindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N1:SuscribeExtraCreditoPortBinding" name="SuscribeExtraCreditoPortBindingQSPort">
+      <WL5G3N2:address location="http://10.120.147.140:80/esb/ExtraCredito/Services/PSSuscribeExtraCredito"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

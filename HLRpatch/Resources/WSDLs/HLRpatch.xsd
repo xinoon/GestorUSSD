@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Oracle JAX-WS 2.1.5. --><xs:schema xmlns:tns="http://ws.hlrpatch.wom.smartdici/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.hlrpatch.wom.smartdici/">
+
+<xs:element name="sendResetAPN" type="tns:sendResetAPN"/>
+
+<xs:element name="sendResetAPNResponse" type="tns:sendResetAPNResponse"/>
+
+<xs:complexType name="sendResetAPN">
+<xs:sequence>
+<xs:element name="imsi" type="xs:string" minOccurs="0"/>
+<xs:element name="idPlan" type="xs:string" minOccurs="0"/>
+<xs:element name="maxbrupl" type="xs:string" minOccurs="0"/>
+<xs:element name="maxbdwl" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sendResetAPNResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:resp" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resp">
+<xs:sequence>
+<xs:element name="cod" type="xs:string" minOccurs="0"/>
+<xs:element name="desc" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

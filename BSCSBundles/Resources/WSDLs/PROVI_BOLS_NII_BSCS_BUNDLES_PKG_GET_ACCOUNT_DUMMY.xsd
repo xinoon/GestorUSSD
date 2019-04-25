@@ -1,0 +1,316 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_BUNDLES_PKG/GET_ACCOUNT_DUMMY/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_BUNDLES_PKG/GET_ACCOUNT_DUMMY/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_CUSTOMER_ID" type="decimal" db:index="1" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="OBJ_CONTRACT_ALL" type="db:PROVI_BOLS.CONTRACT_ALL_QT" db:index="2" db:type="Struct" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_RETORNO" type="decimal" db:index="3" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_MENS_RETORNO" type="string" db:index="4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_NUM_EVENTO" type="decimal" db:index="5" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="PROVI_BOLS.CONTRACT_ALL_QT">
+      <sequence>
+         <element name="CO_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CUSTOMER_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="PLCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SCCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SUBM_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_SIGNED" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_EQU_TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_REP_BILL" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="40"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_REP" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="40"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_REP_BILL_IDNO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_REP_IDNO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_INSTALLED" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_ARCHIVE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_DIR_ENTRY" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_OPERATOR_DIR" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_PSTN_DIR" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_ASS_SERV" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_ASS_EQU" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_CRD_CHECK" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_CRD_CHK_END" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_CHK_START" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_CLICKS" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_CLICKS_DAY" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_DAYS" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_COMMENT" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="60"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_RESERVED" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_EXPIR_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_ACTIVATED" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_ENTDATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_MODDATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_USERLASTMOD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="16"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TMCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TMCODE_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_D_TR1" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_D_TR2" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_D_TR3" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_P_TR1" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_P_TR2" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_P_TR3" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="ECCODE_LDC" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="PENDING_ECCODE_LDC" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="ECCODE_LEC" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="PENDING_ECCODE_LEC" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_REQUEST" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="DEALER_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="NOT_VALID" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="ARPCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_ADDR_ON_IBILL" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_CRD_AMOUNT" type="float" db:type="FLOAT" minOccurs="0" nillable="true"/>
+         <element name="CO_CRD_AMOUNT_DAY" type="float" db:type="FLOAT" minOccurs="0" nillable="true"/>
+         <element name="PRODUCT_HISTORY_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_CONFIRM" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_EXT_CSUIN" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TRIAL_END_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CO_IB_CDR_FLAG" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CURRENCY" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="REC_VERSION" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="AN_PACKAGE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CO_REL_TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="PENDING_TMCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CONTRACT_TEMPLATE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CO_CODE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="BUSINESS_UNIT_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="DESCRIPTION" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="AGREEMENT_TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="2"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="EXT_PRODUCT_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="REMOTE_PLCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="ECCODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="HPLMN_BID_GROUP_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="VPLMN_BID_GROUP_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="HOME_PARTY_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CONTRACT_TYPE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TRIAL_START_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="FOH_AGGREGATION_FLAG" db:type="CHAR" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="GL_ACC_PACK_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CDS_BILL_MEDIUM" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CDS_GENERATION" db:type="CHAR" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CHARGE_PART_NUM" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CH_STATUS" db:type="CHAR" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="SVP_FILE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="5"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="SALES_CONTACT_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="COM_START_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="COM_END_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="COM_MIN_DURATION" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="REASON_CODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="ACTION_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="COM_MIN_RENOCO_MONTHS" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="RATEPLAN_CHANGE_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="TMCODE_OLD" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="REASON_CODE_PENDING" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="COM_MIN_RENOCO_MONTHS_PENDING" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SALES_ZONE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CREDIT_VALUE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="10"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CREDIT_QUAL_CHECK" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CREDIT_QUAL_VALUE" type="float" db:type="FLOAT" minOccurs="0" nillable="true"/>
+         <element name="AGING_SCORE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SUSPENSION_SCORE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="CONTRACT_BILLING_AVG" type="float" db:type="FLOAT" minOccurs="0" nillable="true"/>
+         <element name="CREDIT_SCORE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="10"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CH_STATUS_VALIDFROM" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+</schema>

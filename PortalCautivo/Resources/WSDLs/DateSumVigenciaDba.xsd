@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/DateSumVigenciaDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/DateSumVigenciaDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="DateSumVigenciaDbaInput" type="DateSumVigenciaDbaInput"/>
+   <xs:complexType name="DateSumVigenciaDbaInput">
+      <xs:sequence>
+         <xs:element name="MinVig" type="xs:integer" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="DateSumVigenciaDbaOutputCollection" type="DateSumVigenciaDbaOutputCollection"/>
+   <xs:complexType name="DateSumVigenciaDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="DateSumVigenciaDbaOutput" type="DateSumVigenciaDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="DateSumVigenciaDbaOutput">
+      <xs:sequence>
+         <xs:element name="totalDate" type="xs:dateTime" nillable="true"/>
+         <xs:element name="actualDate" type="xs:dateTime" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

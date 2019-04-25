@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="PortalCautivo/Resources/WSDLs/BSCSUpsellingBolsas" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>BSCSUpsellingCompraBolsasPortBinding</con:name>
+                <con:namespace>http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="response" name="PiPeLinGetUpsellingCompraBolsas_response" errorHandler="_onErrorHandler-1361649779623991221--12488282.1437708f8b6.-7c00">
+            <con:stage name="out_stg_getOferta">
+                <con:context>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="salidaStep1" contents-only="false">
+                        <con1:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7c03</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_BSCSUpsellingBolsas"/>
+                                <con1:param name="flagMixta">
+                                    <con1:path>$flagMixta</con1:path>
+                                </con1:param>
+                                <con1:param name="flagSms">
+                                    <con1:path>$flagSms</con1:path>
+                                </con1:param>
+                                <con1:param name="flagDatos">
+                                    <con1:path>$flagDatos</con1:path>
+                                </con1:param>
+                                <con1:param name="outputParameters1">
+                                    <con1:path>$BSCSUpsellingBolsasResponse</con1:path>
+                                </con1:param>
+                                <con1:param name="flagVoz">
+                                    <con1:path>$flagVoz</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-6620541887103611614--5ba2260b.14ef953eaae.-7cd5</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_BSCSUpsellingBolsasGeneral"/>
+                                <con1:param name="getUpsellingCompraBolsasResponse1">
+                                    <con1:path>$salidaStep1</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:delete varName="BSCSUpsellingBolsas">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b1a</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="BSCSUpsellingBolsasResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b19</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInf">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b18</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInfResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b17</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCReq">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b16</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCRes">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b15</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsi">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b14</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsiResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b13</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="salidaStep1">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ada</con1:id>
+                    </con2:delete>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-6620541887103611614--5ba2260b.14ef953eaae.-7c81</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PiPeLinGetUpsellingCompraBolsas_request" errorHandler="_onErrorHandler-1361649779623991221--12488282.1437708f8b6.-7c01">
+            <con:stage name="in_stg_getImsi">
+                <con:context>
+                    <con1:userNsDecl namespace="http://local.web.portal.ws.ncl.nii.com" prefix="loc"/>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-2632969110165289590-5cbf4ea7.1436d00142a.-7f64</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="LocalWebPortal/Proxy Services/PSGetImsi" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getImsi</con2:operation>
+                        <con2:request>
+                            <con2:body>getImsi</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getImsiResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:replace varName="getImsi">
+                                <con1:id>_ActionId-2632969110165289590-5cbf4ea7.1436d00142a.-7f2c</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_getImsi"/>
+                                        <con1:param name="getUpsellingCompraBolsas1">
+                                            <con1:path>$body/ups:getUpsellingCompraBolsas</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:replace>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="LC_IMSI">
+                                <con1:id>_ActionId-2632969110165289590-5cbf4ea7.1436d00142a.-7ef3</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getImsiResponse/loc:LocalWebPortalOutput/loc:imsi/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-2632969110165289590-5cbf4ea7.1436d00142a.-7c58</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryText>empty($LC_IMSI)</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-2632969110165289590-5cbf4ea7.1436d00142a.-7c20</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>No se pudo obtener el IMSI del numero ingresado</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_obtiene_saldo_icc">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="get"/>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-4447255289074089952-3ae59d43.1437252b901.-7d1f</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/segment_prod/text() = ('POSTPAID','HYBRID','PREPAID')</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:assign varName="LC_SALDO">
+                                    <con1:id>_ActionId-8947048523893935364-54dcb5be.154e42ea8c5.-7e8f</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:Error>
+                                <con1:id>_ActionId-4447255289074089952-3ae59d43.1437252b901.-7d1b</con1:id>
+                                <con2:errCode>1</con2:errCode>
+                                <con2:message>valido solo para segmentos HYBRID, PREPAID y POSTPAID.</con2:message>
+                            </con2:Error>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_obtiene_servicio_existente">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fbd</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>upper-case($body/ups:getUpsellingCompraBolsas/segment_prod/text()) = 'PREPAID'</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7f02</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>getSearchBalanceIcc</con2:operation>
+                                    <con2:request>
+                                        <con2:body wrapped="false">prepaidSearchICCReq</con2:body>
+                                        <con2:header/>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body wrapped="false">prepaidSearchICCRes</con2:body>
+                                        <con2:header/>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="prepaidSearchICCReq">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7e93</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_SearchBalancePrepaidUpselling"/>
+                                                    <con1:param name="getUpsellingCompraBolsas1">
+                                                        <con1:path>$body/ups:getUpsellingCompraBolsas</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="getValueTipTrafico">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7e58</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PortalCautivo/Resources/XQuery/XQ_OrderCountBucketVenta"/>
+                                                    <con1:param name="searchBalancesICC_response1">
+                                                        <con1:path>$prepaidSearchICCRes</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="bucketCountVoz">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7e3b</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($getValueTipTrafico/operacion_ventas/VOZ)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="bucketCountDatos">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7e1e</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($getValueTipTrafico/operacion_ventas/DATOS)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="bucketCountSms">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7e01</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($getValueTipTrafico/operacion_ventas/SMS)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="bucketCountMusica">
+                                            <con1:id>_ActionId-4492969367649578468-3e9bc2b5.157dda03a37.-7d7e</con1:id>
+                                            <con2:expr>
+                                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">data($getValueTipTrafico/operacion_ventas/MUSICA)</con:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="bucketCountTematica">
+                                            <con1:id>_ActionId-6464696664905635676--5ad12fd6.15d18259372.-7f46</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($getValueTipTrafico/operacion_ventas/TEMATICA)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                                <con2:assign varName="countS">
+                                    <con1:id>_ActionId-2308561223113663664-2dbc09fa.15361053216.-7e47</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>fn:count($getSubscriberAllInfResponse/subscribedService/attribute)</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:assign varName="cancatServs">
+                                    <con1:id>_ActionId-5419553720599767194-6e4dd6f.153a4cfbc51.-7f98</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>''</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = ('SMS','VOZ', 'TEMATICA')</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:assign varName="flagMixta">
+                                    <con1:id>_ActionId-5512320466836220623--4dfccb62.1641388d898.-7d31</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>'N'</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:assign varName="cancatServs">
+                                    <con1:id>_ActionId-5512320466836220623--4dfccb62.1641388d898.-7da2</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>''</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:assign varName="flagMixta">
+                                <con1:id>_ActionId-5512320466836220623--4dfccb62.1641388d898.-7d33</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>'N'</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:wsCallout>
+                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fb3</con1:id>
+                                <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con2:operation>getSubscriberAllInf</con2:operation>
+                                <con2:request>
+                                    <con2:param>
+                                        <con2:name>inPara</con2:name>
+                                        <con2:variable>getSubscriberAllInf</con2:variable>
+                                    </con2:param>
+                                    <con2:header/>
+                                </con2:request>
+                                <con2:response>
+                                    <con2:param>
+                                        <con2:name>result</con2:name>
+                                        <con2:variable>getSubscriberAllInfResponse</con2:variable>
+                                    </con2:param>
+                                    <con2:header/>
+                                </con2:response>
+                                <con2:requestTransform>
+                                    <con2:assign varName="getSubscriberAllInf">
+                                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fb7</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText><![CDATA[<inPara>
+	<subscriber>
+	   <!--1 or more repetitions:-->
+	   <attribute>
+		  <key>USRIDENTIFIER</key>
+		  <value>{$LC_IMSI}</value>
+	   </attribute>
+	</subscriber>
+ </inPara>]]></con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                </con2:requestTransform>
+                                <con2:responseTransform>
+                                    <con2:assign varName="countS">
+                                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7d95</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>fn:count($getSubscriberAllInfResponse/subscribedService/attribute)</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                </con2:responseTransform>
+                            </con2:wsCallout>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fa6</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="=">
+                                                <con1:leftPath>xs:string($countS)</con1:leftPath>
+                                                <con1:rightPath>'0'</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:assign varName="cancatServs">
+                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fa5</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>''</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default>
+                                    <con2:foreach>
+                                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7f9d</con1:id>
+                                        <con2:variable>getSubscriberAllInfResponse</con2:variable>
+                                        <con2:expression>
+                                            <con1:xpathText>./subscribedService/attribute</con1:xpathText>
+                                        </con2:expression>
+                                        <con2:value-variable>serviceColl</con2:value-variable>
+                                        <con2:index-variable>currIndexS</con2:index-variable>
+                                        <con2:total-variable>countS</con2:total-variable>
+                                        <con2:actions>
+                                            <con2:assign varName="servicioKey">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fa2</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>data($serviceColl/key)</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:assign varName="servicioValue">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fa1</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>data($serviceColl/value)</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:assign varName="cancatServ">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7fa0</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>concat('|' ,$servicioValue)</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:ifThenElse>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7f9f</con1:id>
+                                                <con2:case>
+                                                    <con2:condition>
+                                                        <con1:xqueryConditionExpr>
+                                                            <con1:compExpr operator="=">
+                                                                <con1:leftPath>xs:string($servicioKey)</con1:leftPath>
+                                                                <con1:rightPath>'SRVNAME'</con1:rightPath>
+                                                            </con1:compExpr>
+                                                        </con1:xqueryConditionExpr>
+                                                    </con2:condition>
+                                                    <con2:actions>
+                                                        <con2:assign varName="cancatServs">
+                                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7f9e</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>concat($cancatServs,$cancatServ)</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                    </con2:actions>
+                                                </con2:case>
+                                                <con2:default/>
+                                            </con2:ifThenElse>
+                                        </con2:actions>
+                                    </con2:foreach>
+                                </con2:default>
+                            </con2:ifThenElse>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_validaCantComprasICC">
+                <con:context>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7bd8</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>upper-case($body/ups:getUpsellingCompraBolsas/segment_prod/text()) = 'PREPAID'</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:ifThenElse>
+                                    <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7b22</con1:id>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'DATOS' and fn:number($bucketCountDatos) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:Error>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-79d6</con1:id>
+                                                <con2:errCode>1</con2:errCode>
+                                                <con2:message>Has llegado al límite de compra para las bolsas de DATOS</con2:message>
+                                            </con2:Error>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'VOZ' and fn:number($bucketCountVoz) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:Error>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7ab4</con1:id>
+                                                <con2:errCode>1</con2:errCode>
+                                                <con2:message>Has llegado al límite de compra para las bolsas de VOZ</con2:message>
+                                            </con2:Error>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'SMS' and fn:number($bucketCountSms) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:Error>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7966</con1:id>
+                                                <con2:errCode>1</con2:errCode>
+                                                <con2:message>Has llegado al límite de compra para las bolsas de SMS</con2:message>
+                                            </con2:Error>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'MUSICA' and fn:number($bucketCountMusica) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:Error>
+                                                <con1:id>_ActionId-4492969367649578468-3e9bc2b5.157dda03a37.-7f18</con1:id>
+                                                <con2:errCode>1</con2:errCode>
+                                                <con2:message>Has llegado al límite de compra para las bolsas de MUSICA</con2:message>
+                                            </con2:Error>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'TEMATICA' and fn:number($bucketCountTematica) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:Error>
+                                                <con1:id>_ActionId-6464696664905635676--5ad12fd6.15d18259372.-7f81</con1:id>
+                                                <con2:errCode>1</con2:errCode>
+                                                <con2:message>Has llegado al límite de compra para las bolsas TEMATICAS</con2:message>
+                                            </con2:Error>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:default/>
+                                </con2:ifThenElse>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_getOferta">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_UPSELLING_COMPRA_BOLSAS/" prefix="get1"/>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7d6a</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSBSCSUpsellingBolsasDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>BSCSUpsellingBolsasDBA</con2:operation>
+                        <con2:request>
+                            <con2:body>BSCSUpsellingBolsas</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>BSCSUpsellingBolsasResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:replace varName="BSCSUpsellingBolsas" contents-only="false">
+                                <con1:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7cfb</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_BSCSUpsellingBolsas"/>
+                                        <con1:param name="P_SALDO">
+                                            <con1:path>$LC_SALDO</con1:path>
+                                        </con1:param>
+                                        <con1:param name="getUpsellingCompraBolsas1">
+                                            <con1:path>$body/ups:getUpsellingCompraBolsas</con1:path>
+                                        </con1:param>
+                                        <con1:param name="P_CONCAT_ID_PROD">
+                                            <con1:path>$cancatServs</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:replace>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-2308561223113663664-2dbc09fa.15361053216.-7d8d</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryText>$BSCSUpsellingBolsasResponse/get1:SN_COD_RETORNO/text() != '0'</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:replace varName="body">
+                                            <con1:id>_ActionId-2308561223113663664-2dbc09fa.15361053216.-7d8b</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText><![CDATA[<ups:getUpsellingCompraBolsasResponse xmlns:ups="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com">
+   <bundleAmount>0</bundleAmount>
+   <listaBundles/>
+   <errorCode>{$BSCSUpsellingBolsasResponse/get1:SN_COD_RETORNO/text()}</errorCode>
+   <errorDescription>{$BSCSUpsellingBolsasResponse/get1:SV_MENS_RETORNO/text()}</errorDescription>
+</ups:getUpsellingCompraBolsasResponse>]]></con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:replace>
+                                        <con2:delete varName="BSCSUpsellingBolsas">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7be2</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="BSCSUpsellingBolsasResponse">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7be0</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getSubscriberAllInf">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bde</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getSubscriberAllInfResponse">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bdc</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="prepaidSearchICCReq">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bda</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="prepaidSearchICCRes">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bd8</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getImsi">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bd6</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getImsiResponse">
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7bd4</con1:id>
+                                        </con2:delete>
+                                        <con1:reply>
+                                            <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7d0a</con1:id>
+                                        </con1:reply>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_validaOfertaMixta">
+                <con:context>
+                    <con1:varNsDecl namespace="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com" prefix="ups"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="flagSms">
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7159</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>'S'</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="flagVoz">
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7157</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>'S'</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="flagDatos">
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7155</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>'S'</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="flagMixta">
+                        <con1:id>_ActionId-6620541887103611614--5ba2260b.14ef953eaae.-7f21</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>'N'</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-77e8</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>$body/ups:getUpsellingCompraBolsas/traffic_type/text() = 'MIXTAS'
+and upper-case($body/ups:getUpsellingCompraBolsas/segment_prod/text()) = 'PREPAID'</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:assign varName="flagMixta">
+                                    <con1:id>_ActionId-6620541887103611614--5ba2260b.14ef953eaae.-7f5a</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>'S'</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:ifThenElse>
+                                    <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-77e7</con1:id>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>fn:number($bucketCountDatos) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:assign varName="flagDatos">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-76cd</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>'N'</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:ifThenElse>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-74cc</con1:id>
+                                                <con2:case>
+                                                    <con2:condition>
+                                                        <con1:xqueryText>fn:number($bucketCountVoz) > 8</con1:xqueryText>
+                                                    </con2:condition>
+                                                    <con2:actions>
+                                                        <con2:assign varName="flagVoz">
+                                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-74ca</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>'N'</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:ifThenElse>
+                                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-740e</con1:id>
+                                                            <con2:case>
+                                                                <con2:condition>
+                                                                    <con1:xqueryText>fn:number($bucketCountSms) > 8</con1:xqueryText>
+                                                                </con2:condition>
+                                                                <con2:actions>
+                                                                    <con2:assign varName="flagSms">
+                                                                        <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-740b</con1:id>
+                                                                        <con2:expr>
+                                                                            <con1:xqueryText>'N'</con1:xqueryText>
+                                                                        </con2:expr>
+                                                                    </con2:assign>
+                                                                </con2:actions>
+                                                            </con2:case>
+                                                            <con2:default/>
+                                                        </con2:ifThenElse>
+                                                    </con2:actions>
+                                                </con2:case>
+                                                <con2:case>
+                                                    <con2:condition>
+                                                        <con1:xqueryText>fn:number($bucketCountSms) > 8</con1:xqueryText>
+                                                    </con2:condition>
+                                                    <con2:actions>
+                                                        <con2:assign varName="flagSms">
+                                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-74c9</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>'N'</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                    </con2:actions>
+                                                </con2:case>
+                                                <con2:default/>
+                                            </con2:ifThenElse>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>fn:number($bucketCountVoz) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:assign varName="flagVoz">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7677</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>'N'</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:ifThenElse>
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7152</con1:id>
+                                                <con2:case>
+                                                    <con2:condition>
+                                                        <con1:xqueryText>fn:number($bucketCountSms) > 8</con1:xqueryText>
+                                                    </con2:condition>
+                                                    <con2:actions>
+                                                        <con2:assign varName="flagSms">
+                                                            <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-7151</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>'N'</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                    </con2:actions>
+                                                </con2:case>
+                                                <con2:default/>
+                                            </con2:ifThenElse>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:case>
+                                        <con2:condition>
+                                            <con1:xqueryText>fn:number($bucketCountSms) > 8</con1:xqueryText>
+                                        </con2:condition>
+                                        <con2:actions>
+                                            <con2:assign varName="flagSms">
+                                                <con1:id>_ActionId-657642592571614613-2865744b.14edf3652b2.-763d</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>'N'</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                        </con2:actions>
+                                    </con2:case>
+                                    <con2:default/>
+                                </con2:ifThenElse>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-1361649779623991221--12488282.1437708f8b6.-7c01">
+            <con:stage name="in_stg_errorUpselling">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1361649779623991221--12488282.1437708f8b6.-7a92</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<ups:getUpsellingCompraBolsasResponse xmlns:ups="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com">
+   <bundleAmount>0</bundleAmount>
+   <listaBundles/>
+   <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+   <errorDescription>{data($fault/ctx:reason)}</errorDescription>
+</ups:getUpsellingCompraBolsasResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:delete varName="BSCSUpsellingBolsas">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba8</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="BSCSUpsellingBolsasResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba7</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInf">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba6</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInfResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba5</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCReq">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba4</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCRes">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba3</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsi">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba2</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsiResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7ba1</con1:id>
+                    </con2:delete>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7a91</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-1361649779623991221--12488282.1437708f8b6.-7c00">
+            <con:stage name="out_stg_errorUpselling">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1361649779623991221--12488282.1437708f8b6.-7974</con4:id>
+                        <con1:expr>
+                            <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<ups:getUpsellingCompraBolsasResponse xmlns:ups="http://upselling.bolsas.bscs.bundle.ws.ncl.nii.com">
+   <bundleAmount>0</bundleAmount>
+   <listaBundles/>
+   <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+   <errorDescription>{data($fault/ctx:reason)}</errorDescription>
+</ups:getUpsellingCompraBolsasResponse>]]></con4:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:delete varName="BSCSUpsellingBolsas">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b7d</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="BSCSUpsellingBolsasResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b7c</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInf">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b7b</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getSubscriberAllInfResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b7a</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCReq">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b79</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="prepaidSearchICCRes">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b78</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsi">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b77</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getImsiResponse">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b76</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="salidaStep1">
+                        <con1:id>_ActionId-8511316891119908473--69675f1b.1633bbd8e1a.-7b3e</con1:id>
+                    </con2:delete>
+                    <con4:reply xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-1361649779623991221--12488282.1437708f8b6.-7972</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BN_getUpsellingCompraBolsas">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="getUpsellingCompraBolsas">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PiPeLinGetUpsellingCompraBolsas">
+                                <con:request>PiPeLinGetUpsellingCompraBolsas_request</con:request>
+                                <con:response>PiPeLinGetUpsellingCompraBolsas_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

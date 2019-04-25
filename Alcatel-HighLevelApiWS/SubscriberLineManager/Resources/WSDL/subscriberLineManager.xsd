@@ -1,0 +1,26 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://implementation.web.api.icc.services.osp.in.alcatel.com" xmlns:ns2="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd">
+    <xs:import schemaLocation="subscriberLineManager_types.xsd" namespace="http://pojo.web.api.icc.services.osp.in.alcatel.com/xsd"/>
+    <xs:complexType name="Exception">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+    <xs:element name="getAllInformation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="subscriberLineId" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="subscriberLineIdType" type="xs:int"/>
+                <xs:element minOccurs="0" name="allBuckets" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllInformationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="return" nillable="true" type="ns2:SubscriberLine"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

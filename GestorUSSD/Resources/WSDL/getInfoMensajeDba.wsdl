@@ -1,0 +1,24 @@
+<?binding.jca getInfoMensajeDba_db.jca?><wsdl:definitions name="getInfoMensajeDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getInfoMensajeDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoMensajeDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getInfoMensajeDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getInfoMensajeDba_plt">
+        <plt:role name="getInfoMensajeDba_role">
+            <plt:portType name="tns:getInfoMensajeDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoMensajeDba" schemaLocation="getInfoMensajeDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getInfoMensajeDbaInput_msg">
+        <wsdl:part name="getInfoMensajeDbaInput_msg" element="db:getInfoMensajeDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getInfoMensajeDbaOutputCollection_msg">
+        <wsdl:part name="getInfoMensajeDbaOutputCollection" element="db:getInfoMensajeDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getInfoMensajeDba_ptt">
+        <wsdl:operation name="getInfoMensajeDba">
+            <wsdl:input message="tns:getInfoMensajeDbaInput_msg"/>
+            <wsdl:output message="tns:getInfoMensajeDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

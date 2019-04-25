@@ -1,0 +1,36 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/"
+           targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" elementFormDefault="unqualified"
+           attributeFormDefault="qualified">
+  <xs:element name="Fault">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="faultcode" type="xs:string" minOccurs="0"/>
+        <xs:element name="faultstring" type="xs:string" minOccurs="0"/>
+        <xs:element name="faultactor" type="xs:string" minOccurs="0"/>
+        <xs:element name="details" type="ns1:details"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="details">
+    <xs:sequence>
+      <xs:element name="fault" type="xs:anyType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="fechaHoraInicio" type="xs:dateTime"/>
+      <xs:element name="fechaHoraFin" type="xs:dateTime"/>
+      <xs:element name="errorList" minOccurs="0" maxOccurs="1" type="ns1:errorList"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="errorList">
+    <xs:sequence>
+      <xs:element name="error" type="ns1:error" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="error">
+    <xs:sequence>
+      <xs:element name="level" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="backEnd" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

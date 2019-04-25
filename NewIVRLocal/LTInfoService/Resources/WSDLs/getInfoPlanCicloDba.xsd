@@ -1,0 +1,41 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoPlanCicloDBA" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoPlanCicloDBA" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getInfoPlanCicloDBAInput" type="getInfoPlanCicloDBAInput"/>
+   <xs:complexType name="getInfoPlanCicloDBAInput">
+      <xs:sequence>
+         <xs:element name="PHONE_NUMBER" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getInfoPlanCicloDBAOutputCollection" type="getInfoPlanCicloDBAOutputCollection"/>
+   <xs:complexType name="getInfoPlanCicloDBAOutputCollection">
+      <xs:sequence>
+         <xs:element name="getInfoPlanCicloDBAOutput" type="getInfoPlanCicloDBAOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getInfoPlanCicloDBAOutput">
+      <xs:sequence>
+         <xs:element name="CUSTOMER_ID" type="xs:string" nillable="true"/>
+         <xs:element name="CO_ID" type="xs:string" nillable="true"/>
+         <xs:element name="ESTADO" type="xs:string" nillable="true"/>
+         <xs:element name="PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="NOMBRE_PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="CICLO" type="xs:string" nillable="true"/>
+         <xs:element name="DESCRIPCION_CICLO" type="xs:string" nillable="true"/>
+         <xs:element name="FECHA_INI_CICLO" type="xs:string" nillable="true"/>
+         <xs:element name="FECHA_TER_CICLO" type="xs:string" nillable="true"/>
+         <xs:element name="TEGNOLOGIA" type="xs:string" nillable="true"/>
+         <xs:element name="TIPO_PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="IMSI" type="xs:string" nillable="true"/>
+         <xs:element name="UNIT_ON_NET" type="xs:string" nillable="true"/>
+         <xs:element name="TYPE_UNIT_ON_NET" type="xs:string" nillable="true"/>
+         <xs:element name="UNIT_OFF_NET" type="xs:string" nillable="true"/>
+         <xs:element name="TYPE_UNIT_OFF_NET" type="xs:string" nillable="true"/>
+         <xs:element name="UNIT_ALL_DEST" type="xs:string" nillable="true"/>
+         <xs:element name="TYPE_UNIT_ALL_DEST" type="xs:string" nillable="true"/>
+         <xs:element name="SMSINCLUIDOS_PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="PTTINCLUIDOS_PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="DATOSINLCUIDOS_PROVI" type="xs:string" nillable="true"/>
+         <xs:element name="TYPE_UNIT_CAP1_PCRF" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?binding.jca DateSumVigenciaDba_db.jca?><wsdl:definitions name="DateSumVigenciaDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/DateSumVigenciaDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/DateSumVigenciaDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/DateSumVigenciaDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="DateSumVigenciaDba_plt">
+        <plt:role name="DateSumVigenciaDba_role">
+            <plt:portType name="tns:DateSumVigenciaDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DateSumVigenciaDba" schemaLocation="DateSumVigenciaDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="DateSumVigenciaDbaInput_msg">
+        <wsdl:part name="DateSumVigenciaDbaInput_msg" element="db:DateSumVigenciaDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="DateSumVigenciaDbaOutputCollection_msg">
+        <wsdl:part name="DateSumVigenciaDbaOutputCollection" element="db:DateSumVigenciaDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="DateSumVigenciaDba_ptt">
+        <wsdl:operation name="DateSumVigenciaDba">
+            <wsdl:input message="tns:DateSumVigenciaDbaInput_msg"/>
+            <wsdl:output message="tns:DateSumVigenciaDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations">
+    <con:coreEntry>
+        <con1:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config">
+            <con:wsdl ref="NewIVRLocal/LTInfoService/Resources/WSDLs/getInfoPlanCicloDba_db"/>
+            <con:binding>
+                <con:name>getInfoPlanCicloDBA_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/db/Application1/NoAws/getInfoPlanCicloDBA</con:namespace>
+            </con:binding>
+        </con1:binding>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false">
+                <oper:capacity>0</oper:capacity>
+                <oper:maxQueueLength>0</oper:maxQueueLength>
+                <oper:timeToLive>0</oper:timeToLive>
+            </oper:throttling>
+            <oper:monitoring enabled="false" aggregationInterval="10"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:ws-policy>
+            <ser:binding-mode xmlns:ser="http://www.bea.com/wli/sb/services">no-policies</ser:binding-mode>
+        </con:ws-policy>
+        <con:result-caching isSupported="false"/>
+    </con:coreEntry>
+    <con:endpointConfig xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <tran:provider-id>jca</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI weight="0">
+            <env:value>jca://eis/DB/BSCSCORPMAN</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>0</tran:retry-interval>
+            <tran:retry-application-errors>true</tran:retry-application-errors>
+            <tran:delay-interval-configuration isEnabled="false">
+                <tran:delay-interval>0</tran:delay-interval>
+            </tran:delay-interval-configuration>
+        </tran:outbound-properties>
+        <tran:provider-specific xsi:type="jca:JCAEndPointConfiguration">
+            <jca:jca-file ref="NewIVRLocal/LTInfoService/Resources/JCA/getInfoPlanCicloDba_db"/>
+            <jca:adapter-name>Database Adapter</jca:adapter-name>
+            <jca:adapter-type>DATABASE</jca:adapter-type>
+            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:connection-mode>managed</jca:connection-mode>
+            <jca:connection-property-username-password-overwrite>false</jca:connection-property-username-password-overwrite>
+            <jca:outbound-properties>
+                <jca:operation-properties>
+                    <jca:operation-name>getInfoPlanCicloDBA</jca:operation-name>
+                    <jca:spec-properties>
+                        <jca:property>
+                            <jca:name>SqlString</jca:name>
+                            <jca:value>SELECT CUSTOMER_ID,CO_ID,ESTADO,PLAN,NOMBRE_PLAN,CICLO,DESCRIPCION_CICLO,FECHA_INI_CICLO,FECHA_TER_CICLO,TEGNOLOGIA,TIPO_PLAN,IMSI,UNIT_ON_NET,TYPE_UNIT_ON_NET,UNIT_OFF_NET,TYPE_UNIT_OFF_NET,UNIT_ALL_DEST,TYPE_UNIT_ALL_DEST,SMSINCLUIDOS_PLAN,PTTINCLUIDOS_PLAN,DATOSINLCUIDOS_PROVI,TYPE_UNIT_CAP1_PCRF FROM ( SELECT DISTINCT d.customer_id AS CUSTOMER_ID,c.co_id AS CO_ID,DECODE(c.ch_status,'a','ACTIVO','s','SUSPENDIDO','d','DESACTIVO') AS ESTADO,c.tmcode AS PLAN,g.des AS NOMBRE_PLAN,f.bch_run_date AS CICLO,f1.description AS DESCRIPCION_CICLO,f1.last_run_date AS FECHA_INI_CICLO, f1.bch_run_date AS FECHA_TER_CICLO, DECODE( g1.rateplan_type_id,'1','2G','2','2G','3','2G','4','3G','5','3G','6','3G') AS TEGNOLOGIA, DECODE( g1.rateplan_type_id,'1','Postpaid','2','Hybrid','3','Prepaid','4','Postpaid','5','Hybrid','6','Prepaid') AS TIPO_PLAN, h1.port_num AS IMSI,x.unit_on_net AS UNIT_ON_NET,x.TYPE_UNIT_ON_NET,x.unit_off_net AS UNIT_OFF_NET,x.TYPE_UNIT_OFF_NET,x.unit_all_dest AS UNIT_ALL_DEST,x.TYPE_UNIT_ALL_DEST,x.unit_sms AS SMSINCLUIDOS_PLAN,x.unit_ptt AS PTTINCLUIDOS_PLAN,x.unit_cap1_pcrf AS DATOSINLCUIDOS_PROVI,x.TYPE_UNIT_CAP1_PCRF FROM sysadm.directory_number a, sysadm.contr_services_cap b, sysadm.contract_all c, sysadm.customer_all d, sysadm.customer_bch e, sysadm.billcycles f, sysadm.billcycle_definition f1, sysadm.rateplan g, sysadm.rateplan_to_rateplan_type g1, sysadm.contr_devices h, sysadm.port h1, PROVI_BOLS.NEXTEL_CATALOGO_PLAN x WHERE a.dn_id  = b.dn_id AND b.sncode = 3 AND b.cs_deactiv_date IS NULL AND b.co_id  = c.co_id AND c.customer_id = d.customer_id AND d.customer_id = e.customer_id AND e.billcycle = f.billcycle AND f.billcycle = f1.billcycle AND c.tmcode = g.tmcode AND g.tmcode = g1.tmcode AND b.co_id = h.co_id AND h.port_id = h1.port_id AND g.shdes = x.shdes_plan AND h1.port_status = 'a' AND a.dn_num  = #PHONE_NUMBER ) a</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>GetActiveUnitOfWork</jca:name>
+                            <jca:value>false</jca:value>
+                        </jca:property>
+                    </jca:spec-properties>
+                </jca:operation-properties>
+            </jca:outbound-properties>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>

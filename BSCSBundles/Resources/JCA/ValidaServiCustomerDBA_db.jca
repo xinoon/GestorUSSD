@@ -1,0 +1,14 @@
+<adapter-config name="ValidaServiCustomerDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/ValidaServiCustomerDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ValidaServiCustomerDBA_ptt" operation="ValidaServiCustomerDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="NII_BSCS_BUNDLES_PKG"/>
+      <property name="ProcedureName" value="VALIDA_SERVICIO_CUSTOMER_FN"/>
+      <property name="QueryTimeout" value="600"/>   
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

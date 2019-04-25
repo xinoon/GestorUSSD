@@ -1,0 +1,131 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_PRODUCT_CATALOG_PRC/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_PRODUCT_CATALOG_PRC/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_CLIENT_NAME" type="string" db:index="1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_ALL_PRODUCT" type="string" db:index="2" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="SV_PROD_NUMBER" type="string" db:index="3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SV_PRODUCT_QT_LIST" type="db:PROVI_BOLS.PRODUCT_QT_LIST" db:index="4" db:type="Array" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_RETORNO" type="decimal" db:index="5" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_MENS_RETORNO" type="string" db:index="6" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_NUM_EVENTO" type="decimal" db:index="7" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="PROVI_BOLS.PRODUCT_QT_LIST">
+      <sequence>
+         <element name="SV_PRODUCT_QT_LIST_ITEM" type="db:PROVI_BOLS.PRODUCT_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.PRODUCT_QT">
+      <sequence>
+         <element name="NAME_PRODUCT" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="80"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="DESC_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="ID_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="ID_PCRF_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="ID_BSCS_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="LEVEL_PCRF_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="80"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TYPE_PROD_BSCS" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TARIFF_PROD" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="UNIT_FREE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="PROMO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="CATEGORY_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="RECURRENCE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="2"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="SEGMENT_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="FAMILY_PLAN" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="80"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="STATUS" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="30"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="VIGENCIA" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TRAFFIC_TYPE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

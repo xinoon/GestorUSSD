@@ -1,0 +1,13 @@
+<adapter-config name="getBolsaIlimitadaXPlan" adapter="Database Adapter" wsdlLocation="../WSDL/getBolsaIlimitadaXPlan.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="Connection1" adapterRef=""/>
+  <endpoint-interaction portType="getBolsaIlimitadaXPlan_ptt" operation="getBolsaIlimitadaXPlan">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT ID_PROD, ID_PCRF_PROD, ID_BSCS_PROD, VIGENCIA, UNIT_FREE FROM NEXTEL_CATALOGO_PRODUCTOS where CHANNEL_ACT = #canal and FAMILY_PLAN = #tmcode and tecnologia = 'SUS' and CLASIFICA_BOLSA = #clasificaBolsa and status = 'A'"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

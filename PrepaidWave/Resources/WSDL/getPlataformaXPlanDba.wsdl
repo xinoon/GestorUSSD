@@ -1,0 +1,24 @@
+<?binding.jca getPlataformaXPlanDba_db.jca?><wsdl:definitions name="getPlataformaXPlanDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getPlataformaXPlanDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getPlataformaXPlanDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getPlataformaXPlanDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getPlataformaXPlanDba_plt">
+        <plt:role name="getPlataformaXPlanDba_role">
+            <plt:portType name="tns:getPlataformaXPlanDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getPlataformaXPlanDba" schemaLocation="getPlataformaXPlanDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getPlataformaXPlanDbaInput_msg">
+        <wsdl:part name="getPlataformaXPlanDbaInput_msg" element="db:getPlataformaXPlanDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getPlataformaXPlanDbaOutputCollection_msg">
+        <wsdl:part name="getPlataformaXPlanDbaOutputCollection" element="db:getPlataformaXPlanDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getPlataformaXPlanDba_ptt">
+        <wsdl:operation name="getPlataformaXPlanDba">
+            <wsdl:input message="tns:getPlataformaXPlanDbaInput_msg"/>
+            <wsdl:output message="tns:getPlataformaXPlanDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

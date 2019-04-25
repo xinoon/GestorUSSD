@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="PortalCautivo/Resources/WSDLs/ValidaCautivoPortal" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>CaptivePortalPortBinding</con:name>
+                <con:namespace>http://captive.portal.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="false" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>false</oper:tracingEnabled>
+            <oper:reporting>true</oper:reporting>
+            <oper:logging enabled="true" level="error"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelinePairNode1_request" errorHandler="_onErrorHandler-7735864963387498266-fd4fbac.13f9b8f51a3.-7f11">
+            <con:stage name="STG_ValidaSegmento">
+                <con:comment>STG_ValidaSegmento</con:comment>
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_CUSTOMER_INFO_PRC/" prefix="ns1"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-944531102804151671--56d9f2be.15af0fc42e2.-7e72</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>empty($body/cap:setNextelActiveProduct/phone_number/text()) or $body/cap:setNextelActiveProduct/phone_number/text() = ''</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:Error>
+                                    <con1:id>_ActionId-944531102804151671--56d9f2be.15af0fc42e2.-7e71</con1:id>
+                                    <con2:errCode>1</con2:errCode>
+                                    <con2:message>Error: Debe ingresar el numero de celular.</con2:message>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>empty($body/cap:setNextelActiveProduct/client_name/text()) or $body/cap:setNextelActiveProduct/client_name/text() = ''</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:Error>
+                                    <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-79bc</con1:id>
+                                    <con2:errCode>1</con2:errCode>
+                                    <con2:message>Error: El campo client_name es obligatorio.</con2:message>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>empty($body/cap:setNextelActiveProduct/metodo_pago/text()) or $body/cap:setNextelActiveProduct/metodo_pago/text() = ''</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:Error>
+                                    <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-753c</con1:id>
+                                    <con2:errCode>1</con2:errCode>
+                                    <con2:message>Error: El campo metodo_pago es obligatorio.</con2:message>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6e18</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryText>$body/cap:setNextelActiveProduct/metodo_pago/text() = ('CONTRA_FACTURA','SALDO_PREPAGO','GRATIS')</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions/>
+                        </con2:case>
+                        <con2:default>
+                            <con2:Error>
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-6d58</con1:id>
+                                <con2:errCode>1</con2:errCode>
+                                <con2:message>Error: Los metodos de pago son SALDO_PREPAGO o CONTRA_FACTURA</con2:message>
+                            </con2:Error>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="flujoDevetel">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6ef0</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:compExpr operator="=">
+                                        <con1:leftPath>data($body/cap:setNextelActiveProduct/client_name)</con1:leftPath>
+                                        <con1:rightPath>'DEVETEL'</con1:rightPath>
+                                    </con1:compExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con4:route xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6eee</con5:id>
+                                    <con4:service ref="PortalCautivo/Business Services/BSServiceSetEventoRecargaNoSeq" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con4:operation>setEventoRecargaNoSeqDba</con4:operation>
+                                    <con4:outboundTransform>
+                                        <con5:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6eb0</con1:id>
+                                            <con5:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_SetEventeRecargaNoSeq"/>
+                                                    <con1:param name="MONTO">
+                                                        <con1:path>$body/cap:setNextelActiveProduct/pago_aplicado/text()</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="NUM_CEL">
+                                                        <con1:path>$body/cap:setNextelActiveProduct/phone_number/text()</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con5:expr>
+                                        </con5:replace>
+                                    </con4:outboundTransform>
+                                </con4:route>
+                                <con2:Error>
+                                    <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6eec</con1:id>
+                                    <con2:errCode>10</con2:errCode>
+                                    <con2:message>No existe bonificación para esta cuenta</con2:message>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_getCatalogoProductoINT">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-7735864963387498266-fd4fbac.13f9b8f51a3.-7f82</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSCatalogoProductosINTDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>CatalogoProductosINTDBA</con2:operation>
+                        <con2:request>
+                            <con2:body>CatProINTRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>CatProINTResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con1:assign varName="CatProINTRequest" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6e78</con4:id>
+                                <con1:expr>
+                                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/">
+    <!--Optional:-->
+    <get:P_ID_PCRF_PROD>{data($body/cap:setNextelActiveProduct/id_pcrf_prod)}</get:P_ID_PCRF_PROD>
+    <!--Optional:-->
+    <get:P_ID_BSCS_PROD>{data($body/cap:setNextelActiveProduct/id_bscs_prod)}</get:P_ID_BSCS_PROD>
+    <!--Optional:-->
+    <get:P_ID_PROD>{data($body/cap:setNextelActiveProduct/id_prod)}</get:P_ID_PROD>
+    <!--Optional:-->
+    <get:P_MONTO_RECARGA>{data($body/cap:setNextelActiveProduct/pago_aplicado)}</get:P_MONTO_RECARGA>
+    <!--Optional:-->
+    <get:P_CLIENT_NAME>{data($body/cap:setNextelActiveProduct/client_name)}</get:P_CLIENT_NAME>
+    <!--Optional:-->
+    <get:P_PHONE_NUMBER>{data($body/cap:setNextelActiveProduct/phone_number)}</get:P_PHONE_NUMBER>
+</get:InputParameters>]]></con4:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6e09</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryText>$CatProINTResponse/get:SN_COD_RETORNO/text() != '0'</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6e08</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>Se produjo un error al obtener el producto del catálogo.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="stg_GetCustomerInfoInt-ValidaSegmento">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CUSTOMER_PRC/" prefix="get2"/>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/NEXTEL_CUSTOMER_INFO_PRC/" prefix="ns1"/>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CATALOGO_PRODUCTOS_INT_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7eea</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BSGetCustomerDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getCustomerDBA</con2:operation>
+                        <con2:request>
+                            <con2:body>getCustomerDBA</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getCustomerDBAResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="getCustomerDBA">
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7ef1</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GET_CUSTOMER_PRC/">
+    <get:P_PHONE_NUMBER>{data($body/cap:setNextelActiveProduct/phone_number)}</get:P_PHONE_NUMBER>
+    <get:P_TMCODE>{data($body/cap:setNextelActiveProduct/rate_plan)}</get:P_TMCODE>
+</get:InputParameters>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="SN_CUS_COD_RETORNO">
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7eee</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getCustomerDBAResponse/get2:SN_COD_RETORNO/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="SN_CUSTOMER_ID">
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7eed</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$getCustomerDBAResponse/get2:SN_CUSTOMER_ID/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7502</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryText>$SN_CUS_COD_RETORNO != '0' and $body/cap:setNextelActiveProduct/client_name/text() != 'DEVETEL'</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7476</con1:id>
+                                            <con2:errCode>1013</con2:errCode>
+                                            <con2:message>Error al obtener los identificadores del cliente.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="In_stg_getImsiBymsisdn">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/" prefix="get4"/>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-4615884836252970773-52a9e39f.13fa01bf89b.-7e22</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PortalCautivo/Business Services/BStimsiBymsisdnDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>timsiBymsisdnDBA</con2:operation>
+                        <con2:request>
+                            <con2:body>timsiBymsisdnDBA</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>timsiBymsisdnDBAResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="timsiBymsisdnDBA">
+                                <con1:id>_ActionId-4615884836252970773-52a9e39f.13fa01bf89b.-7dea</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>&lt;get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/">
+    &lt;!--Optional:-->
+    &lt;get:I_MSISDN>{data($body/cap:setNextelActiveProduct/phone_number)}&lt;/get:I_MSISDN>
+&lt;/get:InputParameters></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7cf2</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="!=">
+                                                <con1:leftPath>$timsiBymsisdnDBAResponse/get4:V_RESULT/text()</con1:leftPath>
+                                                <con1:rightPath>'0'</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7be0</con1:id>
+                                            <con2:errCode>1012</con2:errCode>
+                                            <con2:message>Error al obtener el código IMSI del cliente.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="in_stg_validaVentaBolsas">
+                <con:context>
+                    <con1:varNsDecl namespace="http://captive.portal.ws.ncl.nii.com" prefix="cap"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6dea</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PortalCautivo/Proxy Services/PSValidaVentaBolsas" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getValidaVentaBolsas</con2:operation>
+                        <con2:request>
+                            <con2:body>getValidaVentaBolsas</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>getValidaVentaBolsasResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:replace varName="getValidaVentaBolsas">
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df8</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PortalCautivo/Resources/XQuery/IN_XQ_PortalValVentBols"/>
+                                        <con1:param name="client_name">
+                                            <con1:path>data($body/cap:setNextelActiveProduct/client_name)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="rate_plan">
+                                            <con1:path>data($body/cap:setNextelActiveProduct/rate_plan)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="phone_number">
+                                            <con1:path>data($body/cap:setNextelActiveProduct/phone_number)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="outputParameters1">
+                                            <con1:path>$CatProINTResponse</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:replace>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="validaBolsaErrorCod">
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df7</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($getValidaVentaBolsasResponse/error_code)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="validaBolsaErrorMsg">
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df6</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($getValidaVentaBolsasResponse/err_description)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df5</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="!=">
+                                                <con1:leftPath>xs:string($validaBolsaErrorCod)</con1:leftPath>
+                                                <con1:rightPath>'0'</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:replace varName="body" contents-only="true">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df4</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$validaBolsaErrorCod}</error_code>
+   <err_description>{$validaBolsaErrorMsg}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:replace>
+                                        <con2:delete varName="getCustomerDBAResponse">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df3</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getCustomerDBA">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df2</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="timsiBymsisdnDBAResponse">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df1</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="CatProINTRequest">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6df0</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="CatProINTResponse">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6def</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getValidaVentaBolsas">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6dee</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="getValidaVentaBolsasResponse">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6ded</con1:id>
+                                        </con2:delete>
+                                        <con2:delete varName="timsiBymsisdnDBA">
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6dec</con1:id>
+                                        </con2:delete>
+                                        <con1:reply>
+                                            <con1:id>_ActionId-1410913502282591576--57abb68d.164f77c3c54.-6deb</con1:id>
+                                        </con1:reply>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response" errorHandler="_onErrorHandler-7735864963387498266-fd4fbac.13f9b8f51a3.-7f10">
+            <con:stage name="Out_stg_validaPortal">
+                <con:context/>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-7735864963387498266-fd4fbac.13f9b8f51a3.-7f12</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PortalCautivo/Resources/XQuery/OUT_XQ_GET_ALL_INFO"/>
+                                <con1:param name="outputParameters3">
+                                    <con1:path>$timsiBymsisdnDBAResponse</con1:path>
+                                </con1:param>
+                                <con1:param name="outputParameters1">
+                                    <con1:path>$CatProINTResponse</con1:path>
+                                </con1:param>
+                                <con1:param name="outputParameters2">
+                                    <con1:path>$getCustomerDBAResponse</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:delete varName="getCustomerDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d5</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getCustomerDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d4</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d3</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d2</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsasResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d1</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsas">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72d0</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72cf</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTRequest">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72ce</con1:id>
+                    </con2:delete>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-7735864963387498266-fd4fbac.13f9b8f51a3.-7f11">
+            <con:stage name="ErrorRequest">
+                <con:context/>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-73e2</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$fault/ctx:errorCode/text()}</error_code>
+   <err_description>{$fault/ctx:reason/text()}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:delete varName="getCustomerDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-73a2</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getCustomerDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-73a4</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-73e5</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-73e4</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsasResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7459</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsas">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-732c</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7330</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTRequest">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-732e</con1:id>
+                    </con2:delete>
+                    <con1:reply>
+                        <con1:id>_ActionId-7735864963387498266-fd4fbac.13f9b8f51a3.-7e4a</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-7735864963387498266-fd4fbac.13f9b8f51a3.-7f10">
+            <con:stage name="ErrorResponse">
+                <con:context/>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-7735864963387498266-fd4fbac.13f9b8f51a3.-7da0</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<cap:setNextelActiveProductResponse xmlns:cap="http://captive.portal.ws.ncl.nii.com">
+   <error_code>{$fault/ctx:errorCode/text()}</error_code>
+   <err_description>{$fault/ctx:reason/text()}</err_description>
+</cap:setNextelActiveProductResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:delete varName="getCustomerDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-7300</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getCustomerDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72ff</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBAResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72fe</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="timsiBymsisdnDBA">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72fd</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsasResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72fc</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="getValidaVentaBolsas">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72fb</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTResponse">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72fa</con1:id>
+                    </con2:delete>
+                    <con2:delete varName="CatProINTRequest">
+                        <con1:id>_ActionId-5255164703822402466--3fa390e8.161664a3d7f.-72f9</con1:id>
+                    </con2:delete>
+                    <con1:reply>
+                        <con1:id>_ActionId-7735864963387498266-fd4fbac.13f9b8f51a3.-7d9f</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>PipelinePairNode1_request</con:request>
+                <con:response>PipelinePairNode1_response</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

@@ -1,0 +1,14 @@
+<adapter-config name="ValidaClienteGestorDB" adapter="Database Adapter" wsdlLocation="../WSDLs/ValidaClienteGestorDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ValidaClienteGestorDB_ptt" operation="ValidaClienteGestorDB">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="PROVI_BOLS"/>
+      <property name="ProcedureName" value="VALIDA_BUNDLES_PRC"/>
+      <property name="QueryTimeout" value="600"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

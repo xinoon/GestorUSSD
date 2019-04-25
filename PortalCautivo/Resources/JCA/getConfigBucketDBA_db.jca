@@ -1,0 +1,13 @@
+<adapter-config name="getConfigBucketDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/getConfigBucketDBA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getConfigBucketDBA_ptt" operation="getConfigBucketDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT ID_SECUENCIAL,BUCKET FROM CONFIG_BUCKET"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

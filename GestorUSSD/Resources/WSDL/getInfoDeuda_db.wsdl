@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getInfoDeuda" name="getInfoDeuda-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getInfoDeuda" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getInfoDeuda" location="getInfoDeuda.wsdl"/>
+  <binding name="getInfoDeuda_ptt-binding" type="tns:getInfoDeuda_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getInfoDeuda">
+      <soap:operation soapAction="getInfoDeuda"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getInfoDeuda-service">
+    <port name="getInfoDeuda-port" binding="tns:getInfoDeuda_ptt-binding">
+      <soap:address location="jca://eis/DB/FTOLERANCE"/>
+    </port>
+  </service>
+</definitions>

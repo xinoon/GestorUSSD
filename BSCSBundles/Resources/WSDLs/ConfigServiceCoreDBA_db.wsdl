@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/ConfigServiceCoreDBA" name="ConfigServiceCoreDBA-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/ConfigServiceCoreDBA" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PortalCautivo/NextelProductCatalog/ConfigServiceCoreDBA" location="ConfigServiceCoreDBA.wsdl"/>
+  <binding name="ConfigServiceCoreDBA_ptt-binding" type="tns:ConfigServiceCoreDBA_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="ConfigServiceCoreDBA">
+      <soap:operation soapAction="ConfigServiceCoreDBA"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ConfigServiceCoreDBA-service">
+    <port name="ConfigServiceCoreDBA-port" binding="tns:ConfigServiceCoreDBA_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

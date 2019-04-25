@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ws.wom.cl/WOM/NEG/ServiceOrderManagement/bundleProvisioning/v/1.0" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ws.wom.cl/WOM/NEG/ServiceOrderManagement/bundleProvisioning/v/1.0">
+  <xsd:element name="bundleProvisioningResp" type="bundleProvisioningRespType"/>
+  <xsd:complexType name="bundleProvisioningRespType">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

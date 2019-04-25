@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <xs:schema version="1.0"
+           targetNamespace="http://bolsas.bscs.bundle.ws.ncl.nii.com"
+           xmlns:tns="http://bolsas.bscs.bundle.ws.ncl.nii.com"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="setWriteBSCSBundle" type="tns:setWriteBSCSBundle"/>
+  <xs:element name="setWriteBSCSBundleResponse"
+              type="tns:setWriteBSCSBundleResponse"/>
+  <xs:complexType name="setWriteBSCSBundle">
+    <xs:sequence>
+      <xs:element name="enterpriseID" type="xs:long" minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="client_Name" type="xs:string" maxOccurs="1"/>
+      <xs:element name="packages" minOccurs="1" maxOccurs="1"
+                  type="tns:package"/>
+      <xs:element name="operationFlag" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setWriteBSCSBundleResponse">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:long" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="errorDescription" maxOccurs="1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="package">
+    <xs:sequence>
+      <xs:element name="item_pkg" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="spcode" type="xs:long" minOccurs="1"/>
+            <xs:element name="services" type="tns:service" minOccurs="1"
+                        maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="service">
+    <xs:sequence>
+      <xs:element name="item_srv" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence maxOccurs="1">
+            <xs:element name="sncode" type="xs:long" minOccurs="1"/>
+            <xs:element name="templ_Id" type="xs:long" minOccurs="1"/>
+            <xs:element name="bundles" type="tns:bundle" nillable="true"
+                        minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bundle">
+    <xs:sequence>
+      <xs:element name="item_bls" maxOccurs="unbounded" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="bundle_value" type="xs:string" minOccurs="0"/>
+            <xs:element name="bundle_unit" type="xs:string" minOccurs="0"/>
+            <xs:element name="bundle_type" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getSearchBSCSBundles" type="tns:getSearchBSCSBundles"/>
+  <xs:element name="getSearchBSCSBundlesResponse"
+              type="tns:getSearchBSCSBundlesResponse"/>
+  <xs:complexType name="getSearchBSCSBundles">
+    <xs:sequence>
+      <xs:element name="enterpriseID" type="xs:long" minOccurs="1"/>
+      <xs:element name="client_name" type="xs:string" minOccurs="1"/>
+      <xs:element name="bundleTypeFlag" type="xs:long" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSearchBSCSBundlesResponse">
+    <xs:sequence>
+      <xs:element name="packages" type="tns:listPackage"
+                  maxOccurs="1" nillable="true"/>
+      <xs:element name="errorCode" type="xs:long" minOccurs="1"/>
+      <xs:element name="errorDescription" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listPackage">
+    <xs:sequence>
+      <xs:element name="item_pkg" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="spcode" type="xs:long" minOccurs="0"/>
+            <xs:element name="desc_packages" type="xs:string" minOccurs="1"/>
+            <xs:element name="services" type="tns:listService"
+                        maxOccurs="1" nillable="true"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listService">
+    <xs:sequence maxOccurs="1">
+      <xs:element name="item_srv" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sncode" type="xs:long" minOccurs="0"/>
+            <xs:element name="sv_des" type="xs:string" minOccurs="0"/>
+            <xs:element name="templ_id" type="xs:long" minOccurs="0"/>
+            <xs:element name="bundles" type="tns:bundle"
+                        nillable="true" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

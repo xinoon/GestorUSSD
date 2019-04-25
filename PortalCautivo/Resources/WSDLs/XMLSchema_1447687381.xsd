@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMXSD/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://nii.com/EnterpriseProxyService/ServiceManagement/SendSMSCDMXSD/v1">
+	<xsd:element name="SendSMSRequest" type="SendSMSRequestType"/>
+	<xsd:complexType name="SendSMSRequestType">
+		<xsd:sequence>
+			<xsd:element name="destination" type="xsd:string"/>
+			<xsd:element name="senderName" type="xsd:string"/>
+			<xsd:element name="message" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="SendSMSResponse" type="SendSMSResponseType"/>
+	<xsd:complexType name="SendSMSResponseType">
+		<xsd:sequence>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="description" type="xsd:string"/>
+			</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

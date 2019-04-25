@@ -1,0 +1,14 @@
+<adapter-config name="ConsultaClienteGestorADDB" adapter="Database Adapter" wsdlLocation="../WSDLs/ConsultaClienteGestorADDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="ConsultaClienteGestorADDB_ptt" operation="ConsultaClienteGestorADDB">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT DISTINCT NX.SPCODE,NX.ID_BSCS_PROD SNCODE,NX.UNIT_FREE BUNDLE_VALUE,LOWER(NX.UNIT_TYPE) BUNDLE_UNIT, NVL(NX.COD_BUNDLE_TYPE,4) BUNDLE_TYPE, NX.TEMPLATE_ID,NX.COD_TIPO_TRAFICO,NX.DES_BUNDLE_TYPE,NX.NAME_PROD SV_DES FROM NEXTEL_CATALOGO_PRODUCTOS NX WHERE NX.RECURRENCE = 'N' AND STATUS ='A' AND NX.CHANNEL_ACT = #client_name ORDER BY NX.SPCODE"/>
+      <property name="QueryTimeout" value="600"/>      
+     <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

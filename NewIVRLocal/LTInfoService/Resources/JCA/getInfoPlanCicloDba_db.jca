@@ -1,0 +1,14 @@
+<adapter-config name="getInfoPlanCicloDBA" adapter="Database Adapter" wsdlLocation="../WSDLs/getInfoPlanCicloDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getInfoPlanCicloDBA_ptt" operation="getInfoPlanCicloDBA">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT CUSTOMER_ID,CO_ID,ESTADO,PLAN,NOMBRE_PLAN,CICLO,DESCRIPCION_CICLO,FECHA_INI_CICLO,FECHA_TER_CICLO,TEGNOLOGIA,TIPO_PLAN,IMSI,UNIT_ON_NET,TYPE_UNIT_ON_NET,UNIT_OFF_NET,TYPE_UNIT_OFF_NET,UNIT_ALL_DEST,TYPE_UNIT_ALL_DEST,SMSINCLUIDOS_PLAN,PTTINCLUIDOS_PLAN,DATOSINLCUIDOS_PROVI,TYPE_UNIT_CAP1_PCRF FROM ( SELECT DISTINCT d.customer_id AS CUSTOMER_ID,c.co_id AS CO_ID,DECODE(c.ch_status,'a','ACTIVO','s','SUSPENDIDO','d','DESACTIVO') AS ESTADO,c.tmcode AS PLAN,g.des AS NOMBRE_PLAN,f.bch_run_date AS CICLO,f1.description AS DESCRIPCION_CICLO,f1.last_run_date AS FECHA_INI_CICLO, (f1.bch_run_date -1 )  AS FECHA_TER_CICLO, DECODE( g1.rateplan_type_id,'1','2G','2','2G','3','2G','4','3G','5','3G','6','3G') AS TEGNOLOGIA, DECODE( g1.rateplan_type_id,'1','Postpaid','2','Hybrid','3','Prepaid','4','Postpaid','5','Hybrid','6','Prepaid') AS TIPO_PLAN, h1.port_num AS IMSI,NVL(x.unit_on_net,'0') AS UNIT_ON_NET,x.TYPE_UNIT_ON_NET,NVL(x.unit_off_net,'0') AS UNIT_OFF_NET,x.TYPE_UNIT_OFF_NET,NVL(x.unit_all_dest,'0') AS UNIT_ALL_DEST,x.TYPE_UNIT_ALL_DEST,x.unit_sms AS SMSINCLUIDOS_PLAN,x.unit_ptt AS PTTINCLUIDOS_PLAN,x.unit_cap1_pcrf AS DATOSINLCUIDOS_PROVI,x.TYPE_UNIT_CAP1_PCRF FROM sysadm.directory_number a, sysadm.contr_services_cap b, sysadm.contract_all c, sysadm.customer_all d, sysadm.customer_bch e, sysadm.billcycles f, sysadm.billcycle_definition f1, sysadm.rateplan g, sysadm.rateplan_to_rateplan_type g1, sysadm.contr_devices h, sysadm.port h1, PROVI_BOLS.NEXTEL_CATALOGO_PLAN x WHERE a.dn_id  = b.dn_id AND b.sncode = 3 AND b.cs_deactiv_date IS NULL AND b.co_id  = c.co_id AND c.customer_id = d.customer_id AND d.customer_id = e.customer_id AND e.billcycle = f.billcycle AND f.billcycle = f1.billcycle AND c.tmcode = g.tmcode AND g.tmcode = g1.tmcode AND b.co_id = h.co_id AND h.port_id = h1.port_id AND g.shdes = x.shdes_plan AND h1.port_status = 'a' AND a.dn_num  = #PHONE_NUMBER ) a"/>
+      <property name="QueryTimeout" value="600"/>  
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>
