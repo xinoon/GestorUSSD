@@ -53,7 +53,12 @@
          <string v="GestorUSSD"/>
       </list>
    </hash>
+   <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+      <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+         <url n="pomfileURL" path="pom.xml"/>
+      </hash>
+   </hash>
    <hash n="oracle.sb.tooling.ide.core.internal.application.SbApplication">
-      <value n="configContextSessionName" v="OSB-IDE_build_1556130236535"/>
+      <value n="configContextSessionName" v="OSB-IDE_build_1556304383005"/>
    </hash>
 </jws:workspace>

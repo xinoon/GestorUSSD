@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="WOM.NEG.Fase1.GestorUSSD/SVR.123456.GetCreditoEmergencia_1.0/Specifications/USSDOperaciones"/>
+            <con:binding>
+                <con:name>USSDOperacionesPortBinding</con:name>
+                <con:namespace>http://ussd.operaciones.wom.ws.ncl.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57d480.388e4753.0.16a50b08ba3.N7071" errorHandler="error-N3f57d480.388e4753.0.16a50b08ba3.N706a" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-N3f57d480.388e4753.0.16a50b08ba3.N6fbd" name="ValidateRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="ussd" namespace="http://ussd.operaciones.wom.ws.ncl.com"/>
+                </con:context>
+                <con:actions>
+                    <con2:validate>
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N6fbc</con1:id>
+                        <con2:schema ref="WOM.NEG.Fase1.GestorUSSD/SVR.123456.GetCreditoEmergencia_1.0/Specifications/USSDOperaciones"/>
+                        <con2:schemaElement xmlns:ussd="http://ussd.operaciones.wom.ws.ncl.com">ussd:ussdOperacion</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                            <con1:xpathText>./ussd:ussdOperacion</con1:xpathText>
+                        </con2:location>
+                    </con2:validate>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getExtraCredito" id="_StageId-N3f57d480.388e4753.0.16a50b08ba3.N7070">
+                <con:context>
+                    <con1:userNsDecl namespace="http://operaciones.extracredito.wom.ws.ncl.com" prefix="ope"/>
+                    <con1:varNsDecl namespace="http://ussd.operaciones.wom.ws.ncl.com" prefix="ussd"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N706f</con1:id>
+                        <con2:service ref="WOM.NEG.Fase1.GestorUSSD/SVR.123456.GetCreditoEmergencia_1.0/Services/BS_WhaleAPIService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>QryAcctBook</con2:operation>
+                        <con2:request>
+                            <con2:body wrapped="false">requestEC</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body wrapped="false">responseEC</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="requestEC">
+                                <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N706e</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="WOM.NEG.Fase1.GestorUSSD/SVR.123456.GetCreditoEmergencia_1.0/Transformations/XQ_MSG_GetCreditoEmergencia-WhaleEmergencyCredit.IN_1.0"/>
+                                        <con1:param name="input">
+                                            <con1:path>$body/*[1]</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="respuestaEC">
+                                <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N706d</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="GestorUSSD/Resources/XQuery/OUT_XQ_ExtraCredito"/>
+                                        <con1:param name="suscribeExtraCreditoResponse">
+                                            <con1:path>$responseEC</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                    <con2:assign varName="errorCode">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N706c</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$respuestaEC/errorCode/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="errorDescription">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N706b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$respuestaEC/errorDescription/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57d480.388e4753.0.16a50b08ba3.N706a" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage name="stage_FaultExtraCredito_request" id="_StageId-N3f57d480.388e4753.0.16a50b08ba3.N7069">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7068</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns0:ussdOperacionResponse xmlns:ns0="http://ussd.operaciones.wom.ws.ncl.com">
+   <segmento></segmento>
+   <errorCode>{$fault/ctx:errorCode/text()}</errorCode>
+   <errorDescription>{concat('stage: ',$fault/ctx:location/ctx:stage/text(),', Error: ', $fault/ctx:reason/text())}</errorDescription>
+</ns0:ussdOperacionResponse>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con4:log xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7067</con1:id>
+                        <con4:logLevel>error</con4:logLevel>
+                        <con4:expr>
+                            <con1:xqueryText>$body</con1:xqueryText>
+                        </con4:expr>
+                        <con4:message>-----|||Response PSUSSDOperaciones|||-----</con4:message>
+                    </con4:log>
+                    <con1:reply isError="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7066</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57d480.388e4753.0.16a50b08ba3.N7065" errorHandler="error-N3f57d480.388e4753.0.16a50b08ba3.N7057" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage name="getInfoMensajeCreditoEmergecia" id="_StageId-N3f57d480.388e4753.0.16a50b08ba3.N7064">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getInfoMensajeDba" prefix="gmec"/>
+                    <con1:varNsDecl namespace="http://ussd.operaciones.wom.ws.ncl.com" prefix="ussd"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N705f</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="GestorUSSD/Business Services/BSServiceGetInfoMensaje" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getInfoMensajeDba</con2:operation>
+                        <con2:request>
+                            <con2:body>InfoMensajeReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>InfoMensajeResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="InfoMensajeReq">
+                                <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N705e</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="GestorUSSD/Resources/XQuery/IN_XQ_getMensaje"/>
+                                        <con1:param name="idMsj">
+                                            <con1:path>'10004'</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="respuestaMensaje">
+                                <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N705d</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="GestorUSSD/Resources/XQuery/OUT_XQ_getMensaje_TO_EC"/>
+                                        <con1:param name="getInfoMensajeDbaOutputCollection">
+                                            <con1:path>$InfoMensajeResp</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                    <con2:assign varName="respuestaMensaje">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N705c</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>let $fecha_inicio := substring(xs:string(xs:dateTime(fn:current-dateTime())),1,10)
+              let $fecha_termino := substring(xs:string(xs:dateTime(fn:current-dateTime()+ xs:dayTimeDuration("PT120H"))),1,10)
+              let $mensaje1 := replace($respuestaMensaje/MENSAJE/text(),'#1',$fecha_inicio)
+              let $mensaje2 := replace($mensaje1,'#2',$fecha_termino)
+              
+              let $fecha := replace(replace(replace(substring(xs:string(fn:current-dateTime()),1,20),'T',':'),':',''),'-','')
+return $fecha</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7059</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<ns0:ussdOperacionResponse xmlns:ns0="http://ussd.operaciones.wom.ws.ncl.com">
+   <segmento></segmento>
+   <errorCode>0</errorCode>
+   <errorDescription>{$respuestaMensaje}</errorDescription>
+</ns0:ussdOperacionResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7058</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57d480.388e4753.0.16a50b08ba3.N7057" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage name="stageFaultExtraCredito_response" id="_StageId-N3f57d480.388e4753.0.16a50b08ba3.N7056">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7055</con1:id>
+                        <con3:expr>
+                            <con1:xqueryText><![CDATA[<ns0:ussdOperacionResponse xmlns:ns0="http://ussd.operaciones.wom.ws.ncl.com">
+   <segmento></segmento>
+   <errorCode>{$fault/ctx:errorCode/text()}</errorCode>
+   <errorDescription>{concat('stage: ',$fault/ctx:location/ctx:stage/text(),', Error: ', $fault/ctx:reason/text())}</errorDescription>
+</ns0:ussdOperacionResponse>]]></con1:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con4:log xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7054</con1:id>
+                        <con4:logLevel>error</con4:logLevel>
+                        <con4:expr>
+                            <con1:xqueryText>$body</con1:xqueryText>
+                        </con4:expr>
+                        <con4:message>-----|||Response PSUSSDOperaciones|||-----</con4:message>
+                    </con4:log>
+                    <con1:reply isError="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-N3f57d480.388e4753.0.16a50b08ba3.N7053</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:request>request-N3f57d480.388e4753.0.16a50b08ba3.N7071</con:request>
+                <con:response>response-N3f57d480.388e4753.0.16a50b08ba3.N7065</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
