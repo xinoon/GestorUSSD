@@ -41,6 +41,8 @@
       <hash><url n="URL" path="PrepaidWave/PrepaidWave.jpr"/></hash>
       <hash><url n="URL" path="SearchBalancesICC/SearchBalancesICC.jpr"/></hash>
       <hash><url n="URL" path="WOM.NEG.Fase1.GestorUSSD/WOM.NEG.Fase1.GestorUSSD.jpr"/></hash>
+      <hash><url n="URL" path="WOM.NEG.WOMVOLUTION.BUSINESS/WOM.NEG.WOMVOLUTION.BUSINESS.jpr"/></hash>
+      <hash><url n="URL" path="WOM.NEG.WOMVOLUTION.PROXY/WOM.NEG.WOMVOLUTION.PROXY.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
