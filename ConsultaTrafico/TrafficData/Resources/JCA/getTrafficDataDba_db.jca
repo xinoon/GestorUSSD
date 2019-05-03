@@ -1,0 +1,14 @@
+<adapter-config name="getTrafficDataDba" adapter="Database Adapter" wsdlLocation="../WSDL/getTrafficDataDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/RADB_TECN_DISINFGESRA1" UIConnectionName="RADB_TECN_DISINFGESRA1" adapterRef=""/>
+  <endpoint-interaction portType="getTrafficDataDba_ptt" operation="getTrafficDataDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT MSISDN NUMERO_ORIGEN,APN NUMERO_DESTINO,'N/A' DESTINO,'Emitida' SENTIDO,TO_CHAR(TO_DATE(DATE_EVENT,'yyyy-mm-dd hh24:mi:ss'),'dd-mm-yyyy') AS FECHA,'' HORA_INICIO,'' HORA_TERMINO,'Kbyte' UNIDAD,TO_CHAR(TO_NUMBER(DATA_VOLUMEN_DOWN, '99999999D999999', 'NLS_NUMERIC_CHARACTERS = ''.,''') + TO_NUMBER(DATA_VOLUMEN_UP, '99999999D999999', 'NLS_NUMERIC_CHARACTERS = ''.,''')) AS DURACION,'' DURACION_SEGUNDOS,'' VALOR_SEGUNDO,'Datos' SERVICIO,'N/A' TRAMO_HORARIO,'No facturado' CARACTERISTICA_SERVICIO,'' VALOR_LLAMADA FROM reportsra.RA_AGGNRO_DATOS WHERE MSISDN = #NROCELULAR AND TO_DATE(DATE_EVENT,'yyyy-mm-dd') BETWEEN TO_DATE(#STARDATE,'yyyy-mm-dd')  AND TO_DATE(#ENDDATE,'yyyy-mm-dd') "/>
+      <property name="QueryTimeout" value="10"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

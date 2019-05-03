@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventErrorServicePrepaidDba" name="setEventErrorServicePrepaidDba-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventErrorServicePrepaidDba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/setEventErrorServicePrepaidDba" location="setEventErrorServicePrepaidDba.wsdl"/>
+  <binding name="setEventErrorServicePrepaidDba_ptt-binding" type="tns:setEventErrorServicePrepaidDba_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="setEventErrorServicePrepaidDba">
+      <soap:operation soapAction="setEventErrorServicePrepaidDba"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="setEventErrorServicePrepaidDba-service">
+    <port name="setEventErrorServicePrepaidDba-port" binding="tns:setEventErrorServicePrepaidDba_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,2662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="PrepaidWave/Resources/WSDL/PrepaidWaveService" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>PrepaidWavePortBinding</con:name>
+                <con:namespace>http://prepaid.wave.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" level="pipeline" aggregationInterval="10"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelineQueryBalanceExt_request" errorHandler="_onErrorHandler-4165980681014118163-9cdae95.14d20ab0dbf.-7ce1">
+            <con:stage name="in_stg_getBucket">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="gets"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-4165980681014118163-9cdae95.14d20ab0dbf.-7d88</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>searchBalanceIccReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>searchBalanceIccResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="searchBalanceIccReq">
+                                <con1:id>_ActionId-4165980681014118163-9cdae95.14d20ab0dbf.-7d50</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetBucketSearchBalanceICC"/>
+                                        <con1:param name="detail_bucket">
+                                            <con1:path>data($body/prep:balanceTotalExtendido/totalBucket)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="phone_number">
+                                            <con1:path>data($body/prep:balanceTotalExtendido/nroCelular)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="tipBucket">
+                                            <con1:path>'balance'</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="validaRespEmpty">
+                                <con1:id>_ActionId-4578527172223727568--56bc60d9.14d2e9769a2.-7fa0</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>empty($searchBalanceIccResp/gets:error_code)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="codPlan">
+                                <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7c10</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$searchBalanceIccResp/gets:descPlan/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelineQueryBalanceExt_response" errorHandler="_onErrorHandler-4165980681014118163-9cdae95.14d20ab0dbf.-7ce0">
+            <con:stage name="out_stg_getListBucket">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-487174336179472684--712cddd5.14d33f5067c.-7f85</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_QueryBalanceTotalExtendida"/>
+                                <con1:param name="searchBalancesICC_response1">
+                                    <con1:path>$searchBalanceIccResp</con1:path>
+                                </con1:param>
+                                <con1:param name="flagTotalBucket">
+                                    <con1:path>data($body/prep:balanceTotalExtendido/totalBucket)</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="asd">
+                        <con1:id>_ActionId-487174336179472684--712cddd5.14d33f5067c.-7f4b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut/listBucket</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-487174336179472684--712cddd5.14d33f5067c.-7f68</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucket</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucket)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-4165980681014118163-9cdae95.14d20ab0dbf.-7ce2</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4165980681014118163-9cdae95.14d20ab0dbf.-7ce1">
+            <con:stage name="in_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7eeb</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:balanceTotalExtendidoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{concat('Error en llamada a servicio ICC "AccountManager metodo get: "',data($fault/ctx:reason))}</errorDescription>
+</prep:balanceTotalExtendidoResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7ee9</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7ee7</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-4165980681014118163-9cdae95.14d20ab0dbf.-7ce0">
+            <con:stage name="out_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-2638234560841548417--63f11530.14d493847a0.-7e61</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:balanceTotalExtendidoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{data($fault/ctx:reason)}</errorDescription>
+</prep:balanceTotalExtendidoResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-2638234560841548417--63f11530.14d493847a0.-7e60</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-2638234560841548417--63f11530.14d493847a0.-7dd9</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinelTQueryUnitTotalExtendidaWS_request" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-7e7f">
+            <con:stage name="in_stg_getBucket">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="gets"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7f50</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>searchBalanceIccReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>searchBalanceIccResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="searchBalanceIccReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7f52</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetBucketSearchBalanceICC"/>
+                                        <con1:param name="detail_bucket">
+                                            <con1:path>'N'</con1:path>
+                                        </con1:param>
+                                        <con1:param name="phone_number">
+                                            <con1:path>data($body/prep:unitTotalExtendida/nroCelular)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="tipBucket">
+                                            <con1:path>'noBalance'</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="validaRespEmpty">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7f51</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>empty($searchBalanceIccResp/gets:error_code)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="codPlan">
+                                <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7c81</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$searchBalanceIccResp/gets:descPlan/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinelTQueryUnitTotalExtendidaWS_response" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-7e80">
+            <con:stage name="out_stg_getListBucket">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7eda</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_QueryUnitTotalExtendida"/>
+                                <con1:param name="searchBalancesICC_response1">
+                                    <con1:path>$searchBalanceIccResp</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="asd">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7ed9</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut/listBucketUnidPro</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7ed8</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidAdq</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidAdq)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7e81</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidPro</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidPro)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7e9e</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidTot</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidTot)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7ed7</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-7e80">
+            <con:stage name="out_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7e0c</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendidaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{data($fault/ctx:reason)}</errorDescription>
+</prep:unitTotalExtendidaResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7e0b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7e0a</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-7e7f">
+            <con:stage name="in_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7f5d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendidaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{concat('Error en llamada a servicio ICC "AccountManager metodo get: "',data($fault/ctx:reason))}</errorDescription>
+</prep:unitTotalExtendidaResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7f5b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7f59</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinelTQueryConsumosICCAbonadoWS_request" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773e">
+            <con:stage name="setTipTrafico">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="tipoTrafico">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6c2d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn:upper-case(data($body/prep:consumosICCAbonado/tipTrafico))</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bodyRequest">
+                        <con1:id>_ActionId-607617561008760435-756cd249.1506832324e.-7fb6</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:consumosICCAbonado)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getTrafficTypeSms" errorHandler="_onErrorHandler-8041500400501352775-62b117a0.14e0d1f139a.-7c3a">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/CTODS/SERVICESAPL/GETTRAFFICDETAIL/" prefix="ttp"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b83</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:boolExpr operator="or">
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'SMS'</con1:rightPath>
+                                        </con1:compExpr>
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'TODO'</con1:rightPath>
+                                        </con1:compExpr>
+                                    </con1:boolExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b7f</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="ConsultaTrafico/TrafficType/ProxyService/PSTrafficTypeEBS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>TrafficTypeSN</con2:operation>
+                                    <con2:request>
+                                        <con2:body>TrafficTypeSNSmsReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body>TrafficTypeSNSmsResp</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="TrafficTypeSNSmsReq">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b80</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_TraficTypeSmsVoz"/>
+                                                    <con1:param name="endDate">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/fechaFin)</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="startDate">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/fechaInicio)</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="tipoTrafico">
+                                                        <con1:path>'SMS'</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="nroCelular">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/nroCelular)</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="parseXMLSMS">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6aaf</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>fn-bea:inlinedXML($TrafficTypeSNSmsResp/ttp:GETTRAFFICDETAIL)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="valorRespuestaSms">
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-77dd</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>$parseXMLSMS/ROW/DET/TRAF_DET/TRAF_DET_ITEM/CALLDURATION</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="validaRespuestaSms">
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-79a2</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>empty(data($valorRespuestaSms))</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-78f7</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryConditionExpr>
+                                                        <con1:compExpr operator="=">
+                                                            <con1:leftPath>xs:boolean($validaRespuestaSms)</con1:leftPath>
+                                                            <con1:rightPath>xs:boolean('true')</con1:rightPath>
+                                                        </con1:compExpr>
+                                                    </con1:xqueryConditionExpr>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:assign varName="cantSMS">
+                                                        <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7833</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>0</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default>
+                                                <con2:assign varName="respuestaSms">
+                                                    <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-78bf</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryTransform>
+                                                            <con1:resource ref="PrepaidWave/Resources/XQuery/XMLTrafficType"/>
+                                                            <con1:param name="DATA">
+                                                                <con1:path>$parseXMLSMS</con1:path>
+                                                            </con1:param>
+                                                        </con1:xqueryTransform>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="cantSMS">
+                                                    <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-77fa</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>if(empty(data($respuestaSms/CALLDURATION))) then
+('0')else
+(data($respuestaSms/CALLDURATION))</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                            </con2:default>
+                                        </con2:ifThenElse>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getTrafficTypeVoz">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/CTODS/SERVICESAPL/GETTRAFFICDETAIL/" prefix="ttp"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b47</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:boolExpr operator="or">
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'VOZ'</con1:rightPath>
+                                        </con1:compExpr>
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'TODO'</con1:rightPath>
+                                        </con1:compExpr>
+                                    </con1:boolExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b43</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="ConsultaTrafico/TrafficType/ProxyService/PSTrafficTypeEBS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>TrafficTypeSN</con2:operation>
+                                    <con2:request>
+                                        <con2:body>TrafficTypeSNVozReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body>TrafficTypeSNVozResp</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="TrafficTypeSNVozReq">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b44</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_TraficTypeSmsVoz"/>
+                                                    <con1:param name="endDate">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/fechaFin)</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="startDate">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/fechaInicio)</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="tipoTrafico">
+                                                        <con1:path>'VOZ'</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="nroCelular">
+                                                        <con1:path>data($body/prep:consumosICCAbonado/nroCelular)</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="parseXMLVOZ">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6b0b</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>fn-bea:inlinedXML($TrafficTypeSNVozResp/ttp:GETTRAFFICDETAIL)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="valorRespuestaVoz">
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-77a1</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>$parseXMLVOZ/ROW/DET/TRAF_DET/TRAF_DET_ITEM/CALLDURATION</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="validaRespuestaVoz">
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-77a0</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>empty(data($valorRespuestaVoz))</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7746</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryConditionExpr>
+                                                        <con1:compExpr operator="=">
+                                                            <con1:leftPath>xs:boolean($validaRespuestaVoz)</con1:leftPath>
+                                                            <con1:rightPath>xs:boolean('true')</con1:rightPath>
+                                                        </con1:compExpr>
+                                                    </con1:xqueryConditionExpr>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:assign varName="cantVOZ">
+                                                        <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7745</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>0</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default>
+                                                <con2:assign varName="respuestaVoz">
+                                                    <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-770b</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryTransform>
+                                                            <con1:resource ref="PrepaidWave/Resources/XQuery/XMLTrafficType"/>
+                                                            <con1:param name="DATA">
+                                                                <con1:path>$parseXMLVOZ</con1:path>
+                                                            </con1:param>
+                                                        </con1:xqueryTransform>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="cantVOZ">
+                                                    <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7709</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>if(empty(data($respuestaVoz/CALLDURATION))) then
+('0')else
+(data($respuestaVoz/CALLDURATION))</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                            </con2:default>
+                                        </con2:ifThenElse>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getTrafficTypeData" errorHandler="_onErrorHandler-7538415494247415963-6ca2b1e9.14e26b1c10e.-7955">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/CTODS/SERVICESAPL/GETTRAFFICDETAIL/" prefix="ttp"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6497</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:boolExpr operator="or">
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'DATOS'</con1:rightPath>
+                                        </con1:compExpr>
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>$tipoTrafico</con1:leftPath>
+                                            <con1:rightPath>'TODO'</con1:rightPath>
+                                        </con1:compExpr>
+                                    </con1:boolExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6492</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="ConsultaTrafico/TrafficData/Proxy Services/PSServiceTrafficData" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>traficoDatosWS</con2:operation>
+                                    <con2:request>
+                                        <con2:body>traficoDatosReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body>traficoDatosResp</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="traficoDatosReq">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6496</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_TrafficData"/>
+                                                    <con1:param name="consumosICCAbonado1">
+                                                        <con1:path>$body/prep:consumosICCAbonado</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="respuestaData">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6494</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_GetTrafficData"/>
+                                                    <con1:param name="traficoDatosResponse1">
+                                                        <con1:path>$traficoDatosResp</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:assign varName="cantDATOS">
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6493</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>if(empty(data($respuestaData/CALLDURATION))) then
+('0')else
+(data($respuestaData/CALLDURATION))</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinelTQueryConsumosICCAbonadoWS_response" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773d">
+            <con:stage name="getTraficosGeneral">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-66a6</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:consumosICCAbonadoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<consumoVoz>{if(empty($cantVOZ)) then
+	(0)else($cantVOZ)
+	}</consumoVoz>
+	<unidadVoz>Minutos</unidadVoz>
+	<consumoSms>{if(empty($cantSMS)) then
+	(0)else($cantSMS)
+	}</consumoSms>
+	<unidadSms>Mensajes</unidadSms>
+	<consumoDato>{if(empty($cantDATOS)) then
+	(0)else($cantDATOS)}</consumoDato>
+	<unidadDato>kilobyte</unidadDato>
+	<fechaInicio>{data($body/prep:consumosICCAbonado/fechaInicio)}</fechaInicio>
+	<fechaFin>{data($body/prep:consumosICCAbonado/fechaFin)}</fechaFin>
+	<errorCode>0</errorCode>
+	<errorDescription>{if(xs:string($consumoVoz) =  '0' and xs:string($consumoSms) = '0' and xs:string($consumoDatos)  = '0') then 
+	(
+	'No se encuentra trafico para el abonado.'
+	)
+	else
+	('OK')}</errorDescription>
+</prep:consumosICCAbonadoResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-68dd</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairlTQryBolsasCompraPromoLineaWS_request" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773c">
+            <con:stage name="getHistoricoPromosVendidas">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bodyRequest">
+                        <con1:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-5d88</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:bolsasCompraPromoLinea)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="nroCelular">
+                        <con1:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-5d8d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($body/prep:bolsasCompraPromoLinea/nroCelular)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7fe4</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:boolExpr operator="or">
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>data($body/prep:bolsasCompraPromoLinea/tipoBolsas)</con1:leftPath>
+                                            <con1:rightPath>'TODO'</con1:rightPath>
+                                        </con1:compExpr>
+                                        <con1:compExpr operator="=">
+                                            <con1:leftPath>data($body/prep:bolsasCompraPromoLinea/tipoBolsas)</con1:leftPath>
+                                            <con1:rightPath>'PROMO'</con1:rightPath>
+                                        </con1:compExpr>
+                                    </con1:boolExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-7296843209630164508-5b114d01.14fae5a2bfc.-7f33</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="BenePro/Proxy Services/PSCuentaContrato" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>getPromosAplicadas</con2:operation>
+                                    <con2:request>
+                                        <con2:body>promosAplicadasReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body>promoAplicadasResp</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="promosAplicadasReq">
+                                            <con1:id>_ActionId-7296843209630164508-5b114d01.14fae5a2bfc.-7efb</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_PrepaidAplicaPromo"/>
+                                                    <con1:param name="estado">
+                                                        <con1:path>'Historico'</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="nroCelular">
+                                                        <con1:path>$nroCelular</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform/>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:compExpr operator="=">
+                                        <con1:leftPath>data($body/prep:bolsasCompraPromoLinea/tipoBolsas)</con1:leftPath>
+                                        <con1:rightPath>'COMPRA'</con1:rightPath>
+                                    </con1:compExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:assign varName="promoAplicadasResp">
+                                    <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7b16</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>&lt;ns2:getPromosAplicadasResponse 	xmlns:ns2="http://ccontrato.ws.srv.promo.wom.smartdici/"  xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"/></con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:Error>
+                                <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7d82</con1:id>
+                                <con2:errCode>1</con2:errCode>
+                                <con2:message>los valores validos para el parametro tipoBolsa son los siguientes: 'TODO','COMPRA','PROMO'</con2:message>
+                            </con2:Error>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getVentaVigenteHistorica">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_QUERY_PREPAID_WAVE_PKG/GET_INF_PROMO_COMPRA_BOLSA_PRC/" prefix="get"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7ac7</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetBolsasVigenteHistorica" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getBolsasVigenteHistoricaDba</con2:operation>
+                        <con2:request>
+                            <con2:body>bolsasVigenteHistoricaReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>bolsasVigenteHistoricaResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="bolsasVigenteHistoricaReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7ac8</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_bolsaVigHistReq"/>
+                                        <con1:param name="bolsasCompraPromoLinea1">
+                                            <con1:path>$body/prep:bolsasCompraPromoLinea</con1:path>
+                                        </con1:param>
+                                        <con1:param name="getPromosAplicadasResponse1">
+                                            <con1:path>$promoAplicadasResp</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="errorGetVigenteHistorico">
+                                <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7f72</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($bolsasVigenteHistoricaResp/get:SN_COD_RETORNO)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7f02</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="!=">
+                                                <con1:leftPath>xs:int($errorGetVigenteHistorico)</con1:leftPath>
+                                                <con1:rightPath>0</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-675937645564541483--6d07faf1.14e4f144ff2.-7eca</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>Al obtener el resultado de la busqueda</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairlTQryBolsasCompraPromoLineaWS_response" errorHandler="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773b">
+            <con:stage name="out_stg_vigenciaHistorica">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-62ba</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_GetVentaVigenteHistorico"/>
+                                <con1:param name="outputParameters1">
+                                    <con1:path>$bolsasVigenteHistoricaResp</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-629d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773e">
+            <con:stage name="in_stg_consumoIcc">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/" prefix="rlog"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="rasonError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7310</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>if(fn:string-length(data($fault/ctx:reason)) >= 2000) then (
+            fn:substring(data($fault/ctx:reason),0,2001)
+            )else(data($fault/ctx:reason))</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="stageError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-72f3</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:location/ctx:stage)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="concatStage">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7cff</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>concat($concatStage,$stageError)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="errorCode">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-725f</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:errorCode)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bodyErrorN1">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7263</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:consumosICCAbonadoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<consumoVoz>{if(empty($cantVOZ)) then
+	(0)else($cantVOZ)
+	}</consumoVoz>
+	<unidadVoz>Minutos</unidadVoz>
+	<consumoSms>{if(empty($cantSMS)) then
+	(0)else($cantSMS)
+	}</consumoSms>
+	<unidadSms>Mensajes</unidadSms>
+	<consumoDato>{if(empty($cantDATOS)) then
+	(0)else($cantDATOS)}</consumoDato>
+	<unidadDato>kilobyte</unidadDato>
+	<fechaInicio>{data($body/prep:consumosICCAbonado/fechaInicio)}</fechaInicio>
+	<fechaFin>{data($body/prep:consumosICCAbonado/fechaFin)}</fechaFin>
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Error: ',$rasonError,', Nivel: ',$concatStage)}</errorDescription>
+</prep:consumosICCAbonadoResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7185</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyErrorN1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:assign varName="bodyResponse">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7261</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:consumosICCAbonadoResponse)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7380</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceSetEventErrorServicePrepaid" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>setEventErrorServicePrepaidDba</con2:operation>
+                        <con2:request>
+                            <con2:body>eventErrorServicePrepaidReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>eventErrorServicePrepaidResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="eventErrorServicePrepaidReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7381</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<reg:InputParameters xmlns:reg="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/">
+    <!--Optional:-->
+    <reg:EN_NUM_REGISTRO>0</reg:EN_NUM_REGISTRO>
+    <!--Optional:-->
+    <reg:EV_NOM_USUARIO>{data($body/prep:consumosICCAbonado/usuario)}</reg:EV_NOM_USUARIO>
+    <!--Optional:-->
+    <reg:EV_NOM_METODO>consumosICCAbonado</reg:EV_NOM_METODO>
+    <!--Optional:-->
+    <reg:EV_DES_QUERY>{$stageError}</reg:EV_DES_QUERY>
+    <!--Optional:-->
+    <reg:EN_COD_RESPUESTA>{data($body/prep:consumosICCAbonadoResponse/errorCode)}</reg:EN_COD_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_MENS_RESPUESTA>{
+    if(fn:string-length(data($body/prep:consumosICCAbonadoResponse/errorDescription)) >= 2000) then (
+            fn:substring(data($body/prep:consumosICCAbonadoResponse/errorDescription),0,2001)
+            )else(data($body/prep:consumosICCAbonadoResponse/errorDescription))
+    }</reg:EV_MENS_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_NUM_ERROR_ORA>{$errorCode}</reg:EV_NUM_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EV_DES_ERROR_ORA>{$rasonError}</reg:EV_DES_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EC_DES_REQUEST>{$bodyRequest}</reg:EC_DES_REQUEST>
+    <!--Optional:-->
+    <reg:EC_DES_RESPONSE>{$bodyResponse}</reg:EC_DES_RESPONSE>
+</reg:InputParameters>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="eventoError">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-729d</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($eventErrorServicePrepaidResp/rlog:REGISTRA_ERRORES_FN)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="bodyErrorN2">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-71ea</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<prep:consumosICCAbonadoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<consumoVoz>{if(empty($cantVOZ)) then
+	(0)else($cantVOZ)
+	}</consumoVoz>
+	<unidadVoz>Minutos</unidadVoz>
+	<consumoSms>{if(empty($cantSMS)) then
+	(0)else($cantSMS)
+	}</consumoSms>
+	<unidadSms>Mensajes</unidadSms>
+	<consumoDato>{if(empty($cantDATOS)) then
+	(0)else($cantDATOS)}</consumoDato>
+	<unidadDato>kilobyte</unidadDato>
+	<fechaInicio>{data($body/prep:consumosICCAbonado/fechaInicio)}</fechaInicio>
+	<fechaFin>{data($body/prep:consumosICCAbonado/fechaFin)}</fechaFin>
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Transacción: ',$eventoError,', Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:consumosICCAbonadoResponse>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:replace varName="body" contents-only="true">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7225</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$bodyErrorN2</con1:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con1:reply>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-71d9</con1:id>
+                            </con1:reply>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773d">
+            <con:stage name="out_stg_consumoIcc">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/" prefix="rlog"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="rasonError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7063</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>if(fn:string-length(data($fault/ctx:reason)) >= 2000) then (
+            fn:substring(data($fault/ctx:reason),0,2001)
+            )else(data($fault/ctx:reason))</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="stageError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7062</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:location/ctx:stage)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="concatStage">
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7c8e</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>concat($concatStage,$stageError)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="errorCode">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7061</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:errorCode)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bodyErrorN1">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7060</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:consumosICCAbonadoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<consumoVoz>{if(empty($cantVOZ)) then
+	(0)else($cantVOZ)
+	}</consumoVoz>
+	<unidadVoz>Minutos</unidadVoz>
+	<consumoSms>{if(empty($cantSMS)) then
+	(0)else($cantSMS)
+	}</consumoSms>
+	<unidadSms>Mensajes</unidadSms>
+	<consumoDato>{if(empty($cantDATOS)) then
+	(0)else($cantDATOS)}</consumoDato>
+	<unidadDato>kilobyte</unidadDato>
+	<fechaInicio>{data($body/prep:consumosICCAbonado/fechaInicio)}</fechaInicio>
+	<fechaFin>{data($body/prep:consumosICCAbonado/fechaFin)}</fechaFin>
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Error: ',$rasonError,', Nivel: ',$concatStage)}</errorDescription>
+</prep:consumosICCAbonadoResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705f</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyErrorN1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:assign varName="bodyResponse">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705e</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:consumosICCAbonadoResponse)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7058</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceSetEventErrorServicePrepaid" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>setEventErrorServicePrepaidDba</con2:operation>
+                        <con2:request>
+                            <con2:body>eventErrorServicePrepaidReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>eventErrorServicePrepaidResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="eventErrorServicePrepaidReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705d</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<reg:InputParameters xmlns:reg="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/">
+    <!--Optional:-->
+    <reg:EN_NUM_REGISTRO>0</reg:EN_NUM_REGISTRO>
+    <!--Optional:-->
+    <reg:EV_NOM_USUARIO>{data($body/prep:consumosICCAbonado/usuario)}</reg:EV_NOM_USUARIO>
+    <!--Optional:-->
+    <reg:EV_NOM_METODO>consumosICCAbonado</reg:EV_NOM_METODO>
+    <!--Optional:-->
+    <reg:EV_DES_QUERY>{$stageError}</reg:EV_DES_QUERY>
+    <!--Optional:-->
+    <reg:EN_COD_RESPUESTA>{data($body/prep:consumosICCAbonadoResponse/errorCode)}</reg:EN_COD_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_MENS_RESPUESTA>{
+    if(fn:string-length(data($body/prep:consumosICCAbonadoResponse/errorDescription)) >= 2000) then (
+            fn:substring(data($body/prep:consumosICCAbonadoResponse/errorDescription),0,2001)
+            )else(data($body/prep:consumosICCAbonadoResponse/errorDescription))
+    }</reg:EV_MENS_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_NUM_ERROR_ORA>{$errorCode}</reg:EV_NUM_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EV_DES_ERROR_ORA>{$rasonError}</reg:EV_DES_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EC_DES_REQUEST>{$bodyRequest}</reg:EC_DES_REQUEST>
+    <!--Optional:-->
+    <reg:EC_DES_RESPONSE>{$bodyResponse}</reg:EC_DES_RESPONSE>
+</reg:InputParameters>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="eventoError">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705c</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($eventErrorServicePrepaidResp/rlog:REGISTRA_ERRORES_FN)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="bodyErrorN2">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705b</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<prep:consumosICCAbonadoResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<consumoVoz>{if(empty($cantVOZ)) then
+	(0)else($cantVOZ)
+	}</consumoVoz>
+	<unidadVoz>Minutos</unidadVoz>
+	<consumoSms>{if(empty($cantSMS)) then
+	(0)else($cantSMS)
+	}</consumoSms>
+	<unidadSms>Mensajes</unidadSms>
+	<consumoDato>{if(empty($cantDATOS)) then
+	(0)else($cantDATOS)}</consumoDato>
+	<unidadDato>kilobyte</unidadDato>
+	<fechaInicio>{data($body/prep:consumosICCAbonado/fechaInicio)}</fechaInicio>
+	<fechaFin>{data($body/prep:consumosICCAbonado/fechaFin)}</fechaFin>
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Transacción: ',$eventoError,', Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:consumosICCAbonadoResponse>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:replace varName="body" contents-only="true">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-705a</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$bodyErrorN2</con1:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con1:reply>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-7059</con1:id>
+                            </con1:reply>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773c">
+            <con:stage name="in_stg_bolsasCompraPromo">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/" prefix="rlog"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="rasonError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f67</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>if(fn:string-length(data($fault/ctx:reason)) >= 2000) then (
+            fn:substring(data($fault/ctx:reason),0,2001)
+            )else(data($fault/ctx:reason))</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="stageError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f66</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:location/ctx:stage)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="errorCode">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f65</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:errorCode)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bodyErrorN1">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f64</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:bolsasCompraPromoLineaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:bolsasCompraPromoLineaResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f63</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyErrorN1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:assign varName="bodyResponse">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f62</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:bolsasCompraPromoLineaResponse)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f5c</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceSetEventErrorServicePrepaid" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>setEventErrorServicePrepaidDba</con2:operation>
+                        <con2:request>
+                            <con2:body>eventErrorServicePrepaidReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>eventErrorServicePrepaidResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="eventErrorServicePrepaidReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f61</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<reg:InputParameters xmlns:reg="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/">
+    <!--Optional:-->
+    <reg:EN_NUM_REGISTRO>0</reg:EN_NUM_REGISTRO>
+    <!--Optional:-->
+    <reg:EV_NOM_USUARIO>{data($body/prep:bolsasCompraPromoLinea/usuario)}</reg:EV_NOM_USUARIO>
+    <!--Optional:-->
+    <reg:EV_NOM_METODO>lTQryBolsasCompraPromoLineaWS</reg:EV_NOM_METODO>
+    <!--Optional:-->
+    <reg:EV_DES_QUERY>{$stageError}</reg:EV_DES_QUERY>
+    <!--Optional:-->
+    <reg:EN_COD_RESPUESTA>{data($body/prep:bolsasCompraPromoLineaResponse/errorCode)}</reg:EN_COD_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_MENS_RESPUESTA>{
+    if(fn:string-length(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription)) >= 2000) then (
+            fn:substring(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription),0,2001)
+            )else(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription))
+    }</reg:EV_MENS_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_NUM_ERROR_ORA>{$errorCode}</reg:EV_NUM_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EV_DES_ERROR_ORA>{$rasonError}</reg:EV_DES_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EC_DES_REQUEST>{$bodyRequest}</reg:EC_DES_REQUEST>
+    <!--Optional:-->
+    <reg:EC_DES_RESPONSE>{$bodyResponse}</reg:EC_DES_RESPONSE>
+</reg:InputParameters>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="eventoError">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f60</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($eventErrorServicePrepaidResp/rlog:REGISTRA_ERRORES_FN)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="bodyErrorN2">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f5f</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<prep:bolsasCompraPromoLineaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Transacción: ',$eventoError,', Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:bolsasCompraPromoLineaResponse>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:replace varName="body" contents-only="true">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f5e</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$bodyErrorN2</con1:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con1:reply>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6f5d</con1:id>
+                            </con1:reply>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-8786650245967679754-31a4b3cb.14d6db228b9.-773b">
+            <con:stage name="out_stg_bolsasCompraPromo">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/" prefix="rlog"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="rasonError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e29</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>if(fn:string-length(data($fault/ctx:reason)) >= 2000) then (
+            fn:substring(data($fault/ctx:reason),0,2001)
+            )else(data($fault/ctx:reason))</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="stageError">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e28</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:location/ctx:stage)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="errorCode">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e27</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>data($fault/ctx:errorCode)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bodyErrorN1">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e26</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:bolsasCompraPromoLineaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:bolsasCompraPromoLineaResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e25</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyErrorN1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:assign varName="bodyResponse">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e24</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>fn-bea:serialize($body/prep:bolsasCompraPromoLineaResponse)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e1e</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceSetEventErrorServicePrepaid" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>setEventErrorServicePrepaidDba</con2:operation>
+                        <con2:request>
+                            <con2:body>eventErrorServicePrepaidReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>eventErrorServicePrepaidResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="eventErrorServicePrepaidReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e23</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<reg:InputParameters xmlns:reg="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/REGISTROS_PG/REGISTRA_ERRORES_FN/">
+    <!--Optional:-->
+    <reg:EN_NUM_REGISTRO>0</reg:EN_NUM_REGISTRO>
+    <!--Optional:-->
+    <reg:EV_NOM_USUARIO>{data($body/prep:bolsasCompraPromoLinea/usuario)}</reg:EV_NOM_USUARIO>
+    <!--Optional:-->
+    <reg:EV_NOM_METODO>lTQryBolsasCompraPromoLineaWS</reg:EV_NOM_METODO>
+    <!--Optional:-->
+    <reg:EV_DES_QUERY>{$stageError}</reg:EV_DES_QUERY>
+    <!--Optional:-->
+    <reg:EN_COD_RESPUESTA>{data($body/prep:bolsasCompraPromoLineaResponse/errorCode)}</reg:EN_COD_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_MENS_RESPUESTA>{
+    if(fn:string-length(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription)) >= 2000) then (
+            fn:substring(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription),0,2001)
+            )else(data($body/prep:bolsasCompraPromoLineaResponse/errorDescription))
+    }</reg:EV_MENS_RESPUESTA>
+    <!--Optional:-->
+    <reg:EV_NUM_ERROR_ORA>{$errorCode}</reg:EV_NUM_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EV_DES_ERROR_ORA>{$rasonError}</reg:EV_DES_ERROR_ORA>
+    <!--Optional:-->
+    <reg:EC_DES_REQUEST>{$bodyRequest}</reg:EC_DES_REQUEST>
+    <!--Optional:-->
+    <reg:EC_DES_RESPONSE>{$bodyResponse}</reg:EC_DES_RESPONSE>
+</reg:InputParameters>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="eventoError">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e22</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($eventErrorServicePrepaidResp/rlog:REGISTRA_ERRORES_FN)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="bodyErrorN2">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e21</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText><![CDATA[<prep:bolsasCompraPromoLineaResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+	<errorCode>{$errorCode}</errorCode>
+	<errorDescription>{concat('Transacción: ',$eventoError,', Error: ',$rasonError,', Nivel: ',$stageError)}</errorDescription>
+</prep:bolsasCompraPromoLineaResponse>]]></con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:replace varName="body" contents-only="true">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e20</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$bodyErrorN2</con1:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con1:reply>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6e1f</con1:id>
+                            </con1:reply>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairlTCambioPlanWS_request">
+            <con:stage name="getPlan">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getDatosAbonadoDba" prefix="get"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c81</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetDatosAbonado" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getDatosAbonadoDba</con2:operation>
+                        <con2:request>
+                            <con2:body>datosAbonadoReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>datosAbonadoResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="datosAbonadoReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c85</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetDatosPlan"/>
+                                        <con1:param name="nroCelular">
+                                            <con1:path>data($body/prep:cambioPlan/nroCelular)</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="codPlan">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c84</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($datosAbonadoResp/get:getDatosAbonadoDbaOutput/get:TMCODE[1])</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c83</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:boolExpr operator="or">
+                                                <con1:compExpr operator="=">
+                                                    <con1:leftPath>empty($codPlan)</con1:leftPath>
+                                                    <con1:rightPath>fn:true()</con1:rightPath>
+                                                </con1:compExpr>
+                                                <con1:compExpr operator="=">
+                                                    <con1:leftPath>$codPlan</con1:leftPath>
+                                                    <con1:rightPath>''</con1:rightPath>
+                                                </con1:compExpr>
+                                            </con1:boolExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c82</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>Para el numero ingresado no existe codigo de plan.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="AccountManager">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="gets"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5dec</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>searchBalanceIccReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>searchBalanceIccResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="searchBalanceIccReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5dee</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetBucketSearchBalanceICC"/>
+                                        <con1:param name="detail_bucket">
+                                            <con1:path>'N'</con1:path>
+                                        </con1:param>
+                                        <con1:param name="phone_number">
+                                            <con1:path>data($body/prep:cambioPlan/nroCelular)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="tipBucket">
+                                            <con1:path>'balance'</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="validaRespEmpty">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5ded</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(empty($searchBalanceIccResp/gets:error_code)) then
+('1')
+else(
+data($searchBalanceIccResp/gets:error_code)
+)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="balance">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c29</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(empty(data($searchBalanceIccResp/gets:balance))) then
+('0')
+else
+(data($searchBalanceIccResp/gets:balance))</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="totalBalance">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5c2b</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(empty(data($searchBalanceIccResp/gets:totalBalance))) then
+('0')
+else
+(data($searchBalanceIccResp/gets:totalBalance))</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5d7b</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="!=">
+                                                <con1:leftPath>xs:string($validaRespEmpty)</con1:leftPath>
+                                                <con1:rightPath>'0'</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5d7a</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>Error: El cliente no es Prepago.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:compExpr operator="&lt;=">
+                                                <con1:leftPath>xs:int($totalBalance)</con1:leftPath>
+                                                <con1:rightPath>0</con1:rightPath>
+                                            </con1:compExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions>
+                                        <con2:Error>
+                                            <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-5afa</con1:id>
+                                            <con2:errCode>1</con2:errCode>
+                                            <con2:message>Error: Saldo Isuficiente.</con2:message>
+                                        </con2:Error>
+                                    </con2:actions>
+                                </con2:case>
+                                <con2:default/>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getlTCambioPlanWS">
+                <con:context/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairlTCambioPlanWS_response"/>
+        <con:pipeline type="error" name="_onErrorHandler-8041500400501352775-62b117a0.14e0d1f139a.-7c3a">
+            <con:stage name="stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:skip>
+                        <con1:id>_ActionId-8041500400501352775-62b117a0.14e0d1f139a.-7bb0</con1:id>
+                    </con1:skip>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-7538415494247415963-6ca2b1e9.14e26b1c10e.-7955">
+            <con:stage name="stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:skip>
+                        <con1:id>_ActionId-7538415494247415963-6ca2b1e9.14e26b1c10e.-790e</con1:id>
+                    </con1:skip>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairlTQueryUnitTotalExtendida4GWS_request" errorHandler="_onErrorHandler-1934628699415184149-13786e51.150ae7942d5.-7d42">
+            <con:stage name="getTecnologiaXplan">
+                <con:context>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getTecnologiaXPlanDba" prefix="pln"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-1058545898587272339--1bac615.15090bb3a92.-7d46</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetTecnologiaXPlan" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getTecnologiaXPlanDba</con2:operation>
+                        <con2:request>
+                            <con2:body>tecnologiaXPlanReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>tecnologiaXPlanRes</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="tecnologiaXPlanReq">
+                                <con1:id>_ActionId-1058545898587272339--1bac615.15090bb3a92.-7d0e</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_TecnologiaXplan"/>
+                                        <con1:param name="nroCelular">
+                                            <con1:path>data($body/prep:unitTotalExtendida4G/nroCelular)</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="flujoFlag">
+                                <con1:id>_ActionId-1058545898587272339--1bac615.15090bb3a92.-7bc5</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>fn:upper-case(data($tecnologiaXPlanRes/pln:getTecnologiaXPlanDbaOutput/pln:PLATAFORMA[1]))</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="plan">
+                                <con1:id>_ActionId-1058545898587272339--1bac615.15090bb3a92.-7703</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($tecnologiaXPlanRes/pln:getTecnologiaXPlanDbaOutput/pln:SHDES[1])</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7aad</con1:id>
+                                <con2:case>
+                                    <con2:condition>
+                                        <con1:xqueryConditionExpr>
+                                            <con1:boolExpr operator="or">
+                                                <con1:compExpr operator="=">
+                                                    <con1:leftPath>$flujoFlag</con1:leftPath>
+                                                    <con1:rightPath>"PCRF"</con1:rightPath>
+                                                </con1:compExpr>
+                                                <con1:compExpr operator="=">
+                                                    <con1:leftPath>$flujoFlag</con1:leftPath>
+                                                    <con1:rightPath>"ICC"</con1:rightPath>
+                                                </con1:compExpr>
+                                            </con1:boolExpr>
+                                        </con1:xqueryConditionExpr>
+                                    </con2:condition>
+                                    <con2:actions/>
+                                </con2:case>
+                                <con2:default>
+                                    <con2:assign varName="bodyError">
+                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7aa8</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>1</errorCode>
+ <errorDescription>{concat('No existe plataforma configurada para el plan del cliente: ',data($body/prep:unitTotalExtendida4G/nroCelular))}</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:replace varName="body" contents-only="true">
+                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7aa6</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:replace>
+                                    <con1:reply>
+                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7aa4</con1:id>
+                                    </con1:reply>
+                                </con2:default>
+                            </con2:ifThenElse>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage name="getFlujoPCRF_ICC">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="gets"/>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/" prefix="get4"/>
+                    <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getGetSrvPCRFDba" prefix="getPcrf"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-1058545898587272339--1bac615.15090bb3a92.-7bfd</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:compExpr operator="=">
+                                        <con1:leftPath>$flujoFlag</con1:leftPath>
+                                        <con1:rightPath>'ICC'</con1:rightPath>
+                                    </con1:compExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-7d4d</con1:id>
+                                    <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con2:operation>getSearchBalanceIcc</con2:operation>
+                                    <con2:request>
+                                        <con2:body>searchBalanceIccReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body>searchBalanceIccResp</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="searchBalanceIccReq">
+                                            <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-7d4f</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryTransform>
+                                                    <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetBucketSearchBalanceICC"/>
+                                                    <con1:param name="detail_bucket">
+                                                        <con1:path>'N'</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="phone_number">
+                                                        <con1:path>data($body/prep:unitTotalExtendida4G/nroCelular)</con1:path>
+                                                    </con1:param>
+                                                    <con1:param name="tipBucket">
+                                                        <con1:path>'BALANCE4G'</con1:path>
+                                                    </con1:param>
+                                                </con1:xqueryTransform>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="validaRespEmpty">
+                                            <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-7d4e</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>if(not(empty($searchBalanceIccResp/gets:error_code))) then
+(data($searchBalanceIccResp/gets:error_code))
+else('1')</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                        <con2:ifThenElse>
+                                            <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7fc0</con1:id>
+                                            <con2:case>
+                                                <con2:condition>
+                                                    <con1:xqueryConditionExpr>
+                                                        <con1:compExpr operator="!=">
+                                                            <con1:leftPath>$validaRespEmpty</con1:leftPath>
+                                                            <con1:rightPath>'0'</con1:rightPath>
+                                                        </con1:compExpr>
+                                                    </con1:xqueryConditionExpr>
+                                                </con2:condition>
+                                                <con2:actions>
+                                                    <con2:assign varName="bodyError">
+                                                        <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7fbe</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>0</errorCode>
+ <errorDescription>El cliente no tiene bolsas de datos ICC</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:assign>
+                                                    <con2:replace varName="body" contents-only="true">
+                                                        <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7fbc</con1:id>
+                                                        <con2:expr>
+                                                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                                                        </con2:expr>
+                                                    </con2:replace>
+                                                    <con1:reply>
+                                                        <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7fba</con1:id>
+                                                    </con1:reply>
+                                                </con2:actions>
+                                            </con2:case>
+                                            <con2:default/>
+                                        </con2:ifThenElse>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:wsCallout>
+                                <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78b5</con1:id>
+                                <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BStimsiBymsisdnDBA" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con2:operation>timsiBymsisdnDBA</con2:operation>
+                                <con2:request>
+                                    <con2:body>timsiBymsisdnDBA</con2:body>
+                                </con2:request>
+                                <con2:response>
+                                    <con2:body>timsiBymsisdnDBAResponse</con2:body>
+                                </con2:response>
+                                <con2:requestTransform>
+                                    <con2:assign varName="timsiBymsisdnDBA">
+                                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78cc</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>&lt;get:InputParameters xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_BSCS_PORTAL_CAUTIVO_PKG/GETIMSI_BYMSISDN/">
+    &lt;!--Optional:-->
+    &lt;get:I_MSISDN>{data($body/prep:unitTotalExtendida4G/nroCelular)}&lt;/get:I_MSISDN>
+&lt;/get:InputParameters></con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                </con2:requestTransform>
+                                <con2:responseTransform>
+                                    <con2:assign varName="timsiBymsisdnResp">
+                                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78cb</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>$timsiBymsisdnDBAResponse</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:assign varName="Cod_ErrorIMSI">
+                                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78ca</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>data($timsiBymsisdnResp/get4:V_RESULT)</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:ifThenElse>
+                                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78c9</con1:id>
+                                        <con2:case>
+                                            <con2:condition>
+                                                <con1:xqueryConditionExpr>
+                                                    <con1:compExpr operator="!=">
+                                                        <con1:leftPath>$Cod_ErrorIMSI</con1:leftPath>
+                                                        <con1:rightPath>'0'</con1:rightPath>
+                                                    </con1:compExpr>
+                                                </con1:xqueryConditionExpr>
+                                            </con2:condition>
+                                            <con2:actions>
+                                                <con2:assign varName="bodyError">
+                                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78c8</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>1</errorCode>
+ <errorDescription>{concat('Error al obtener imsi del numero :',data($body/prep:unitTotalExtendida4G/nroCelular))}</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:replace varName="body" contents-only="true">
+                                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78c7</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>$bodyError</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:replace>
+                                                <con1:reply>
+                                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78c6</con1:id>
+                                                </con1:reply>
+                                            </con2:actions>
+                                        </con2:case>
+                                        <con2:default>
+                                            <con2:assign varName="imsi">
+                                                <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-78c5</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>data($timsiBymsisdnResp/get4:V_IMSI)</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:replace varName="cadenaBucketPromoCant">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c58</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>0</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:replace varName="cadenaBucketCant">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c56</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>0</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:replace varName="cadenaBucketPromo">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c54</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>''</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:replace varName="cadenaBucket">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c52</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>''</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                        </con2:default>
+                                    </con2:ifThenElse>
+                                    <con2:wsCallout>
+                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c16</con1:id>
+                                        <con2:service xsi:type="ref:ProxyRef" ref="PCRF/Proxy Services/PSPcrfService" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con2:operation>getSubscriberAllInf</con2:operation>
+                                        <con2:request>
+                                            <con2:param>
+                                                <con2:name>inPara</con2:name>
+                                                <con2:variable>getSubscriberAllInf</con2:variable>
+                                            </con2:param>
+                                        </con2:request>
+                                        <con2:response>
+                                            <con2:param>
+                                                <con2:name>result</con2:name>
+                                                <con2:variable>getSubscriberAllInfResp</con2:variable>
+                                            </con2:param>
+                                        </con2:response>
+                                        <con2:requestTransform>
+                                            <con2:assign varName="getSubscriberAllInf">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c18</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText><![CDATA[<inPara>
+    <subscriber>
+        <!--1 or more repetitions:-->
+        <attribute>
+            <key>USRIDENTIFIER</key>
+            <value>{$imsi}</value>
+        </attribute>
+    </subscriber>
+</inPara>]]></con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                        </con2:requestTransform>
+                                        <con2:responseTransform>
+                                            <con2:assign varName="SubscriberAllInfResp">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c17</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>$getSubscriberAllInfResp</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                        </con2:responseTransform>
+                                    </con2:wsCallout>
+                                    <con2:assign varName="countS">
+                                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-7732</con1:id>
+                                        <con2:expr>
+                                            <con1:xqueryText>fn:count($getSubscriberAllInfResp/subscriberQuota)</con1:xqueryText>
+                                        </con2:expr>
+                                    </con2:assign>
+                                    <con2:ifThenElse>
+                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c02</con1:id>
+                                        <con2:case>
+                                            <con2:condition>
+                                                <con1:xqueryText>xs:int($countS) > 0</con1:xqueryText>
+                                            </con2:condition>
+                                            <con2:actions>
+                                                <con2:assign varName="srvName">
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7aa2</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>''</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="qtaFecha">
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7a29</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>''</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="qtaBalance">
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7a0c</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>''</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="cadenaBucketPromoCant">
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-79ed</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>''</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="cadenaBucketCant">
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-79d0</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>''</con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:assign varName="tagPut">
+                                                    <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7d47</con1:id>
+                                                    <con2:expr>
+                                                        <con1:xqueryText>&lt;put>&lt;/put></con1:xqueryText>
+                                                    </con2:expr>
+                                                </con2:assign>
+                                                <con2:foreach>
+                                                    <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf3</con1:id>
+                                                    <con2:variable>SubscriberAllInfResp</con2:variable>
+                                                    <con2:expression>
+                                                        <con1:xpathText>./subscriberQuota</con1:xpathText>
+                                                    </con2:expression>
+                                                    <con2:value-variable>serviceColl</con2:value-variable>
+                                                    <con2:index-variable>currIndexS</con2:index-variable>
+                                                    <con2:total-variable>countS</con2:total-variable>
+                                                    <con2:actions>
+                                                        <con2:assign varName="srvName">
+                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c00</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>data($serviceColl/attribute[key eq 'SRVNAME']/value)</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:assign varName="qtaFecha">
+                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bff</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>data($serviceColl/attribute[key eq 'QTATIMESTAMP']/value)</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:assign varName="qtaBalance">
+                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bfe</con1:id>
+                                                            <con2:expr>
+                                                                <con1:xqueryText>data($serviceColl/attribute[key eq 'QTABALANCE']/value)</con1:xqueryText>
+                                                            </con2:expr>
+                                                        </con2:assign>
+                                                        <con2:ifThenElse>
+                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bfd</con1:id>
+                                                            <con2:case>
+                                                                <con2:condition>
+                                                                    <con1:xqueryConditionExpr>
+                                                                        <con1:compExpr operator="!=">
+                                                                            <con1:leftPath>$srvName</con1:leftPath>
+                                                                            <con1:rightPath>''</con1:rightPath>
+                                                                        </con1:compExpr>
+                                                                    </con1:xqueryConditionExpr>
+                                                                </con2:condition>
+                                                                <con2:actions>
+                                                                    <con2:wsCallout>
+                                                                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf4</con1:id>
+                                                                        <con2:service xsi:type="ref:BusinessServiceRef" ref="PrepaidWave/Business Services/BSServiceGetGetSrvPCRF" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                                        <con2:operation>getGetSrvPCRFDba</con2:operation>
+                                                                        <con2:request>
+                                                                            <con2:body>getGetSrvPCRFReq</con2:body>
+                                                                        </con2:request>
+                                                                        <con2:response>
+                                                                            <con2:body>getGetSrvPCRFResp</con2:body>
+                                                                        </con2:response>
+                                                                        <con2:requestTransform>
+                                                                            <con2:assign varName="getGetSrvPCRFReq">
+                                                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bfc</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryTransform>
+                                                                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetSRVPcrf"/>
+                                                                                        <con1:param name="tecnologia4g">
+                                                                                            <con1:path>'LTE4G'</con1:path>
+                                                                                        </con1:param>
+                                                                                        <con1:param name="idPcrf">
+                                                                                            <con1:path>$srvName</con1:path>
+                                                                                        </con1:param>
+                                                                                        <con1:param name="plataformPcrf">
+                                                                                            <con1:path>'PCRF'</con1:path>
+                                                                                        </con1:param>
+                                                                                    </con1:xqueryTransform>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                        </con2:requestTransform>
+                                                                        <con2:responseTransform>
+                                                                            <con2:assign varName="tipoTrafico">
+                                                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bfb</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>data($getGetSrvPCRFResp/getPcrf:getGetSrvPCRFDbaOutput/getPcrf:TRAFFIC_TYPE[1])</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:assign varName="tipPromo">
+                                                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bfa</con1:id>
+                                                                                <con2:expr>
+                                                                                    <con1:xqueryText>data($getGetSrvPCRFResp/getPcrf:getGetSrvPCRFDbaOutput/getPcrf:PROMO[1])</con1:xqueryText>
+                                                                                </con2:expr>
+                                                                            </con2:assign>
+                                                                            <con2:ifThenElse>
+                                                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf9</con1:id>
+                                                                                <con2:case>
+                                                                                    <con2:condition>
+                                                                                        <con1:xqueryText>$tipPromo = 'N'</con1:xqueryText>
+                                                                                    </con2:condition>
+                                                                                    <con2:actions>
+                                                                                        <con2:replace varName="cadenaBucket">
+                                                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf8</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat($cadenaBucket,'|',$srvName,'|',$tipoTrafico,'|',$qtaBalance,'|',$qtaFecha)</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:replace>
+                                                                                        <con2:insert varName="tagPut" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                                                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7dba</con3:id>
+                                                                                            <con2:where>last-child</con2:where>
+                                                                                            <con2:expr>
+                                                                                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;suma>{data($qtaBalance)}&lt;/suma></con3:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:insert>
+                                                                                        <con2:replace varName="cadenaBucketCant">
+                                                                                            <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf7</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat($cadenaBucketCant,'|')</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:replace>
+                                                                                    </con2:actions>
+                                                                                </con2:case>
+                                                                                <con2:case>
+                                                                                    <con2:condition>
+                                                                                        <con1:xqueryText>$tipPromo = 'S'</con1:xqueryText>
+                                                                                    </con2:condition>
+                                                                                    <con2:actions>
+                                                                                        <con2:replace varName="cadenaBucketPromo">
+                                                                                            <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7f82</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat($cadenaBucket,'|',$srvName,'|',$tipoTrafico,'|',$qtaBalance,'|',$qtaFecha)</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:replace>
+                                                                                        <con2:insert varName="tagPut" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                                                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7c7b</con3:id>
+                                                                                            <con2:where>last-child</con2:where>
+                                                                                            <con2:expr>
+                                                                                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;suma>{data($qtaBalance)}&lt;/suma></con3:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:insert>
+                                                                                        <con2:replace varName="cadenaBucketPromoCant">
+                                                                                            <con1:id>_ActionId-5108926427277326092--1f1b8a98.150cd47b69d.-7f80</con1:id>
+                                                                                            <con2:expr>
+                                                                                                <con1:xqueryText>fn:concat($cadenaBucketPromoCant,'|')</con1:xqueryText>
+                                                                                            </con2:expr>
+                                                                                        </con2:replace>
+                                                                                    </con2:actions>
+                                                                                </con2:case>
+                                                                                <con2:default/>
+                                                                            </con2:ifThenElse>
+                                                                        </con2:responseTransform>
+                                                                    </con2:wsCallout>
+                                                                </con2:actions>
+                                                            </con2:case>
+                                                            <con2:default/>
+                                                        </con2:ifThenElse>
+                                                    </con2:actions>
+                                                </con2:foreach>
+                                            </con2:actions>
+                                        </con2:case>
+                                        <con2:default>
+                                            <con2:assign varName="bodyError">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf2</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>0</errorCode>
+ <errorDescription>El cliente no tiene bolsas de datos PCRF</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:replace varName="body" contents-only="true">
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf1</con1:id>
+                                                <con2:expr>
+                                                    <con1:xqueryText>$bodyError</con1:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con1:reply>
+                                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7bf0</con1:id>
+                                            </con1:reply>
+                                        </con2:default>
+                                    </con2:ifThenElse>
+                                </con2:responseTransform>
+                            </con2:wsCallout>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairlTQueryUnitTotalExtendida4GWS_response" errorHandler="_onErrorHandler-1934628699415184149-13786e51.150ae7942d5.-7ccf">
+            <con:stage name="getFlujoSalida4GPcrfIcc">
+                <con:context/>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-7d53</con1:id>
+                        <con2:case>
+                            <con2:condition>
+                                <con1:xqueryConditionExpr>
+                                    <con1:compExpr operator="=">
+                                        <con1:leftPath>$flujoFlag</con1:leftPath>
+                                        <con1:rightPath>'ICC'</con1:rightPath>
+                                    </con1:compExpr>
+                                </con1:xqueryConditionExpr>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:assign varName="bodyOut">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e63</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryTransform>
+                                            <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_QueryUnitTotalExtendida4G"/>
+                                            <con1:param name="searchBalancesICC_response1">
+                                                <con1:path>$searchBalanceIccResp</con1:path>
+                                            </con1:param>
+                                        </con1:xqueryTransform>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:assign varName="asd">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e61</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>$bodyOut/listBucketUnidPro</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:assign>
+                                <con2:replace contents-only="true" varName="bodyOut">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e5f</con1:id>
+                                    <con2:location>
+                                        <con1:xpathText>./listBucketUnidAdq</con1:xpathText>
+                                    </con2:location>
+                                    <con2:expr>
+                                        <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidAdq)),'[ ]','')</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:replace>
+                                <con2:replace contents-only="true" varName="bodyOut">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e5d</con1:id>
+                                    <con2:location>
+                                        <con1:xpathText>./listBucketUnidPro</con1:xpathText>
+                                    </con2:location>
+                                    <con2:expr>
+                                        <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidPro)),'[ ]','')</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:replace>
+                                <con2:replace contents-only="true" varName="bodyOut">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e5b</con1:id>
+                                    <con2:location>
+                                        <con1:xpathText>./listBucketUnidTot</con1:xpathText>
+                                    </con2:location>
+                                    <con2:expr>
+                                        <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidTot)),'[ ]','')</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:replace>
+                                <con2:replace varName="body" contents-only="true">
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e59</con1:id>
+                                    <con2:expr>
+                                        <con1:xqueryText>$bodyOut</con1:xqueryText>
+                                    </con2:expr>
+                                </con2:replace>
+                                <con1:reply>
+                                    <con1:id>_ActionId-1865804794915647022-2ab292cb.150a97c7a80.-6e57</con1:id>
+                                </con1:reply>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:assign varName="cantProm">
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7960</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(not(empty($cadenaBucketPromoCant))) then
+(xs:int(string-length($cadenaBucketPromoCant)))else(0)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="cantVent">
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7943</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>if(not(empty($cadenaBucketCant))) then 
+(xs:int(string-length($cadenaBucketCant)))else(0)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="sumaTotalBolsas">
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7f27</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>xs:int(sum(data($tagPut/suma)))</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="bodyOut">
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7ed4</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_QueryUnitTotalExtendidaPCRF4G"/>
+                                        <con1:param name="cantidadBucketAdq">
+                                            <con1:path>$cantVent</con1:path>
+                                        </con1:param>
+                                        <con1:param name="totalDatos">
+                                            <con1:path>if(not(empty($sumaTotalBolsas))) then
+($sumaTotalBolsas)
+else
+(0)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="listBucketUnidPro">
+                                            <con1:path>$cadenaBucketPromo</con1:path>
+                                        </con1:param>
+                                        <con1:param name="plan">
+                                            <con1:path>$plan</con1:path>
+                                        </con1:param>
+                                        <con1:param name="cantidadBucketPro">
+                                            <con1:path>$cantProm</con1:path>
+                                        </con1:param>
+                                        <con1:param name="listBucketUnidAdq">
+                                            <con1:path>$cadenaBucket</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:replace varName="body" contents-only="true">
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7e9b</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$bodyOut</con1:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con1:reply>
+                                <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7e62</con1:id>
+                            </con1:reply>
+                        </con2:default>
+                    </con2:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-1934628699415184149-13786e51.150ae7942d5.-7d42">
+            <con:stage name="in_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7d08</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{concat('Error en stage: ', data($fault/ctx:location/ctx:stage), ', ',data($fault/ctx:reason))}</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7d07</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7d06</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-1934628699415184149-13786e51.150ae7942d5.-7ccf">
+            <con:stage name="out_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c5c</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendida4GResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$plan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{concat('Error en stage: ', data($fault/ctx:location/ctx:stage), ', ',data($fault/ctx:reason))}</errorDescription>
+</prep:unitTotalExtendida4GResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c5b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-1934628699415184149-13786e51.150ae7942d5.-7c5a</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="PipelinePairNode1_request" errorHandler="_onErrorHandler-2220867798518858434--2d29475b.152ea1ffe66.-7dad">
+            <con:stage name="in_stg_getBucket">
+                <con:context>
+                    <con1:userNsDecl namespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation" prefix="gets"/>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7dae</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="PrepaidWave/Proxy Services/PSServiceSearchPrepagoICC" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getSearchBalanceIcc</con2:operation>
+                        <con2:request>
+                            <con2:body>searchBalanceIccReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>searchBalanceIccResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="searchBalanceIccReq">
+                                <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7db0</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="PrepaidWave/Resources/XQuery/IN_XQ_GetBucketSearchBalanceICC"/>
+                                        <con1:param name="detail_bucket">
+                                            <con1:path>'N'</con1:path>
+                                        </con1:param>
+                                        <con1:param name="phone_number">
+                                            <con1:path>data($body/prep:unitTotalExtendidaFull/nroCelular)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="tipBucket">
+                                            <con1:path>'noBalance'</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                            <con2:assign varName="validaRespEmpty">
+                                <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7daf</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>empty($searchBalanceIccResp/gets:error_code)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="codPlan">
+                                <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7bd7</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>$searchBalanceIccResp/gets:descPlan/text()</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:responseTransform>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelinePairNode1_response" errorHandler="_onErrorHandler-2220867798518858434--2d29475b.152ea1ffe66.-7bd6">
+            <con:stage name="out_stg_getListBucket">
+                <con:context>
+                    <con1:varNsDecl namespace="http://prepaid.wave.ws.ncl.nii.com" prefix="prep"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cbf</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="PrepaidWave/Resources/XQuery/OUT_XQ_QueryUnitTotalExtendidaFull"/>
+                                <con1:param name="searchBalancesICC_response1">
+                                    <con1:path>$searchBalanceIccResp</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="asd">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cbe</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut/listBucketUnidPro</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cbd</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidAdq</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidAdq)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cbc</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidPro</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidPro)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-2787164093544513789-47beae35.1539eb20237.-7fc8</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketRoamingUnidAdq</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketRoamingUnidAdq)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-2787164093544513789-47beae35.1539eb20237.-7f8f</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketRoamingUnidPro</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketRoamingUnidPro)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cbb</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidTot</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidTot)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace contents-only="true" varName="bodyOut">
+                        <con1:id>_ActionId-8539422565697043814--a572b8f.153a9d76e13.-7fc8</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./listBucketUnidProSocial</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>replace(normalize-space(data($bodyOut/listBucketUnidProSocial)),'[ ]','')</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7cba</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-2220867798518858434--2d29475b.152ea1ffe66.-7dad">
+            <con:stage name="in_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7d3a</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendidaFullResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{concat('Error en llamada a servicio ICC "AccountManager metodo get: "',data($fault/ctx:reason))}</errorDescription>
+</prep:unitTotalExtendidaFullResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7d39</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7d38</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="_onErrorHandler-2220867798518858434--2d29475b.152ea1ffe66.-7bd6">
+            <con:stage name="out_error_getListBucket">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyError">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7b48</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<prep:unitTotalExtendidaFullResponse xmlns:prep="http://prepaid.wave.ws.ncl.nii.com">
+ <planAbonado>{$codPlan}</planAbonado>
+ <errorCode>{data($fault/ctx:errorCode)}</errorCode>
+ <errorDescription>{data($fault/ctx:reason)}</errorDescription>
+</prep:unitTotalExtendidaFullResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7b47</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyError</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply>
+                        <con1:id>_ActionId-2220867798518858434--2d29475b.152ea1ffe66.-7b46</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="lTQueryBalanceTotalExtendidaWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelineQueryBalanceExt">
+                                <con:request>PipelineQueryBalanceExt_request</con:request>
+                                <con:response>PipelineQueryBalanceExt_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTQueryUnitTotalExtendidaWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinelTQueryUnitTotalExtendidaWS">
+                                <con:request>PipelinelTQueryUnitTotalExtendidaWS_request</con:request>
+                                <con:response>PipelinelTQueryUnitTotalExtendidaWS_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTQueryConsumosICCAbonadoWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinelTQueryConsumosICCAbonadoWS">
+                                <con:request>PipelinelTQueryConsumosICCAbonadoWS_request</con:request>
+                                <con:response>PipelinelTQueryConsumosICCAbonadoWS_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTQryBolsasCompraPromoLineaWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairlTQryBolsasCompraPromoLineaWS">
+                                <con:request>PipelinePairlTQryBolsasCompraPromoLineaWS_request</con:request>
+                                <con:response>PipelinePairlTQryBolsasCompraPromoLineaWS_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTCambioPlanWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairlTCambioPlanWS">
+                                <con:request>PipelinePairlTCambioPlanWS_request</con:request>
+                                <con:response>PipelinePairlTCambioPlanWS_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTQueryUnitTotalExtendida4GWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairlTQueryUnitTotalExtendida4GWS">
+                                <con:request>PipelinePairlTQueryUnitTotalExtendida4GWS_request</con:request>
+                                <con:response>PipelinePairlTQueryUnitTotalExtendida4GWS_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="lTQueryUnitTotalExtendidaFullWS">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

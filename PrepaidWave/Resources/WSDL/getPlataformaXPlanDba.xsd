@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getPlataformaXPlanDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getPlataformaXPlanDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getPlataformaXPlanDbaInput" type="getPlataformaXPlanDbaInput"/>
+   <xs:complexType name="getPlataformaXPlanDbaInput">
+      <xs:sequence>
+         <xs:element name="NROCELULAR" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getPlataformaXPlanDbaOutputCollection" type="getPlataformaXPlanDbaOutputCollection"/>
+   <xs:complexType name="getPlataformaXPlanDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="getPlataformaXPlanDbaOutput" type="getPlataformaXPlanDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getPlataformaXPlanDbaOutput">
+      <xs:sequence>
+         <xs:element name="TMCODE" type="xs:string" nillable="true"/>
+         <xs:element name="SHDES" type="xs:string" nillable="true"/>
+         <xs:element name="PLATAFORM_PCRF" type="xs:string" nillable="true"/>
+         <xs:element name="PLATAFORM_ICC" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

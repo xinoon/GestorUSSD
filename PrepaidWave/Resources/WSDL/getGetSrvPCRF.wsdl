@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getGetSrvPCRFDba" name="getGetSrvPCRFDba-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getGetSrvPCRFDba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getGetSrvPCRFDba" location="getGetSrvPCRFDba.wsdl"/>
+  <binding name="getGetSrvPCRFDba_ptt-binding" type="tns:getGetSrvPCRFDba_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getGetSrvPCRFDba">
+      <soap:operation soapAction="getGetSrvPCRFDba"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getGetSrvPCRFDba-service">
+    <port name="getGetSrvPCRFDba-port" binding="tns:getGetSrvPCRFDba_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

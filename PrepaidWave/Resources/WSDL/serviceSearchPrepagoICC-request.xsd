@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation"
+           targetNamespace="http://ws.nextel.cl/schemas/searchBalanceIcc/alcatel/getAllInformation"
+           elementFormDefault="qualified">
+ <xs:element name="searchBalancesICC-request" type="searchBalancesICC-request"/>
+ <xs:complexType name="searchBalancesICC-request">
+  <xs:sequence>
+  <xs:element minOccurs="0" maxOccurs="1" name="phone_number" type="xs:string"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="detail_bucket"
+               type="xs:string"/>
+   <xs:element minOccurs="0" maxOccurs="1" name="tipBucket"
+               type="xs:string"/>
+  </xs:sequence>
+ </xs:complexType>
+</xs:schema>

@@ -31,6 +31,7 @@
       <hash><url n="URL" path="Alcatel-HighLevelApiWS/Alcatel-HighLevelApiWS.jpr"/></hash>
       <hash><url n="URL" path="BenePro/BenePro.jpr"/></hash>
       <hash><url n="URL" path="BSCSBundles/BSCSBundles.jpr"/></hash>
+      <hash><url n="URL" path="ConsultaTrafico/ConsultaTrafico.jpr"/></hash>
       <hash><url n="URL" path="CurrentAccount/CurrentAccount.jpr"/></hash>
       <hash><url n="URL" path="GestorUSSD/GestorUSSD.jpr"/></hash>
       <hash><url n="URL" path="HLRpatch/HLRpatch.jpr"/></hash>

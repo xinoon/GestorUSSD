@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getTrafficDataDba" name="getTrafficDataDba-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getTrafficDataDba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getTrafficDataDba" location="getTrafficDataDba.wsdl"/>
+  <binding name="getTrafficDataDba_ptt-binding" type="tns:getTrafficDataDba_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getTrafficDataDba">
+      <soap:operation soapAction="getTrafficDataDba"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getTrafficDataDba-service">
+    <port name="getTrafficDataDba-port" binding="tns:getTrafficDataDba_ptt-binding">
+      <soap:address location="jca://eis/DB/ConsultaTrafico"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,24 @@
+<?binding.jca getTecnologiaXPlanDba_db.jca?><wsdl:definitions name="getTecnologiaXPlanDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getTecnologiaXPlanDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getTecnologiaXPlanDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getTecnologiaXPlanDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getTecnologiaXPlanDba_plt">
+        <plt:role name="getTecnologiaXPlanDba_role">
+            <plt:portType name="tns:getTecnologiaXPlanDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getTecnologiaXPlanDba" schemaLocation="getTecnologiaXPlanDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getTecnologiaXPlanDbaInput_msg">
+        <wsdl:part name="getTecnologiaXPlanDbaInput_msg" element="db:getTecnologiaXPlanDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getTecnologiaXPlanDbaOutputCollection_msg">
+        <wsdl:part name="getTecnologiaXPlanDbaOutputCollection" element="db:getTecnologiaXPlanDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getTecnologiaXPlanDba_ptt">
+        <wsdl:operation name="getTecnologiaXPlanDba">
+            <wsdl:input message="tns:getTecnologiaXPlanDbaInput_msg"/>
+            <wsdl:output message="tns:getTecnologiaXPlanDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

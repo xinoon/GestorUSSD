@@ -1,0 +1,15 @@
+<adapter-config name="TrafficTypeSN" adapter="Database Adapter" wsdlLocation="../WSDL/TrafficTypeSN.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ConsultaTrafico" UIConnectionName="Nextel" UIOverloadedProcedure="3" adapterRef=""/>
+  <endpoint-interaction portType="TrafficTypeSN_ptt" operation="TrafficTypeSN">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="CTODS"/>
+      <property name="PackageName" value="SERVICESAPL"/>
+      <property name="ProcedureName" value="GETTRAFFICDETAIL"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="QueryTimeout" value="10"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

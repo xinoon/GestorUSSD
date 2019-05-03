@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con3:wsdl ref="ConsultaTrafico/TrafficData/Resources/WSDL/TrafficDataService" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/pipeline/config"/>
+            <con:binding>
+                <con:name>TraficoDatosPortBinding</con:name>
+                <con:namespace>http://traficoDatos.wave.ws.ncl.nii.com</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:logging enabled="false" level="debug"/>
+            <oper:monitoring enabled="true" level="pipeline" aggregationInterval="10"/>
+        </oper:operations>
+    </con:coreEntry>
+    <con:router xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline type="request" name="PipelineTrafficData_request">
+            <con:stage name="stg_in_getTrafficType">
+                <con:context>
+                    <con1:varNsDecl namespace="http://traficoDatos.wave.ws.ncl.nii.com" prefix="traf"/>
+                </con:context>
+                <con:actions>
+                    <con2:wsCallout>
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-65d5</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ConsultaTrafico/TrafficData/Business Services/BSServiceGetTrafficData" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>getTrafficDataDba</con2:operation>
+                        <con2:request>
+                            <con2:body>trafficDataReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                            <con2:body>trafficDataResp</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                            <con2:assign varName="trafficDataReq">
+                                <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-659d</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryTransform>
+                                        <con1:resource ref="ConsultaTrafico/TrafficData/Resources/XQuery/IN_XQ_TrafficData"/>
+                                        <con1:param name="traficoDatos1">
+                                            <con1:path>$body/traf:traficoDatos</con1:path>
+                                        </con1:param>
+                                    </con1:xqueryTransform>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                    </con2:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="PipelineTrafficData_response">
+            <con:stage name="stg_out_getTrafficType">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="bodyOut">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-652d</con1:id>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="ConsultaTrafico/TrafficData/Resources/XQuery/OUT_XQ_TrafficData"/>
+                                <con1:param name="getTrafficDataDbaOutputCollection1">
+                                    <con1:path>$trafficDataResp</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8786650245967679754-31a4b3cb.14d6db228b9.-6510</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$bodyOut</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelineTrafficData">
+                <con:request>PipelineTrafficData_request</con:request>
+                <con:response>PipelineTrafficData_response</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

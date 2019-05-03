@@ -1,0 +1,24 @@
+<?binding.jca getDatosAbonadoDba_db.jca?><wsdl:definitions name="getDatosAbonadoDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getDatosAbonadoDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getDatosAbonadoDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getDatosAbonadoDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getDatosAbonadoDba_plt">
+        <plt:role name="getDatosAbonadoDba_role">
+            <plt:portType name="tns:getDatosAbonadoDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getDatosAbonadoDba" schemaLocation="getDatosAbonadoDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getDatosAbonadoDbaInput_msg">
+        <wsdl:part name="getDatosAbonadoDbaInput_msg" element="db:getDatosAbonadoDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getDatosAbonadoDbaOutputCollection_msg">
+        <wsdl:part name="getDatosAbonadoDbaOutputCollection" element="db:getDatosAbonadoDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getDatosAbonadoDba_ptt">
+        <wsdl:operation name="getDatosAbonadoDba">
+            <wsdl:input message="tns:getDatosAbonadoDbaInput_msg"/>
+            <wsdl:output message="tns:getDatosAbonadoDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

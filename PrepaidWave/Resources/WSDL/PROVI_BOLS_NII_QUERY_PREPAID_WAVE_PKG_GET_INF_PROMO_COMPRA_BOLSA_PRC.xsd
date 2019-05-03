@@ -1,0 +1,135 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_QUERY_PREPAID_WAVE_PKG/GET_INF_PROMO_COMPRA_BOLSA_PRC/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/PROVI_BOLS/NII_QUERY_PREPAID_WAVE_PKG/GET_INF_PROMO_COMPRA_BOLSA_PRC/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="PV_PHONE_NUMBER" type="string" db:index="1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="PV_SEGMENTO" type="string" db:index="2" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="PV_TIP_BOLSA" type="string" db:index="3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="PV_ESTADO" type="string" db:index="4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="PV_PRODUCT_PROM" type="db:PROVI_BOLS.PROMO_PRODUCT_QT_LIST" db:index="5" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="SN_BUNDLE_COUNT" type="decimal" db:index="6" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SN_BUNDLE_PROM_COUNT" type="decimal" db:index="7" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="ST_HIST_MOV_PROMOS" type="db:PROVI_BOLS.HIST_MOV_BOLSA_QT_LIST" db:index="8" db:type="Array" minOccurs="0" nillable="true"/>
+            <element name="ST_HIST_MOV_BOLSA_QT_LIST" type="db:PROVI_BOLS.HIST_MOV_BOLSA_QT_LIST" db:index="9" db:type="Array" minOccurs="0" nillable="true"/>
+            <element name="SN_COD_RETORNO" type="decimal" db:index="10" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="SV_MENS_RETORNO" type="string" db:index="11" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="SN_NUM_EVENTO" type="decimal" db:index="12" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="PROVI_BOLS.PROMO_PRODUCT_QT">
+      <sequence>
+         <element name="ID_ICC_PROD" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="FECHA_INICIO" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="VIGENCIA" type="int" db:type="INTEGER" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.HIST_MOV_BOLSA_QT_LIST">
+      <sequence>
+         <element name="ST_HIST_MOV_PROMOS_ITEM" type="db:PROVI_BOLS.HIST_MOV_BOLSA_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.PROMO_PRODUCT_QT_LIST">
+      <sequence>
+         <element name="PV_PRODUCT_PROM_ITEM" type="db:PROVI_BOLS.PROMO_PRODUCT_QT" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="PROVI_BOLS.HIST_MOV_BOLSA_QT">
+      <sequence>
+         <element name="NOM_BOLSA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="80"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="VIGENCIA" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TIP_BOLSA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="15"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TIP_APLICACION" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="15"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="RECURRENCIA" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="UNID_RECURRECIA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="MOTIVO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="15"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="UND_CONTENIDA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="UNID_MEDIDA_BOLSA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="50"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="VALOR_BOLSA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="TIP_TRAFICO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="20"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="DETALLE_CONTENIDO" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="100"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="FECHA_COMPRA" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="FECHA_INICIO" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="FECHA_FIN" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="CLASIFICA_BOLSA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="80"/>
+               </restriction>
+            </simpleType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

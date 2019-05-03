@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getBolsasVigenteHistoricaDba" name="getBolsasVigenteHistoricaDba-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getBolsasVigenteHistoricaDba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getBolsasVigenteHistoricaDba" location="getBolsasVigenteHistoricaDba.wsdl"/>
+  <binding name="getBolsasVigenteHistoricaDba_ptt-binding" type="tns:getBolsasVigenteHistoricaDba_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getBolsasVigenteHistoricaDba">
+      <soap:operation soapAction="getBolsasVigenteHistoricaDba"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getBolsasVigenteHistoricaDba-service">
+    <port name="getBolsasVigenteHistoricaDba-port" binding="tns:getBolsasVigenteHistoricaDba_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSCORPMAN"/>
+    </port>
+  </service>
+</definitions>

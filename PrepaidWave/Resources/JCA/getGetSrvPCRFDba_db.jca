@@ -1,0 +1,13 @@
+<adapter-config name="getGetSrvPCRFDba" adapter="Database Adapter" wsdlLocation="../WSDL/getGetSrvPCRFDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getGetSrvPCRFDba_ptt" operation="getGetSrvPCRFDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select ID_PROD,ID_PCRF_PROD,ID_BSCS_PROD,NAME_PROD,DESC_PROD,CATEGORY_PROD,PROMO,TARIFF_PROD,UNIT_FREE,TYPE_PROD_BSCS,TRAFFIC_TYPE,UNIT_TYPE,RECURRENCE,STATUS,LEVEL_PCRF_PROD,SEGMENT_PROD,CHANNEL_ACT,PLATFORM_ACT,FAMILY_PLAN,BUNDLE_TYPE_FLAG,COD_BUNDLE_TYPE,DES_BUNDLE_TYPE,COD_TIPO_TRAFICO,TEMPLATE_ID,SPCODE,FILE1,FILE2,FILE3,VIGENCIA from NEXTEL_CATALOGO_PRODUCTOS where ID_PCRF_PROD = #idPcrf and upper(DES_BUNDLE_TYPE) = #Tecnologia4g and PLATFORM_ACT = #plataformPcrf"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

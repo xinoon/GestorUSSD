@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getGetSrvPCRFDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getGetSrvPCRFDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getGetSrvPCRFDbaInput" type="getGetSrvPCRFDbaInput"/>
+   <xs:complexType name="getGetSrvPCRFDbaInput">
+      <xs:sequence>
+         <xs:element name="idPcrf" type="xs:string" nillable="true"/>
+         <xs:element name="Tecnologia4g" type="xs:string" nillable="true"/>
+         <xs:element name="plataformPcrf" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getGetSrvPCRFDbaOutputCollection" type="getGetSrvPCRFDbaOutputCollection"/>
+   <xs:complexType name="getGetSrvPCRFDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="getGetSrvPCRFDbaOutput" type="getGetSrvPCRFDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getGetSrvPCRFDbaOutput">
+      <xs:sequence>
+         <xs:element name="ID_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="ID_PCRF_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="ID_BSCS_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="NAME_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="DESC_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="CATEGORY_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="PROMO" type="xs:string" nillable="true"/>
+         <xs:element name="TARIFF_PROD" type="xs:decimal" nillable="true"/>
+         <xs:element name="UNIT_FREE" type="xs:decimal" nillable="true"/>
+         <xs:element name="TYPE_PROD_BSCS" type="xs:string" nillable="true"/>
+         <xs:element name="TRAFFIC_TYPE" type="xs:string" nillable="true"/>
+         <xs:element name="UNIT_TYPE" type="xs:string" nillable="true"/>
+         <xs:element name="RECURRENCE" type="xs:string" nillable="true"/>
+         <xs:element name="STATUS" type="xs:string" nillable="true"/>
+         <xs:element name="LEVEL_PCRF_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="SEGMENT_PROD" type="xs:string" nillable="true"/>
+         <xs:element name="CHANNEL_ACT" type="xs:string" nillable="true"/>
+         <xs:element name="PLATFORM_ACT" type="xs:string" nillable="true"/>
+         <xs:element name="FAMILY_PLAN" type="xs:string" nillable="true"/>
+         <xs:element name="BUNDLE_TYPE_FLAG" type="xs:string" nillable="true"/>
+         <xs:element name="COD_BUNDLE_TYPE" type="xs:decimal" nillable="true"/>
+         <xs:element name="DES_BUNDLE_TYPE" type="xs:string" nillable="true"/>
+         <xs:element name="COD_TIPO_TRAFICO" type="xs:decimal" nillable="true"/>
+         <xs:element name="TEMPLATE_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="SPCODE" type="xs:decimal" nillable="true"/>
+         <xs:element name="FILE1" type="xs:string" nillable="true"/>
+         <xs:element name="FILE2" type="xs:string" nillable="true"/>
+         <xs:element name="FILE3" type="xs:string" nillable="true"/>
+         <xs:element name="VIGENCIA" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

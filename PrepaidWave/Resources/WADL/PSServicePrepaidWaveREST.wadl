@@ -1,0 +1,100 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PSServicePrepaidWaveREST">PSServicePrepaidWaveREST</doc>
+   <grammars>
+      <xsd:schema>
+      <xsd:import namespace="http://prepaid.wave.ws.ncl.nii.com" schemaLocation="../WSDL/PrepaidWaveService.xsd"/>
+    </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/lTQueryBalanceTotalExtendidaWS">
+         <method name="GET" soa:wsdlOperation="lTQueryBalanceTotalExtendidaWS">
+            <request soa:paramElement="pns:balanceTotalExtendido" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+               <param name="totalBucket" style="query" soa:expression="$msg.parameters/totalBucket" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:balanceTotalExtendidoResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTQueryUnitTotalExtendidaWS">
+         <method name="GET" soa:wsdlOperation="lTQueryUnitTotalExtendidaWS">
+            <request soa:paramElement="pns:unitTotalExtendida" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:unitTotalExtendidaResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTQueryUnitTotalExtendida4GWS">
+         <method name="GET" soa:wsdlOperation="lTQueryUnitTotalExtendida4GWS">
+            <request soa:paramElement="pns:unitTotalExtendida4G" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:unitTotalExtendida4GResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTQryBolsasCompraPromoLineaWS">
+         <method name="GET" soa:wsdlOperation="lTQryBolsasCompraPromoLineaWS">
+            <request soa:paramElement="pns:bolsasCompraPromoLinea" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="segmento" style="query" soa:expression="$msg.parameters/segmento" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+               <param name="tipoBolsas" style="query" soa:expression="$msg.parameters/tipoBolsas" type="xsd:string"/>
+               <param name="estado" style="query" soa:expression="$msg.parameters/estado" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:bolsasCompraPromoLineaResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTQueryConsumosICCAbonadoWS">
+         <method name="GET" soa:wsdlOperation="lTQueryConsumosICCAbonadoWS">
+            <request soa:paramElement="pns:consumosICCAbonado" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+               <param name="tipTrafico" style="query" soa:expression="$msg.parameters/tipTrafico" type="xsd:string"/>
+               <param name="tecnologia" style="query" soa:expression="$msg.parameters/tecnologia" type="xsd:string"/>
+               <param name="fechaInicio" style="query" soa:expression="$msg.parameters/fechaInicio" type="xsd:dateTime"/>
+               <param name="fechaFin" style="query" soa:expression="$msg.parameters/fechaFin" type="xsd:dateTime"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:consumosICCAbonadoResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTCambioPlanWS">
+         <method name="PUT" soa:wsdlOperation="lTCambioPlanWS">
+            <request>
+               <representation mediaType="application/json" element="cns:cambioPlan" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:cambioPlanResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lTQueryUnitTotalExtendidaFullWS">
+         <method name="GET" soa:wsdlOperation="lTQueryUnitTotalExtendidaFullWS">
+            <request soa:paramElement="pns:unitTotalExtendidaFull" xmlns:pns="http://prepaid.wave.ws.ncl.nii.com">
+               <param name="nroCelular" style="query" soa:expression="$msg.parameters/nroCelular" type="xsd:string"/>
+               <param name="appCliente" style="query" soa:expression="$msg.parameters/appCliente" type="xsd:string"/>
+               <param name="usuario" style="query" soa:expression="$msg.parameters/usuario" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:unitTotalExtendidaFullResponse" xmlns:cns="http://prepaid.wave.ws.ncl.nii.com"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
