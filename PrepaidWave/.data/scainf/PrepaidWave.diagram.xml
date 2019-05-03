@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="PSServicePrepaidWave">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="730" width="137" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="723" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="PSServicePrepaidWave" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="7" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gService>
+    <dgm:gService name="PSServicePrepaidWaveREST">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="585" width="137" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="578" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="PSServicePrepaidWaveREST" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/RestAdapterService20x20px.png" X="7" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gService>
+    <dgm:gService name="PSServiceSearchPrepagoICC">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="163" width="137" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="156" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="PSServiceSearchPrepagoICC" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="7" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gService>
+    <dgm:gReference name="BSServiceGetTecnologiaXPlan">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="466" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="459" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetTecnologiaXPlan" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="PSServiceTrafficData">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="554" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="547" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PSServiceTrafficData" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BStimsiBymsisdnDBA">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="290" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="283" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BStimsiBymsisdnDBA" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceGetDatosAbonado">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="642" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="635" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetDatosAbonado" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceGetBolsasVigenteHistorica">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="730" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="723" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetBolsasVigenteHistorica" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="PSTrafficTypeEBS">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="818" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="811" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PSTrafficTypeEBS" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="PSServiceSearchPrepagoICC3">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="906" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="899" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PSServiceSearchPrepagoICC3" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceSetEventErrorServicePrepaid">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="994" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="987" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceSetEventErrorServicePrepaid" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="PSPcrfService">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="378" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="371" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PSPcrfService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceGetGetSrvPCRF">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="1082" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="1075" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetGetSrvPCRF" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="PSSubscriberLineManagerService">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="26" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="19" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PSSubscriberLineManagerService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_transport_http_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceGetPlataformaXPlan">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="114" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="107" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetPlataformaXPlan" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gReference name="BSServiceGetOfertaBucket">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="202" width="136" height="54">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="195" width="156" height="68">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BSServiceGetOfertaBucket" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="14" Y="4" width="20" height="20"/>
+        <dgm:operations/>
+    </dgm:gReference>
+    <dgm:gComponent name="PSServicePrepaidWave2">
+        <dgm:body borderWidth="2" arcRad="20" X="296" Y="570" width="130" height="286">
+            <dgm:borderColor r="109" g="136" b="65"/>
+            <dgm:lightBgColor r="201" g="224" b="155"/>
+            <dgm:darkBgColor r="157" g="195" b="93"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="286" Y="563" width="150" height="302">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="__service__" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetTecnologiaXPlan" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.106885770.PSServiceTrafficData" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BStimsiBymsisdnDBA" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetDatosAbonado" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetBolsasVigenteHistorica" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.-84364815.PSTrafficTypeEBS" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.1088572311.PSServiceSearchPrepagoICC" X="120" Y="165" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceSetEventErrorServicePrepaid" X="120" Y="190" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.-46713416.PSPcrfService" X="120" Y="215" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetGetSrvPCRF" X="120" Y="240" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_pipeline_20x20.gif" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="PSServiceSearchPrepagoICC2">
+        <dgm:body borderWidth="2" arcRad="20" X="296" Y="148" width="130" height="161">
+            <dgm:borderColor r="109" g="136" b="65"/>
+            <dgm:lightBgColor r="201" g="224" b="155"/>
+            <dgm:darkBgColor r="157" g="195" b="93"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="286" Y="141" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="__service__" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.-46713416.PSPcrfService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="proxyservice.-1415680978.PSSubscriberLineManagerService" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetPlataformaXPlan" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BStimsiBymsisdnDBA" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:outputPort name="businessservice.1713844695.BSServiceGetOfertaBucket" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="SB Interface" callbackInterface="SB Interface"/>
+        <dgm:nodeIcon URI="/oracle/sb/tooling/ide/sca/internal/icons/icon_pipeline_20x20.gif" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="PSServicePrepaidWave" target="PSServicePrepaidWave2/__service__" width="2">
+        <dgm:gSegment X1="168" Y1="740" X2="251" Y2="740"/>
+        <dgm:gSegment X1="251" Y1="740" X2="251" Y2="595"/>
+        <dgm:gSegment X1="251" Y1="595" X2="286" Y2="595"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWaveREST" target="PSServicePrepaidWave2/__service__" width="2">
+        <dgm:gSegment X1="168" Y1="595" X2="286" Y2="595"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC" target="PSServiceSearchPrepagoICC2/__service__" width="2">
+        <dgm:gSegment X1="168" Y1="173" X2="286" Y2="173"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BSServiceGetTecnologiaXPlan" target="BSServiceGetTecnologiaXPlan" width="2">
+        <dgm:gSegment X1="436" Y1="595" X2="460" Y2="595"/>
+        <dgm:gSegment X1="460" Y1="595" X2="460" Y2="476"/>
+        <dgm:gSegment X1="460" Y1="476" X2="604" Y2="476"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/proxyservice.106885770.PSServiceTrafficData" target="PSServiceTrafficData" width="2">
+        <dgm:gSegment X1="436" Y1="620" X2="475" Y2="620"/>
+        <dgm:gSegment X1="475" Y1="620" X2="475" Y2="564"/>
+        <dgm:gSegment X1="475" Y1="564" X2="604" Y2="564"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BStimsiBymsisdnDBA" target="BStimsiBymsisdnDBA" width="2">
+        <dgm:gSegment X1="436" Y1="645" X2="490" Y2="645"/>
+        <dgm:gSegment X1="490" Y1="645" X2="490" Y2="300"/>
+        <dgm:gSegment X1="490" Y1="300" X2="604" Y2="300"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BSServiceGetDatosAbonado" target="BSServiceGetDatosAbonado" width="2">
+        <dgm:gSegment X1="436" Y1="670" X2="505" Y2="670"/>
+        <dgm:gSegment X1="505" Y1="670" X2="505" Y2="652"/>
+        <dgm:gSegment X1="505" Y1="652" X2="604" Y2="652"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BSServiceGetBolsasVigenteHistorica" target="BSServiceGetBolsasVigenteHistorica" width="2">
+        <dgm:gSegment X1="436" Y1="695" X2="580" Y2="695"/>
+        <dgm:gSegment X1="580" Y1="695" X2="580" Y2="740"/>
+        <dgm:gSegment X1="580" Y1="740" X2="604" Y2="740"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/proxyservice.-84364815.PSTrafficTypeEBS" target="PSTrafficTypeEBS" width="2">
+        <dgm:gSegment X1="436" Y1="720" X2="565" Y2="720"/>
+        <dgm:gSegment X1="565" Y1="720" X2="565" Y2="828"/>
+        <dgm:gSegment X1="565" Y1="828" X2="604" Y2="828"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/proxyservice.1088572311.PSServiceSearchPrepagoICC" target="PSServiceSearchPrepagoICC3" width="2">
+        <dgm:gSegment X1="436" Y1="745" X2="550" Y2="745"/>
+        <dgm:gSegment X1="550" Y1="745" X2="550" Y2="916"/>
+        <dgm:gSegment X1="550" Y1="916" X2="604" Y2="916"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BSServiceSetEventErrorServicePrepaid" target="BSServiceSetEventErrorServicePrepaid" width="2">
+        <dgm:gSegment X1="436" Y1="770" X2="535" Y2="770"/>
+        <dgm:gSegment X1="535" Y1="770" X2="535" Y2="1004"/>
+        <dgm:gSegment X1="535" Y1="1004" X2="604" Y2="1004"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/proxyservice.-46713416.PSPcrfService" target="PSPcrfService" width="2">
+        <dgm:gSegment X1="436" Y1="795" X2="520" Y2="795"/>
+        <dgm:gSegment X1="520" Y1="795" X2="520" Y2="388"/>
+        <dgm:gSegment X1="520" Y1="388" X2="604" Y2="388"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServicePrepaidWave2/businessservice.1713844695.BSServiceGetGetSrvPCRF" target="BSServiceGetGetSrvPCRF" width="2">
+        <dgm:gSegment X1="436" Y1="820" X2="460" Y2="820"/>
+        <dgm:gSegment X1="460" Y1="820" X2="460" Y2="1092"/>
+        <dgm:gSegment X1="460" Y1="1092" X2="604" Y2="1092"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC2/proxyservice.-46713416.PSPcrfService" target="PSPcrfService" width="2">
+        <dgm:gSegment X1="436" Y1="173" X2="535" Y2="173"/>
+        <dgm:gSegment X1="535" Y1="173" X2="535" Y2="388"/>
+        <dgm:gSegment X1="535" Y1="388" X2="604" Y2="388"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC2/proxyservice.-1415680978.PSSubscriberLineManagerService" target="PSSubscriberLineManagerService" width="2">
+        <dgm:gSegment X1="436" Y1="198" X2="460" Y2="198"/>
+        <dgm:gSegment X1="460" Y1="198" X2="460" Y2="36"/>
+        <dgm:gSegment X1="460" Y1="36" X2="604" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC2/businessservice.1713844695.BSServiceGetPlataformaXPlan" target="BSServiceGetPlataformaXPlan" width="2">
+        <dgm:gSegment X1="436" Y1="223" X2="475" Y2="223"/>
+        <dgm:gSegment X1="475" Y1="223" X2="475" Y2="124"/>
+        <dgm:gSegment X1="475" Y1="124" X2="604" Y2="124"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC2/businessservice.1713844695.BStimsiBymsisdnDBA" target="BStimsiBymsisdnDBA" width="2">
+        <dgm:gSegment X1="436" Y1="248" X2="505" Y2="248"/>
+        <dgm:gSegment X1="505" Y1="248" X2="505" Y2="300"/>
+        <dgm:gSegment X1="505" Y1="300" X2="604" Y2="300"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="PSServiceSearchPrepagoICC2/businessservice.1713844695.BSServiceGetOfertaBucket" target="BSServiceGetOfertaBucket" width="2">
+        <dgm:gSegment X1="436" Y1="273" X2="490" Y2="273"/>
+        <dgm:gSegment X1="490" Y1="273" X2="490" Y2="212"/>
+        <dgm:gSegment X1="490" Y1="212" X2="604" Y2="212"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

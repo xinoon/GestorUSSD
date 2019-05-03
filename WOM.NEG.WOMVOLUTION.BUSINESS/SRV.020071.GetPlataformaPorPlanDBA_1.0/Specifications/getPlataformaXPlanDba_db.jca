@@ -1,4 +1,4 @@
-<adapter-config name="getPlataformaXPlanDba" adapter="Database Adapter" wsdlLocation="../WSDL/getPlataformaXPlanDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+<adapter-config name="getPlataformaXPlanDba" adapter="Database Adapter" wsdlLocation="getPlataformaXPlanDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
   
   <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
   <endpoint-interaction portType="getPlataformaXPlanDba_ptt" operation="getPlataformaXPlanDba">

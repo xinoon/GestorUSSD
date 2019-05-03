@@ -1,0 +1,238 @@
+<xs:schema version="1.0" targetNamespace="http://prepaid.wave.ws.ncl.nii.com" xmlns:tns="http://prepaid.wave.ws.ncl.nii.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="balanceTotalExtendido" type="tns:queryBalanceTotalExtendido"/>
+   <xs:element name="balanceTotalExtendidoResponse" type="tns:queryBalanceTotalExtendidoResponse"/>
+   
+   <xs:complexType name="queryBalanceTotalExtendido">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+         <xs:element name="totalBucket" type="xs:string" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="queryBalanceTotalExtendidoResponse">
+      <xs:sequence>
+		<xs:element name="sumTotal" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="planAbonado" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="cantidadBucket" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucket" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" nillable="true"  maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   
+   <xs:element name="unitTotalExtendidaFull" type="tns:queryUnitTotalExtendidaFull"/>
+   <xs:element name="unitTotalExtendidaFullResponse" type="tns:queryUnitTotalExtendidaFullResponse"/>
+   
+   <xs:complexType name="queryUnitTotalExtendidaFull">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="queryUnitTotalExtendidaFullResponse">
+      <xs:sequence>
+		<xs:element name="planAbonado" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="cantidadBucketAdq" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="cantidadBucketPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		
+		<xs:element name="listBucketUnidAdq" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		
+		<xs:element name="listBucketRoamingUnidAdq" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketRoamingUnidPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidProSocial" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidTot" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>		
+		
+		<xs:element name="totalVigPromoDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigPromoVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigPromoSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsPromoDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsPromoVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsPromoSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>	
+		<xs:element name="totalVigVentaDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVentaVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVentaSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsVentaDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsVentaVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalConsVentaSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+					
+		<xs:element name="totalConsVentaDatos4G" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVentaDatos4G" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>	
+			
+		<xs:element name="totalConsPromoDatos4G" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigPromoDatos4G" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>	
+						
+		<xs:element name="totalConsVentaDatosRoaming" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVentaDatosRoaming" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>	
+		<xs:element name="totalConsPromoDatosRoaming" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigPromoDatosRoaming" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		
+		<xs:element name="totalConsVentaDatosSocial" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigVentaDatosSocial" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>	
+		<xs:element name="totalConsPromoDatosSocial" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVigPromoDatosSocial" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>								
+		
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:element name="unitTotalExtendida" type="tns:queryUnitTotalExtendida"/>
+   <xs:element name="unitTotalExtendidaResponse" type="tns:queryUnitTotalExtendidaResponse"/>
+   
+   <xs:complexType name="queryUnitTotalExtendida">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="queryUnitTotalExtendidaResponse">
+      <xs:sequence>
+		<xs:element name="planAbonado" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="cantidadBucketAdq" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="cantidadBucketPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidAdq" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidTot" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalVoz" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalSms" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:element name="unitTotalExtendida4G" type="tns:queryUnitTotalExtendida4G"/>
+   <xs:element name="unitTotalExtendida4GResponse" type="tns:queryUnitTotalExtendida4GResponse"/>
+   
+   <xs:complexType name="queryUnitTotalExtendida4G">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="queryUnitTotalExtendida4GResponse">
+      <xs:sequence>
+		<xs:element name="planAbonado" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="cantidadBucketAdq" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="cantidadBucketPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidAdq" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidPro" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="listBucketUnidTot" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="totalDatos" nillable="true"  type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:element name="bolsasCompraPromoLinea" type="tns:qryBolsasCompraPromoLinea"/>
+   <xs:element name="bolsasCompraPromoLineaResponse" type="tns:qryBolsasCompraPromoLineaResponse"/>
+   
+   <xs:complexType name="qryBolsasCompraPromoLinea">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="segmento" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+         <xs:element name="tipoBolsas" type="xs:string" nillable="false"/>
+         <xs:element name="estado" type="xs:string" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="qryBolsasCompraPromoLineaResponse">
+      <xs:sequence>
+		<xs:element name="cantidadBolsas" type="xs:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+        <xs:element name="bolsas" type="tns:bolsasList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		<xs:element name="errorCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="bolsasList">
+      <xs:sequence>
+		<xs:element name="nombreBolsa" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="vigencia" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="tipBolsa" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="tipAplicacion" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="recurrencia" type="xs:string" minOccurs="1" maxOccurs="1"/>     
+		<xs:element name="unidRecurrencia" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="motivo" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="unidContenida" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="unidMedida" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="valorBolsa" type="xs:string" minOccurs="1" maxOccurs="1"/>     
+		<xs:element name="tipTrafico" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="DetContenidoMix" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="fechaCompra" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="fechaInicio" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="fechaFin" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>     
+		<xs:element name="clasificaBolsa" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1"/>     
+	  </xs:sequence>
+   </xs:complexType>
+ 
+   <xs:element name="consumosICCAbonado" type="tns:queryConsumosICCAbonado"/>
+   <xs:element name="consumosICCAbonadoResponse" type="tns:queryConsumosICCAbonadoResponse"/>
+   
+   <xs:complexType name="queryConsumosICCAbonado">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+		 <xs:element name="tipTrafico" type="xs:string" nillable="false"/>
+		 <xs:element name="tecnologia" type="xs:string" nillable="false"/>
+		 <xs:element name="fechaInicio" type="xs:dateTime" nillable="false"/>
+		 <xs:element name="fechaFin" type="xs:dateTime" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="queryConsumosICCAbonadoResponse">
+      <xs:sequence>
+		<xs:element name="consumoVoz" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="unidadVoz" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="consumoSms" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="unidadSms" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="consumoDato" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="unidadDato" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="fechaInicio" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="fechaFin" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   
+   <xs:element name="cambioPlan" type="tns:inCambioPlan"/>
+   <xs:element name="cambioPlanResponse" type="tns:outCambioPlanResponse"/>
+   
+   <xs:complexType name="inCambioPlan">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+         <xs:element name="planDestino" type="xs:string" nillable="false"/>
+         <xs:element name="appCliente" type="xs:string" nillable="false"/>
+         <xs:element name="usuario" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="outCambioPlanResponse">
+      <xs:sequence>
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" nillable="true"  maxOccurs="1" minOccurs="0" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   
+</xs:schema>
