@@ -1,0 +1,40 @@
+<xs:schema version="1.0" targetNamespace="http://traficoDatos.wave.ws.ncl.nii.com" xmlns:tns="http://traficoDatos.wave.ws.ncl.nii.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+   <xs:element name="traficoDatos" type="tns:inTraficoDatos"/>
+   <xs:element name="traficoDatosResponse" type="tns:outTraficoDatosResponse"/>
+   
+   <xs:complexType name="inTraficoDatos">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false"/>
+		 <xs:element name="fechaInicio" type="xs:dateTime" nillable="false"/>
+		 <xs:element name="fechaFin" type="xs:dateTime" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="outTraficoDatosResponse">
+      <xs:sequence>
+         <xs:element name="outTraficoDato" type="tns:outTraficoDatos" maxOccurs="unbounded" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="outTraficoDatos">
+      <xs:sequence>
+         <xs:element name="numeroOrigen" type="xs:string" nillable="true"/>
+         <xs:element name="numeroDestino" type="xs:string" nillable="true"/>
+         <xs:element name="destino" type="xs:string" nillable="true"/>
+         <xs:element name="sentido" type="xs:string" nillable="true"/>
+         <xs:element name="fecha" type="xs:string" nillable="true"/>
+         <xs:element name="horaInicio" type="xs:string" nillable="true"/>
+         <xs:element name="horaTermino" type="xs:string" nillable="true"/>
+         <xs:element name="unidad" type="xs:string" nillable="true"/>
+         <xs:element name="duracion" type="xs:string" nillable="true"/>
+         <xs:element name="duracionSegundos" type="xs:string" nillable="true"/>
+         <xs:element name="valorSegundo" type="xs:string" nillable="true"/>
+         <xs:element name="servicio" type="xs:string" nillable="true"/>
+         <xs:element name="tramoHorario" type="xs:string" nillable="true"/>
+         <xs:element name="caracteristicaServicio" type="xs:string" nillable="true"/>
+         <xs:element name="valorLlamada" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+</xs:schema>

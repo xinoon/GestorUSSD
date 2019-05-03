@@ -1,0 +1,13 @@
+<adapter-config name="getTecnologiaXPlanDba" adapter="Database Adapter" wsdlLocation="../WSDL/getTecnologiaXPlanDba.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSCORPMAN" UIConnectionName="BSCSCORPMAN" adapterRef=""/>
+  <endpoint-interaction portType="getTecnologiaXPlanDba_ptt" operation="getTecnologiaXPlanDba">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="SELECT CA.CO_ID,CU.CUSTOMER_ID,CA.TMCODE,RP.SHDES,PIP.TECNOLOGIA ,PIP.PLATAFORMA FROM CONTR_SERVICES_CAP CS,DIRECTORY_NUMBER DN, CONTRACT_ALL CA,CUSTOMER_ALL CU,RATEPLAN RP, PLAN_ICC_PCRF_TEC PIP WHERE CS.DN_ID= DN.DN_ID AND CS.CO_ID= CA.CO_ID AND CA.CUSTOMER_ID= CU.CUSTOMER_ID AND CS.CS_DEACTIV_DATE IS NULL AND CS.SNCODE = 3 AND RP.TMCODE = CA.TMCODE and RP.SHDES= PIP.DES_PLAN AND DN.DN_NUM = #NROCELULAR"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

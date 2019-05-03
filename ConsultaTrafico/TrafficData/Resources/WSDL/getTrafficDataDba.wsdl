@@ -1,0 +1,24 @@
+<?binding.jca getTrafficDataDba_db.jca?><wsdl:definitions name="getTrafficDataDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getTrafficDataDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getTrafficDataDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UNIPRE/UNIPRE/getTrafficDataDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getTrafficDataDba_plt">
+        <plt:role name="getTrafficDataDba_role">
+            <plt:portType name="tns:getTrafficDataDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getTrafficDataDba" schemaLocation="getTrafficDataDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getTrafficDataDbaInput_msg">
+        <wsdl:part name="getTrafficDataDbaInput_msg" element="db:getTrafficDataDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getTrafficDataDbaOutputCollection_msg">
+        <wsdl:part name="getTrafficDataDbaOutputCollection" element="db:getTrafficDataDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getTrafficDataDba_ptt">
+        <wsdl:operation name="getTrafficDataDba">
+            <wsdl:input message="tns:getTrafficDataDbaInput_msg"/>
+            <wsdl:output message="tns:getTrafficDataDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

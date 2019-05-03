@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations">
+    <con:coreEntry>
+        <con1:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config">
+            <con:wsdl ref="PrepaidWave/Resources/WSDL/getDatosAbonadoDba_db"/>
+            <con:binding>
+                <con:name>getDatosAbonadoDba_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getDatosAbonadoDba</con:namespace>
+            </con:binding>
+        </con1:binding>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:ws-policy>
+            <ser:binding-mode xmlns:ser="http://www.bea.com/wli/sb/services">no-policies</ser:binding-mode>
+        </con:ws-policy>
+    </con:coreEntry>
+    <con:endpointConfig xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:env="http://www.bea.com/wli/config/env" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <tran:provider-id>jca</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI weight="0">
+            <env:value>jca://eis/DB/BSCSCORPMAN</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+            <tran:retry-application-errors>true</tran:retry-application-errors>
+        </tran:outbound-properties>
+        <tran:all-headers>false</tran:all-headers>
+        <tran:provider-specific xsi:type="jca:JCAEndPointConfiguration">
+            <jca:jca-file ref="PrepaidWave/Resources/JCA/getDatosAbonadoDba_db"/>
+            <jca:adapter-name>getDatosAbonadoDba</jca:adapter-name>
+            <jca:adapter-type>DATABASE</jca:adapter-type>
+            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:connection-mode>managed</jca:connection-mode>
+            <jca:connection-property-username-password-overwrite>false</jca:connection-property-username-password-overwrite>
+            <jca:outbound-properties>
+                <jca:operation-properties>
+                    <jca:operation-name>getDatosAbonadoDba</jca:operation-name>
+                    <jca:spec-properties>
+                        <jca:property>
+                            <jca:name>SqlString</jca:name>
+                            <jca:value>SELECT CA.CO_ID,CU.CUSTOMER_ID,CU.CUSTCODE,CA.TMCODE FROM CONTR_SERVICES_CAP CS,DIRECTORY_NUMBER DN,CONTRACT_ALL CA,CUSTOMER_ALL CU WHERE CS.DN_ID = DN.DN_ID AND CS.CO_ID = CA.CO_ID AND CA.CUSTOMER_ID = CU.CUSTOMER_ID AND CS.CS_DEACTIV_DATE IS NULL AND CS.SNCODE = 3 AND DN.DN_NUM = #NROCELULAR and rownum $amp;lt= 1</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>GetActiveUnitOfWork</jca:name>
+                            <jca:value>false</jca:value>
+                        </jca:property>
+                    </jca:spec-properties>
+                </jca:operation-properties>
+            </jca:outbound-properties>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>

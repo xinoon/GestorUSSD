@@ -1,0 +1,24 @@
+<?binding.jca getGetSrvPCRFDba_db.jca?><wsdl:definitions name="getGetSrvPCRFDba" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getGetSrvPCRFDba" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/getGetSrvPCRFDba" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ProviBols/provi_bols/getGetSrvPCRFDba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="getGetSrvPCRFDba_plt">
+        <plt:role name="getGetSrvPCRFDba_role">
+            <plt:portType name="tns:getGetSrvPCRFDba_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/getGetSrvPCRFDba" schemaLocation="getGetSrvPCRFDba.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="getGetSrvPCRFDbaInput_msg">
+        <wsdl:part name="getGetSrvPCRFDbaInput_msg" element="db:getGetSrvPCRFDbaInput"/>
+    </wsdl:message>
+    <wsdl:message name="getGetSrvPCRFDbaOutputCollection_msg">
+        <wsdl:part name="getGetSrvPCRFDbaOutputCollection" element="db:getGetSrvPCRFDbaOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="getGetSrvPCRFDba_ptt">
+        <wsdl:operation name="getGetSrvPCRFDba">
+            <wsdl:input message="tns:getGetSrvPCRFDbaInput_msg"/>
+            <wsdl:output message="tns:getGetSrvPCRFDbaOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

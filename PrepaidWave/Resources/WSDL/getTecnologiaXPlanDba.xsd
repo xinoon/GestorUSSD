@@ -1,0 +1,25 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getTecnologiaXPlanDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getTecnologiaXPlanDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getTecnologiaXPlanDbaInput" type="getTecnologiaXPlanDbaInput"/>
+   <xs:complexType name="getTecnologiaXPlanDbaInput">
+      <xs:sequence>
+         <xs:element name="NROCELULAR" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getTecnologiaXPlanDbaOutputCollection" type="getTecnologiaXPlanDbaOutputCollection"/>
+   <xs:complexType name="getTecnologiaXPlanDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="getTecnologiaXPlanDbaOutput" type="getTecnologiaXPlanDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getTecnologiaXPlanDbaOutput">
+      <xs:sequence>
+         <xs:element name="CO_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="CUSTOMER_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="TMCODE" type="xs:decimal" nillable="true"/>
+         <xs:element name="SHDES" type="xs:string" nillable="true"/>
+         <xs:element name="TECNOLOGIA" type="xs:string" nillable="true"/>
+         <xs:element name="PLATAFORMA" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

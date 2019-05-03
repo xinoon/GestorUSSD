@@ -1,0 +1,42 @@
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="DATA" type="DATA"/>
+   <xs:element name="TOTAL_TRAF_DET_ITEM" type="TOTAL_TRAF_DET_ITEM" />
+   
+   <xs:complexType name="DATA">
+      <xs:sequence>
+         <xs:element name="ROW" type="ROW"  minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="ROW">
+      <xs:sequence>
+         <xs:element name="DET" type="DET"  minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="DET">
+      <xs:sequence>
+         <xs:element name="TRAF_DET" type="TRAF_DET"  minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="TRAF_DET">
+      <xs:sequence>
+         <xs:element name="TRAF_DET_ITEM" type="TRAF_DET_ITEM" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="TRAF_DET_ITEM">
+      <xs:sequence>
+         <xs:element name="CALLDATE" type="xs:string" nillable="false"/>
+         <xs:element name="EVENTTYPE" type="xs:string" nillable="false"/>
+         <xs:element name="PRODTYPEDESC" type="xs:string" nillable="true"/>
+         <xs:element name="CALLDURATION" type="xs:string" nillable="false"/>
+         <xs:element name="DESTNUM" type="xs:string" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="TOTAL_TRAF_DET_ITEM">
+      <xs:sequence>
+         <xs:element name="CALLDURATION" type="xs:string" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+</xs:schema>

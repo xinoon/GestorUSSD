@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/getTrafficDataDba" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/getTrafficDataDba" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="getTrafficDataDbaInput" type="getTrafficDataDbaInput"/>
+   <xs:complexType name="getTrafficDataDbaInput">
+      <xs:sequence>
+         <xs:element name="NROCELULAR" type="xs:string" nillable="true"/>
+         <xs:element name="STARDATE" type="xs:string" nillable="true"/>
+         <xs:element name="ENDDATE" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="getTrafficDataDbaOutputCollection" type="getTrafficDataDbaOutputCollection"/>
+   <xs:complexType name="getTrafficDataDbaOutputCollection">
+      <xs:sequence>
+         <xs:element name="getTrafficDataDbaOutput" type="getTrafficDataDbaOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getTrafficDataDbaOutput">
+      <xs:sequence>
+         <xs:element name="NUMERO_ORIGEN" type="xs:string" nillable="true"/>
+         <xs:element name="NUMERO_DESTINO" type="xs:string" nillable="true"/>
+         <xs:element name="DESTINO" type="xs:string" nillable="true"/>
+         <xs:element name="SENTIDO" type="xs:string" nillable="true"/>
+         <xs:element name="FECHA" type="xs:string" nillable="true"/>
+         <xs:element name="HORA_INICIO" type="xs:string" nillable="true"/>
+         <xs:element name="HORA_TERMINO" type="xs:string" nillable="true"/>
+         <xs:element name="UNIDAD" type="xs:string" nillable="true"/>
+         <xs:element name="DURACION" type="xs:string" nillable="true"/>
+         <xs:element name="DURACION_SEGUNDOS" type="xs:string" nillable="true"/>
+         <xs:element name="VALOR_SEGUNDO" type="xs:string" nillable="true"/>
+         <xs:element name="SERVICIO" type="xs:string" nillable="true"/>
+         <xs:element name="TRAMO_HORARIO" type="xs:string" nillable="true"/>
+         <xs:element name="CARACTERISTICA_SERVICIO" type="xs:string" nillable="true"/>
+         <xs:element name="VALOR_LLAMADA" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>
