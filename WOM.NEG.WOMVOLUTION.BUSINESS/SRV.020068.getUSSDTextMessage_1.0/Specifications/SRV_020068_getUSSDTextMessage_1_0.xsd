@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SRV.020068.getUSSDTextMessage_1.0" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/SRV.020068.getUSSDTextMessage_1.0" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="SRV.020068.getUSSDTextMessage_1.0Input" type="SRV.020068.getUSSDTextMessage_1.0Input"/>
+   <xs:complexType name="SRV.020068.getUSSDTextMessage_1.0Input">
+      <xs:sequence>
+         <xs:element name="idMsj" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="SRV.020068.getUSSDTextMessage_1.0OutputCollection" type="SRV.020068.getUSSDTextMessage_1.0OutputCollection"/>
+   <xs:complexType name="SRV.020068.getUSSDTextMessage_1.0OutputCollection">
+      <xs:sequence>
+         <xs:element name="SRV.020068.getUSSDTextMessage_1.0Output" type="SRV.020068.getUSSDTextMessage_1.0Output" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SRV.020068.getUSSDTextMessage_1.0Output">
+      <xs:sequence>
+         <xs:element name="ID_MSJ" type="xs:decimal" nillable="true"/>
+         <xs:element name="MSJ_DES" type="xs:string" nillable="true"/>
+         <xs:element name="MENSAJE" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

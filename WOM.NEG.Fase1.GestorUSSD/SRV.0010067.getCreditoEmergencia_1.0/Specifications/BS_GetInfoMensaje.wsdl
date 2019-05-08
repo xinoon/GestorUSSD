@@ -1,0 +1,25 @@
+<wsdl:definitions name="BS_GetInfoMensaje" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.Fase1.GestorUSSD/BS_GetInfoMensaje" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.Fase1.GestorUSSD/BS_GetInfoMensaje" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/BS_GetInfoMensaje" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="BS_GetInfoMensaje_plt">
+    <plt:role name="BS_GetInfoMensaje_role">
+      <plt:portType name="tns:BS_GetInfoMensaje_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/BS_GetInfoMensaje"
+                schemaLocation="../../SRV.0010067.getCreditoEmergencia_1.0/Specifications/BS_GetInfoMensaje.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="BS_GetInfoMensajeInput_msg">
+        <wsdl:part name="BS_GetInfoMensajeInput_msg" element="db:BS_GetInfoMensajeInput"/>
+    </wsdl:message>
+    <wsdl:message name="BS_GetInfoMensajeOutputCollection_msg">
+        <wsdl:part name="BS_GetInfoMensajeOutputCollection" element="db:BS_GetInfoMensajeOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="BS_GetInfoMensaje_ptt">
+        <wsdl:operation name="BS_GetInfoMensaje">
+            <wsdl:input message="tns:BS_GetInfoMensajeInput_msg"/>
+            <wsdl:output message="tns:BS_GetInfoMensajeOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

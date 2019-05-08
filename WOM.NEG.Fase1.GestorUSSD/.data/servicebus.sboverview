@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns:composite xmlns:ns="http://xmlns.oracle.com/sca/1.0">
+    <ns:reference>
+        <ns:interface src="BusinessService:WOM.NEG.Fase1.GestorUSSD/SRV.0010067.getCreditoEmergencia_1.0/Services/SRV.020070.EmergencyCredit_1.0"/>
+    </ns:reference>
+    <ns:reference>
+        <ns:interface src="BusinessService:WOM.NEG.Fase1.GestorUSSD/SRV.0010067.getCreditoEmergencia_1.0/Services/SRV.020068.getUSSDTextMessage_1.0"/>
+    </ns:reference>
+</ns:composite>
