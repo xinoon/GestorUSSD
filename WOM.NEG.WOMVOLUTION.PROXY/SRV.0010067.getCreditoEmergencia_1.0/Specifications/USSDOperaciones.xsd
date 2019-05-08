@@ -1,0 +1,25 @@
+<xs:schema version="1.0" targetNamespace="http://ussd.operaciones.wom.ws.ncl.com" xmlns:tns="http://ussd.operaciones.wom.ws.ncl.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+   <xs:element name="ussdOperacion" type="tns:inUssdOperacion"/>
+   <xs:element name="ussdOperacionResponse" type="tns:outUssdOperacionResponse"/>
+   
+   <xs:complexType name="inUssdOperacion">
+      <xs:sequence>
+         <xs:element name="nroCelular" type="xs:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="segmento" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+         <xs:element name="tipoOperacion" type="xs:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="idProd" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+         <xs:element name="idServicio" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="outUssdOperacionResponse">
+      <xs:sequence>
+		<xs:element name="segmento" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorCode" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="errorDescription" type="xs:string" nillable="true"  minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   
+</xs:schema>

@@ -1,0 +1,12 @@
+<adapter-config name="BS_GetInfoMensaje" adapter="db" wsdlLocation="BS_GetInfoMensaje.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="localConnection" location="eis/DB/GETMESSAGE"/>
+  <endpoint-interaction portType="BS_GetInfoMensaje_ptt" operation="BS_GetInfoMensaje">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select ID_MSJ, MSJ_DES,MENSAJE from INFO_MENSAJE where ID_MSJ = #idMsj"/>
+      <property name="MaxRows" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

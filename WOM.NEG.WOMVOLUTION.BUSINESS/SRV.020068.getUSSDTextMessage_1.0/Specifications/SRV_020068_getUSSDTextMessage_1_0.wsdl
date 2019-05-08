@@ -1,0 +1,24 @@
+<wsdl:definitions name="SRV.020068.getUSSDTextMessage_1.0" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.WOMVOLUTION.BUSINESS/SRV_020068_getUSSDTextMessage_1_0" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.WOMVOLUTION.BUSINESS/SRV_020068_getUSSDTextMessage_1_0" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SRV.020068.getUSSDTextMessage_1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="SRV_020068_getUSSDTextMessage_1_0_plt">
+    <plt:role name="SRV.020068.getUSSDTextMessage_1.0_role">
+      <plt:portType name="tns:SRV_020068_getUSSDTextMessage_1_0_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SRV.020068.getUSSDTextMessage_1.0" schemaLocation="SRV_020068_getUSSDTextMessage_1_0.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="SRV.020068.getUSSDTextMessage_1.0Input_msg">
+        <wsdl:part name="SRV.020068.getUSSDTextMessage_1.0Input_msg" element="db:SRV.020068.getUSSDTextMessage_1.0Input"/>
+    </wsdl:message>
+    <wsdl:message name="SRV.020068.getUSSDTextMessage_1.0OutputCollection_msg">
+        <wsdl:part name="SRV.020068.getUSSDTextMessage_1.0OutputCollection" element="db:SRV.020068.getUSSDTextMessage_1.0OutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="SRV_020068_getUSSDTextMessage_1_0_ptt">
+        <wsdl:operation name="SRV.020068.getUSSDTextMessage_1.0">
+            <wsdl:input message="tns:SRV.020068.getUSSDTextMessage_1.0Input_msg"/>
+            <wsdl:output message="tns:SRV.020068.getUSSDTextMessage_1.0OutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

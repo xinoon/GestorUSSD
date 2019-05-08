@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.WOMVOLUTION.BUSINESS/SRV_020068_getUSSDTextMessage_1_0" name="SRV.020068.getUSSDTextMessage_1.0-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="SRV_020068_getUSSDTextMessage_1_0.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.WOMVOLUTION.BUSINESS/SRV_020068_getUSSDTextMessage_1_0"/>
+    <wsdl:binding name="SRV_020068_getUSSDTextMessage_1_0_ptt-binding" type="srv:SRV_020068_getUSSDTextMessage_1_0_ptt" xmlns:srv="http://xmlns.oracle.com/pcbpel/adapter/db/GestorUSSD/WOM.NEG.WOMVOLUTION.BUSINESS/SRV_020068_getUSSDTextMessage_1_0">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="SRV.020068.getUSSDTextMessage_1.0">
+            <soap:operation soapAction="SRV.020068.getUSSDTextMessage_1.0"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
